@@ -1,6 +1,6 @@
 const express = require('express');
-const router = express.Router();
 const clients = require('../services/clients');
+const router = express.Router();
 
 /* GET programming languages. */
 router.get('/', async function(req, res, next) {
@@ -24,7 +24,7 @@ router.post('/', async function(req, res, next) {
 /* PUT programming language */
 router.put('/:id', async function(req, res, next) {
     try {
-      res.json(await programmingLanguages.update(req.params.id, req.body));
+      res.json(await clients.update(req.params.id, req.body));
     } catch (err) {
       console.error(`Error while updating client`, err.message);
       next(err);
@@ -34,7 +34,7 @@ router.put('/:id', async function(req, res, next) {
 /* DELETE programming language */
 router.delete('/:id', async function(req, res, next) {
     try {
-      res.json(await programmingLanguages.remove(req.params.id));
+      res.json(await clients.remove(req.params.id));
     } catch (err) {
       console.error(`Error while deleting client`, err.message);
       next(err);

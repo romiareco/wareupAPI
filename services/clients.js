@@ -9,12 +9,9 @@ async function getMultiple(page = 1){
     FROM clients LIMIT ${offset},${config.listPerPage}`
   );
   const data = helper.emptyOrRows(rows);
-  const meta = {page};
+  //const meta = {page};
 
-  return {
-    data,
-    meta
-  }
+  return data
 }
 
 async function create(client){
@@ -36,7 +33,7 @@ async function create(client){
 
 async function update(id, client){
     const result = await db.query(
-      `UPDATE client 
+      `UPDATE clients 
         SET name="${client.name}", last_name=${client.last_name}, user_name=${client.user_name}, 
         password=${client.password}, status=${client.status} , email=${client.email} , display_name=${client.display_name}
         WHERE id=${id}` 
