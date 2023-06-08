@@ -5,7 +5,7 @@ const config = require('../config');
 async function getMultiple(page = 1){
   const offset = helper.getOffset(page, config.listPerPage);
   const rows = await db.query(
-    `SELECT id, name, last_name, user_name, password, email, status, display_name
+    `SELECT id, name, last_name,  password, email, status
     FROM clients LIMIT ${offset},${config.listPerPage}`
   );
   const data = helper.emptyOrRows(rows);
@@ -15,27 +15,27 @@ async function getMultiple(page = 1){
 }
 
 async function create(client){
+    let hasError = true;
     const result = await db.query(
       `INSERT INTO clients 
-      (name, last_name, user_name, password, email, status, display_name) 
-      VALUES ('${client.name}', '${client.last_name}', '${client.user_name}', '${client.password}', 
-        '${client.email}', ${client.status}, '${client.display_name}')`
+      (name, last_name, password, email, status) 
+      VALUES ('${client.name}', '${client.lastname}', '${client.password}', '${client.email}', 1)`
     );
   
     let message = 'Error in creating a client';
-  
     if (result.affectedRows) {
       message = 'Client created successfully';
+      hasError = false;
     }
-  
-    return {message};
+
+    return {message, hasError};
 }
 
 async function update(id, client){
     const result = await db.query(
       `UPDATE clients 
-        SET name="${client.name}", last_name=${client.last_name}, user_name=${client.user_name}, 
-        password=${client.password}, status=${client.status} , email=${client.email} , display_name=${client.display_name}
+        SET name="${client.name}", last_name=${client.last_name},  
+        password=${client.password}, status=${client.status} , email=${client.email}
         WHERE id=${id}` 
     );
   
