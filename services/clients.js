@@ -1,6 +1,7 @@
 const db = require('./db');
 const helper = require('../helper');
 const config = require('../config');
+const mails = require('./mails');
 
 async function getMultiple(page = 1){
   const offset = helper.getOffset(page, config.listPerPage);
@@ -9,23 +10,23 @@ async function getMultiple(page = 1){
     FROM clients LIMIT ${offset},${config.listPerPage}`
   );
   const data = helper.emptyOrRows(rows);
-  //const meta = {page};
-
   return data
 }
 
 async function create(client){
     let hasError = true;
+    let message = 'Error in creating a client';
+
     const result = await db.query(
       `INSERT INTO clients 
       (name, last_name, password, email, status) 
       VALUES ('${client.name}', '${client.lastname}', '${client.password}', '${client.email}', 1)`
-    );
-  
-    let message = 'Error in creating a client';
+    );  
+    
     if (result.affectedRows) {
       message = 'Client created successfully';
       hasError = false;
+      mails.sendEmailCreatedClient(client);    
     }
 
     return {message, hasError};
