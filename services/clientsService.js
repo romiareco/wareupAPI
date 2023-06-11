@@ -38,9 +38,29 @@ async function update(id, client){
     return {message};
 }
 
+async function recoverPassword(email){ 
+  let hasError = true;
+  if(email == null){
+    message = 'Email required';
+  }
+  else{
+    const client = await clientsDAO.getByEmail(email); 
+    if(client == null){
+      message = 'Invalid email';
+    }
+    else{    
+      mails.sendEmailPasswordRecovery(client);  
+      message = 'Password sent succesfully';
+      hasError= false;
+    }   
+  }
+  return {message, hasError};
+}
+
 module.exports = {
   getMultiple,
   get,
   create,
   update,
+  recoverPassword
 }

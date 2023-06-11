@@ -52,9 +52,22 @@ async function get(clientId){
     return data
 }
 
+async function getByEmail(email){
+  const rows = await db.query(
+    `SELECT id, name, last_name,  password, email, status
+    FROM clients WHERE email='${email}' LIMIT 1`
+  ); 
+
+  if(rows.length > 0){ 
+    return rows[0];
+  }
+  return null;
+}
+
 module.exports = {
   getMultiple,
   get,
+  getByEmail,
   insert,
   update,
   remove

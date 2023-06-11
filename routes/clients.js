@@ -20,6 +20,15 @@ router.post('/', async function(req, res, next) {
     }
   });
 
+router.post('/recover-password', async function(req, res, next) {
+    try {
+      res.json(await clients.recoverPassword(req.body.email));
+    } catch (err) {
+      console.error(`Error recovering the password `, err.message);
+      next(err);
+    }
+  });
+
 router.put('/:id', async function(req, res, next) {
     try {
       res.json(await clients.update(req.params.id, req.body));
