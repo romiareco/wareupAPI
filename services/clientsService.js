@@ -1,7 +1,4 @@
-const helper = require('../utils/helper');
-const config = require('../config');
 const mails = require('./mailsService');
-const clientStatus = require('../utils/enums');
 const clientsDAO = require('../dataAccess/clientsDAO');
 
 async function getMultiple(page = 1){
@@ -16,11 +13,11 @@ async function get(clientId){
 
 async function create(client) {
     let hasError = true;
-    let message = 'Error in creating a client'; 
+    let message = 'Error creating a client'; 
 
     const affectedRows = clientsDAO.insert(client);
 
-    if (affectedRows) {
+    if (affectedRows > 0) {
       message = 'Client created successfully';
       hasError = false;
       mails.sendEmailCreatedClient(client);    
@@ -32,10 +29,10 @@ async function create(client) {
 async function update(id, client){
 
     const affectedRows = clientsDAO.update(id, client);  
-    let message = 'Error in updating clients';
+    let message = 'Error updating a client';
   
-    if (affectedRows) {
-      message = 'Clients updated successfully';
+    if (affectedRows > 0) {
+      message = 'Client updated successfully';
     }
   
     return {message};

@@ -1,6 +1,10 @@
 
+const helper = require('../utils/helper');
+const config = require('../config');
+const db = require('./db');
 
-async function insert(client) {
+async function insert(client){
+
     const result = await db.query(
       `INSERT INTO clients 
       (name, last_name, password, email, status) 
