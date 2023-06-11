@@ -1,8 +1,7 @@
 const express = require('express');
-const clients = require('../services/clients');
+const clients = require('../services/clientsService');
 const router = express.Router();
 
-/* GET programming languages. */
 router.get('/', async function(req, res, next) {
   try {
     res.json(await clients.getMultiple(req.query.page));
@@ -21,7 +20,6 @@ router.post('/', async function(req, res, next) {
     }
   });
 
-/* PUT programming language */
 router.put('/:id', async function(req, res, next) {
     try {
       res.json(await clients.update(req.params.id, req.body));
@@ -31,7 +29,7 @@ router.put('/:id', async function(req, res, next) {
     }
   });
  
-/* DELETE programming language */
+/* DELETE programming language
 router.delete('/:id', async function(req, res, next) {
     try {
       res.json(await clients.remove(req.params.id));
@@ -40,5 +38,6 @@ router.delete('/:id', async function(req, res, next) {
       next(err);
     }
   });
+ */
 
 module.exports = router;

@@ -1,4 +1,5 @@
-const fs = require('fs');
+
+
 async function sendEmailCreatedClient(client) {
     
     const { email } = client;
