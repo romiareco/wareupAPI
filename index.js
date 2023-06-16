@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors")
-const clientsRouter = require('./routes/clients');
+const usersRouter = require('./routes/users');
 
 const app = express();
 const port = 3001;
@@ -16,7 +16,7 @@ app.use(
   })
 );
 
-app.use("/clients", clientsRouter);
+app.use("/users", usersRouter);
 
 /* Error handler middleware */
 app.use((err, req, res, next) => {

@@ -1,6 +1,21 @@
-const clientStatus = {
+const userStatus = {
     pending: 1,
     active: 2,
     blocked: 3,
     deleted: 4
-} //no funciona asi.. averiguar como seria.
+} 
+const role = {
+    admin: 1,
+    client: 2
+}
+const logsType = {
+    database: 1,
+    service: 2,
+    routes: 3
+}
+
+module.exports = {
+    userStatus,
+    role,
+    logsType
+}

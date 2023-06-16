@@ -7,5 +7,7 @@ const config = {
       database: "wareup",
     },
     listPerPage: 10,
+    mode: "dev" //dev - prod 
   };
+
   module.exports = config;
