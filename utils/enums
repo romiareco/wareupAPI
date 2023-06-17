@@ -1,6 +1,0 @@
-const clientStatus = {
-    pending: 1,
-    active: 2,
-    blocked: 3,
-    deleted: 4
-} //no funciona asi.. averiguar como seria.

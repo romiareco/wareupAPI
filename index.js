@@ -1,9 +1,9 @@
+
+/*
 const express = require("express");
 const cors = require("cors")
-const clientsRouter = require('./routes/clients');
 
 const app = express();
-const port = 3001;
 const path = require("path");
 app.use(express.static(path.join(__dirname, "..", "build")));
 app.use(express.static("public"));
@@ -15,8 +15,26 @@ app.use(
     extended: true,
   })
 );
+*/
 
-app.use("/clients", clientsRouter);
+const express = require("express");
+const bodyParser = require("body-parser");
+const morgan = require("morgan");
+const userRouter = require("./src/routes/user.route");
+const sequelize = require("./src/database").sequelize;
+
+const app = express();
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(morgan("dev"));
+
+const PORT = process.env.PORT || 3001;
+
+app.use("/api/v1", userRouter);
+app.get("*", (req, res) => {
+  res.status(404).json({ message: "Welcome to the begining of nothingness" });
+});
 
 /* Error handler middleware */
 app.use((err, req, res, next) => {
@@ -26,10 +44,14 @@ app.use((err, req, res, next) => {
   return;
 });
 
+
+
+
 app.get("/", (req, res) => {
   res.json({ message: "ok" });
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+
+app.listen(PORT, () => {
+  console.log(`Server is listening to port ${PORT}`);
 });
