@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const config = require('../../config');
+const {JWT_SECRET_TOKEN} = require("../../constants");
 
 function createAccessToken(user) {
     const tokenExpirationDate = new Date();
@@ -12,7 +12,7 @@ function createAccessToken(user) {
         exp: tokenExpirationDate.getTime()
     };
 
-    return jwt.sign(payload, config.jwtSecretToken);
+    return jwt.sign(payload, JWT_SECRET_TOKEN);
 }
 
 function refreshToken(user) {
@@ -26,12 +26,12 @@ function refreshToken(user) {
         exp: tokenExpirationDate.getTime()
     };
 
-    return jwt.sign(payload, config.jwtSecretToken);
+    return jwt.sign(payload, JWT_SECRET_TOKEN);
 }
 
 //Devuelve datos del token decodificado
 function decoded(token){
-    return jwt.decode(token, config.jwtSecretToken, true);
+    return jwt.decode(token, JWT_SECRET_TOKEN, true);
 }
 
 module.exports = {

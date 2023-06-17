@@ -5,7 +5,7 @@ const { userService } = require("./dependency");
 
 const authController = new AuthController(userService);
 
-router.post("/login", (req, res) => authController.login(req, res));
-router.post("/refresh_access_token", (req, res) => authController.refreshAccessToken(req, res));
+router.post("/auth/login", (req, res) => authController.login(req, res));
+router.post("/auth/refresh_access_token", (req, res) => authController.refreshAccessToken(req, res));
 
 module.exports = router;

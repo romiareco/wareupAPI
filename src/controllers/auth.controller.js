@@ -37,18 +37,20 @@ class AuthController {
     async refreshAccessToken(req, res) {
         const { token } = req.body;
 
-        if(!token) res.status(400).send({msg: "Token requerido"});
-        
-        const { user_id } = jwt.decoded(token);
-        
-        const userFound = await this.userService.getUser(user_id);
-
-        if (userFound) {
-            res.status(200).send({
-                accessToken: jwt.createAccessToken(userFound)
-            })
+        if(!token) {
+            res.status(400).send({msg: "Token requerido"});
         } else {
-            res.status(500).send({msg: "Error del servidor al refrescar access token"});
+            const { user_id } = jwt.decoded(token);
+        
+            const userFound = await this.userService.getUser(user_id);
+    
+            if (userFound) {
+                res.status(200).send({
+                    accessToken: jwt.createAccessToken(userFound)
+                })
+            } else {
+                res.status(500).send({msg: "Error del servidor al refrescar access token"});
+            }
         }
     }
 }
