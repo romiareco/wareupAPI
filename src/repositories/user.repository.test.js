@@ -1,20 +1,25 @@
 const chai = require("chai");
 const sinon = require("sinon");
-const expect = chai.expect;
-const faker = require("faker");
-const { UserModel } = require("../../database");
+const expect = chai.expect;  
+const UserModel = require("../models/user.model");
 const UserRepository = require("./user.repository");
 
 describe("UserRepository", function() {
   const stubValue = {
-    id: faker.random.uuid(),
-    name: faker.name.findName(),
-    email: faker.internet.email()
+    id: 1,
+    name: 'Juan',
+    email: 'Juan@email.com',
+    password: 'Pass123',
+    last_name: 'Perez',
+    status: 2,
+    role: 2
   };
+
+
   describe("create", function() {
     it("should add a new user to the db", async function() {
       const stubValue = {
-        id: faker.random.uuid(),
+        id: 1,
         name: 'Juan',
         email: 'Juan@email.com',
         password: 'Pass123',

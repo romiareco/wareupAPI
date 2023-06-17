@@ -12,12 +12,14 @@ class UserService {
     let message = 'Error creating a user'; 
     
     try{ 
-        let userCreated = await this.userRepository.create(name, last_name, password, email);
-        if(userCreated){
+        let userWasCreated = await this.userRepository.create(name, last_name, password, email);
+        if(userWasCreated){
           message = 'User created successfully';
           hasError = false;
           this.mailService.sendEmailUserCreated(email);    
         }      
+
+        return {message, hasError};
     }
     catch (error) {
       this.log.create('Error in userService - create: '+ error, enums.logsType.service);

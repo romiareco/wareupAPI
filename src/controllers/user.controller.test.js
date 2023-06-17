@@ -1,10 +1,9 @@
 const chai = require("chai");
 const sinon = require("sinon");
-const expect = chai.expect;
-const faker = require("faker");
+const expect = chai.expect; 
 const UserController = require("./user.controller");
-const UserService = require("./user.service");
-const UserRepository = require("./user.repository");
+const UserService = require("../services/user.service");
+const UserRepository = require("../repositories/user.repository");
 
 describe("UserController", function() {
   describe("register", function() {
@@ -18,7 +17,7 @@ describe("UserController", function() {
       userService = new UserService(userRepo);
     });
     it("should not register a user when name param is not provided", async function() {
-      const req = { body: { email: faker.internet.email() } };
+      const req = { body: { email: 'Juan@email.com' } };
 
       await new UserController().register(req, res);
 
@@ -40,7 +39,7 @@ describe("UserController", function() {
     });
 
     it("should not register a user when email param is not provided", async function() {
-      const req = { body: { name: faker.name.findName() } };
+      const req = { body: { name: 'Juan' } };
 
       await new UserController().register(req, res);
 
@@ -56,7 +55,7 @@ describe("UserController", function() {
       };
 
       const stubValue = {
-        id: faker.random.uuid(),
+        id: 1,
         name: 'Juan',
         email: 'Juan@email.com',
         password: 'Pass123',
@@ -81,7 +80,7 @@ describe("UserController", function() {
     let res;
     let userService;
     beforeEach(() => {
-      req = { params: { id: faker.random.uuid() } };
+      req = { params: { id: 1 } };
       res = { json: function() {} };
       const userRepo = sinon.spy();
       userService = new UserService(userRepo);
@@ -90,8 +89,8 @@ describe("UserController", function() {
     it("should return a user that matches the id param", async function() {
       const stubValue = {
         id: req.params.id,
-        name: faker.name.findName(),
-        email: faker.internet.email() 
+        name: 'Juan',
+        email: 'Juan@email.com' 
       };
       const mock = sinon.mock(res);
       mock
