@@ -21,6 +21,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const userRouter = require("./src/routes/user.route");
+const authRouter = require("./src/routes/auth.route");
+
 const sequelize = require("./src/database").sequelize;
 
 const app = express();
@@ -31,6 +33,7 @@ app.use(morgan("dev"));
 
 const PORT = process.env.PORT || 3001;
 
+app.use("/api/v1/auth", authRouter);
 app.use("/api/v1", userRouter);
 
 app.get("*", (req, res) => {
