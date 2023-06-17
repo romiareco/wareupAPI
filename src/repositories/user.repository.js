@@ -1,7 +1,7 @@
 const enums = require('../utils/enums');
 const { UserModel } = require("../database");
 const config = require('../../config');
-
+const bcrypt = require("bcryptjs")
 class UserRepository {
   constructor(logRepository) {
     this.log = logRepository;
@@ -15,10 +15,13 @@ class UserRepository {
         const status = enums.userStatus.active;
         const role = enums.role.client;
 
+        const salt = bcrypt.genSaltSync(10);
+        const hashPassword = bcrypt.hashSync(password, salt)
+
         return this.user.create({
           name,
           last_name,
-          password,
+          hashPassword,
           email,
           status,
           role

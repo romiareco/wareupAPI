@@ -1,7 +1,12 @@
 const clientsDAO = require('../dataAccess/clientsDAO');
 
+class SessionService {
+  constructor(userRepository, logRepository) {
+    this.userRepository = userRepository;
+    this.mailService = mailService;
+  }
 
-async function signup(sessionInfo){ 
+  async signup(sessionInfo){ 
     let hasError = true;
     if (sessionInfo.email == null) {
       message = 'Email required';
@@ -19,3 +24,6 @@ async function signup(sessionInfo){
     }
     return {message, hasError};
   }
+}
+
+module.exports = SessionService;

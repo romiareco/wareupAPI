@@ -31,6 +31,7 @@ class UserModel extends Model {
           type: DataTypes.INTEGER,
           allowNull: false
         }
+        //Falta agregar el rol?
       },
       {
         sequelize,
