@@ -29,6 +29,8 @@ class UserService {
   
   async recoverPassword(email){ 
     let hasError = true;
+    let message = 'Error int password recovery'; 
+
     if(email == null){
       message = 'Email required';
     }
@@ -50,8 +52,8 @@ class UserService {
     return this.userRepository.getUser(id);
   }
 
-  getUsers(page = 1) {
-    return this.userRepository.getUsers(page);
+  getUsers() {
+    return this.userRepository.getUsers();
   }
 }
 

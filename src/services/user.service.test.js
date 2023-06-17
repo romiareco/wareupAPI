@@ -10,24 +10,25 @@ describe("UserService", function() {
     it("should create a new user", async function() {
       const stubValue = {
         id: faker.random.uuid(),
-        name: faker.name.findName(),
-        email: faker.internet.email(),
-        createdAt: faker.date.past(),
-        updatedAt: faker.date.past()
+        name: 'Juan',
+        email: 'Juan@email.com',
+        password: 'Pass123',
+        last_name: 'Perez',
+        status: 2,
+        role: 2
       };
 
       const userRepo = new UserRepository();
       const stub = sinon.stub(userRepo, "create").returns(stubValue);
 
       const userService = new UserService(userRepo);
-      const user = await userService.create(stubValue.name, stubValue.email);
+      const user = await userService.create(stubValue.name, stubValue.last_name, stubValue.password, stubValue.email);
 
       expect(stub.calledOnce).to.be.true;
       expect(user.id).to.equal(stubValue.id);
       expect(user.name).to.equal(stubValue.name);
-      expect(user.email).to.equal(stubValue.email);
-      expect(user.createdAt).to.equal(stubValue.createdAt);
-      expect(user.updatedAt).to.equal(stubValue.updatedAt);
+      expect(user.last_name).to.equal(stubValue.last_name);
+      expect(user.email).to.equal(stubValue.email); 
     });
   });
 
@@ -36,9 +37,7 @@ describe("UserService", function() {
       const stubValue = {
         id: faker.random.uuid(),
         name: faker.name.findName(),
-        email: faker.internet.email(),
-        createdAt: faker.date.past(),
-        updatedAt: faker.date.past()
+        email: faker.internet.email() 
       };
 
       const userRepo = new UserRepository();
@@ -51,8 +50,6 @@ describe("UserService", function() {
       expect(user.id).to.equal(stubValue.id);
       expect(user.name).to.equal(stubValue.name);
       expect(user.email).to.equal(stubValue.email);
-      expect(user.createdAt).to.equal(stubValue.createdAt);
-      expect(user.updatedAt).to.equal(stubValue.updatedAt);
     });
   });
 });

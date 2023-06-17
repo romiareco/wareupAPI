@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 require("dotenv").config();
 
-const config = require('../config');
+const config = require('../../config');
 const UserModel = require("../models/user.model");
 const LogModel= require("../models/log.model"); 
 

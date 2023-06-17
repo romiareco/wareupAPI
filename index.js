@@ -20,8 +20,8 @@ app.use(
 const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
-const userRouter = require("./routes/user.route");
-const sequelize = require("./database").sequelize;
+const userRouter = require("./src/routes/user.route");
+const sequelize = require("./src/database").sequelize;
 
 const app = express();
 

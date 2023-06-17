@@ -1,10 +1,10 @@
 const { LogModel } = require("../database");
-const config = require('../config');
+const config = require('../../config');
 
 class LogRepository {
   constructor() {
     this.log = LogModel;
-    this.log.sync({ force: true });
+    this.log.sync({ force: config.db.recreate,  alter: config.db.alter });
   }
 
   async create(description, type) {

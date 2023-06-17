@@ -1,5 +1,5 @@
 const enums = require('../utils/enums');
-const config = require('../config');
+const config = require('../../config');
  
 class MailService {
     constructor(logRepository) {
