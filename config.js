@@ -13,7 +13,8 @@ const config = {
     sendgrid:{
       apikey: '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',
       from:'romiareco@gmail.com'
-    }
+    },
+    jwtSecretToken: "secret_token"
   };
 
   module.exports = config;

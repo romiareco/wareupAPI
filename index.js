@@ -32,6 +32,7 @@ app.use(morgan("dev"));
 const PORT = process.env.PORT || 3001;
 
 app.use("/api/v1", userRouter);
+
 app.get("*", (req, res) => {
   res.status(404).json({ message: "Welcome to the begining of nothingness" });
 });
@@ -43,9 +44,6 @@ app.use((err, req, res, next) => {
   res.status(statusCode).json({ message: err.message });
   return;
 });
-
-
-
 
 app.get("/", (req, res) => {
   res.json({ message: "ok" });

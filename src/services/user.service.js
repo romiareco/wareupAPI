@@ -50,6 +50,10 @@ class UserService {
     return {message, hasError};
   }
 
+  getUserByEmail(email) {
+    return this.userRepository.getUserByEmail(email);
+  }
+  
   getUser(id) {
     return this.userRepository.getUser(id);
   }

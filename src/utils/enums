@@ -1,3 +1,4 @@
+//TODO: analizar si deberiamos poner en mayusculas el nombre de los ENUMS
 const userStatus = {
     pending: 1,
     active: 2,
@@ -19,5 +20,5 @@ const logsType = {
 module.exports = {
     userStatus,
     role,
-    logsType
+    logsType,
 }

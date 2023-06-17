@@ -10,18 +10,19 @@ class UserRepository {
     this.user.sync({ force: config.db.recreate,  alter: config.db.alter });
   }
 
-  async create(name, last_name, password, email) {
+  async create(name, last_name, pass, email) {
     try {
         const status = enums.userStatus.active;
         const role = enums.role.client;
 
+        //Método para encriptar password
         const salt = bcrypt.genSaltSync(10);
-        const hashPassword = bcrypt.hashSync(password, salt)
+        const password = bcrypt.hashSync(pass, salt);
 
         return this.user.create({
           name,
           last_name,
-          hashPassword,
+          password,
           email,
           status,
           role
