@@ -3,11 +3,11 @@ const config = require('../../config');
 
 function createAccessToken(user) {
     const tokenExpirationDate = new Date();
-    tokenExpirationDate.setHours(tokenExpirationDate.getHours + 3);
+    tokenExpirationDate.setHours(tokenExpirationDate.getHours() + 3);
 
     const payload = {
         token_type : "access",
-        user_id: user._id,
+        user_id: user.id,
         iat: Date.now(),
         exp: tokenExpirationDate.getTime()
     };
@@ -21,7 +21,7 @@ function refreshToken(user) {
 
     const payload = {
         token_type : "access",
-        user_id: user._id,
+        user_id: user.id,
         iat: Date.now(),
         exp: tokenExpirationDate.getTime()
     };
