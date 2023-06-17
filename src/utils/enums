@@ -4,10 +4,12 @@ const userStatus = {
     blocked: 3,
     deleted: 4
 } 
+
 const role = {
     admin: 1,
     client: 2
 }
+
 const logsType = {
     database: 1,
     service: 2,
