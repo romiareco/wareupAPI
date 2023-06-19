@@ -16,22 +16,26 @@ app.use(
   })
 );
 */
-
+const cors = require("cors")
 const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const userRouter = require("./src/routes/user.route");
-const sequelize = require("./src/database").sequelize;
+const authRouter = require("./src/routes/auth.route");
+const {API_VERSION} = require("./constants");
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan("dev"));
+app.use(cors())
 
 const PORT = process.env.PORT || 3001;
 
-app.use("/api/v1", userRouter);
+app.use(`/api/${API_VERSION}`, authRouter);
+app.use(`/api/${API_VERSION}`, userRouter);
+
 app.get("*", (req, res) => {
   res.status(404).json({ message: "Welcome to the begining of nothingness" });
 });
@@ -43,9 +47,6 @@ app.use((err, req, res, next) => {
   res.status(statusCode).json({ message: err.message });
   return;
 });
-
-
-
 
 app.get("/", (req, res) => {
   res.json({ message: "ok" });
