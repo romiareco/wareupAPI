@@ -42,6 +42,20 @@ class UserController {
         data: users
       });
     }
+
+    async getMe(req, res) {
+      const { id } = req.user;
+    
+      const user = await this.userService.getUser(id);
+    
+      if (!user) {
+        res.status(400).send({ msg: "No se ha encontrado usuario" });
+      } else {
+        res.status(201).send(user);
+      }
+    }
+    
 }  
+
 module.exports = UserController;
   
