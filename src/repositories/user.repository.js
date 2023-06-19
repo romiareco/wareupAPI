@@ -36,7 +36,9 @@ class UserRepository {
 
   async getUser(id) {
     try {
-      return this.user.findOne({ id });
+      return this.user.findOne({
+        where: {id: id}
+      });
     }
     catch (error) {
       this.log.create('Error in user repository - get: '+error, enums.logsType.database);

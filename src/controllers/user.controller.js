@@ -44,14 +44,14 @@ class UserController {
     }
 
     async getMe(req, res) {
-      const { id } = req.params;
+      const { id } = req.user;
     
       const user = await this.userService.getUser(id);
     
       if (!user) {
         res.status(400).send({ msg: "No se ha encontrado usuario" });
       } else {
-        res.status(201).send(response);
+        res.status(201).send(user);
       }
     }
     
