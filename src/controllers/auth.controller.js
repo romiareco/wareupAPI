@@ -40,9 +40,9 @@ class AuthController {
         if(!token) {
             res.status(400).send({msg: "Token requerido"});
         } else {
-            const { user_id } = jwt.decoded(token);
+            const { id } = jwt.decoded(token);
         
-            const userFound = await this.userService.getUser(user_id);
+            const userFound = await this.userService.getUser(id);
     
             if (userFound) {
                 res.status(200).send({
