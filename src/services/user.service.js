@@ -12,13 +12,20 @@ class UserService {
     let message = 'Error creating a user'; 
     
     try{ 
+
+        const user = await this.userRepository.getUserByEmail(email);
+        if(user != null){
+          message = 'Email already in use'; 
+          return {message, hasError};
+        }
+         
         let userWasCreated = await this.userRepository.create(name, last_name, password, email);
         if(userWasCreated){
           message = 'User created successfully';
           hasError = false;
           this.mailService.sendEmailUserCreated(email);    
-        }      
-
+        }            
+        
         return {message, hasError};
     }
     catch (error) {
