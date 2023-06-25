@@ -7,7 +7,7 @@ class UserRepository {
     this.log = logRepository;
 
     this.user = UserModel;
-    this.user.sync({ force: config.db.recreate,  alter: config.db.alter });
+    //this.user.sync({ force: config.db.recreate,  alter: config.db.alter });
   }
 
   async create(name, last_name, password, email) {

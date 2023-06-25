@@ -27,8 +27,19 @@ describe("UserController", function() {
       expect(json.args[0][0].message).to.equal("Invalid Params");
     });
 
-    it("should not register a user when name and email params are not provided", async function() {
-      const req = { body: {} };
+    it("should not register a user when password param is not provided", async function() {
+      const req = { body: { name:'Juan', email: 'Juan@email.com' } };
+
+      await new UserController().register(req, res);
+
+      expect(status.calledOnce).to.be.true;
+      expect(status.args[0][0]).to.equal(400);
+      expect(json.calledOnce).to.be.true;
+      expect(json.args[0][0].message).to.equal("Invalid Params");
+    });
+
+    it("should not register a user when lastname param is not provided", async function() {
+      const req = { body: { name:'Juan', email: 'Juan@email.com', passowrd:'Pass123' } };
 
       await new UserController().register(req, res);
 
@@ -49,7 +60,19 @@ describe("UserController", function() {
       expect(json.args[0][0].message).to.equal("Invalid Params");
     });
 
-    it("should register a user when email and name params are provided", async function() {
+    it("should not register a user when params are not provided", async function() {
+      const req = { body: {} };
+
+      await new UserController().register(req, res);
+
+      expect(status.calledOnce).to.be.true;
+      expect(status.args[0][0]).to.equal(400);
+      expect(json.calledOnce).to.be.true;
+      expect(json.args[0][0].message).to.equal("Invalid Params");
+    });
+
+   
+    it("should register a user when email, password, lastname and name params are provided", async function() {
       const req = {
         body: { name: 'Juan', last_name: 'Perez', password: 'Pass123', email: 'Juan@email.com' }
       };

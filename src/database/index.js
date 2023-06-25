@@ -21,6 +21,8 @@ sequelize.authenticate().then(() => {
     console.error('Unable to connect to the database: ', error);
 });
 
+sequelize.sync({ force: config.db.recreate,  alter: config.db.alter });
+
 const models = {
   UserModel: UserModel.init(sequelize, Sequelize),
   LogModel: LogModel.init(sequelize, Sequelize)
