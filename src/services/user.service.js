@@ -42,18 +42,19 @@ class UserService {
 
     if(email == null){
       message = 'Email required';
+      return {message, hasError};
     }
-    else{
-      const user = await this.userRepository.getUserByEmail(email);
-      if(user == null){
-        message = 'Invalid email';
-      }
-      else{    
-        this.mailService.sendEmailPasswordRecovery(user);  
-        message = 'Password sent succesfully';
-        hasError= false;
-      }   
+  
+    const user = await this.userRepository.getUserByEmail(email);
+    if(user == null){
+      message = 'Invalid email';
+      return {message, hasError};
     }
+      
+    this.mailService.sendEmailPasswordRecovery(user);  
+    message = 'Password sent successfully';
+    hasError = false;
+         
     return {message, hasError};
   }
 
