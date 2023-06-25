@@ -4,7 +4,7 @@ const config = require('../../config');
 class LogRepository {
   constructor() {
     this.log = LogModel;
-    this.log.sync({ force: config.db.recreate,  alter: config.db.alter });
+    //this.log.sync({ force: config.db.recreate,  alter: config.db.alter });
   }
 
   async create(description, type) {
