@@ -20,7 +20,7 @@ class MailService {
 
             sgMail.send(msg)
             .then(() => {
-                console.log('Email sent')
+                
             })
             .catch((error) => {
                 this.log.create('Error in sendEmailUserCreated: '+ error, enums.logsType.service); 
@@ -51,7 +51,6 @@ class MailService {
             sgMail
             .send(msg)
             .then(() => {
-                console.log('Email sent')
             })
             .catch((error) => {
                 this.log.create('Error in sendEmailPasswordRecovery: '+error, enums.logsType.service);
