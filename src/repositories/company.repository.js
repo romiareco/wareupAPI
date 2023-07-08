@@ -8,7 +8,7 @@ class CompanyRepository {
     this.company = CompanyModel;
   }
    
-  async create(userId, RUT, name, businessName, email, phone, contactName, status) {
+  async create(userId, RUT, name, businessName, email, phone, contactName, contactPhone, contactEmail, status) {
     try {
         return this.company.create({
           userId,
@@ -18,6 +18,8 @@ class CompanyRepository {
           email,
           phone,
           contactName,
+          contactPhone,
+          contactEmail,
           status
         });
     }

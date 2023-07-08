@@ -12,10 +12,11 @@ class DepositController {
   
       //validate type enum
        
-      if (!title || typeof title !== "string" || (!description || typeof description !== "string") 
-        || (!totalM3 || typeof totalM3 !== "string") || (!companyId || typeof companyId !== "number")
-        || (!addressId || typeof addressId !== "number") || (!minimumBusinessVolume || typeof minimumBusinessVolume !== "number")
-        || (!minimumBusinessPeriod || typeof minimumBusinessPeriod !== "number")) {
+      if (!title || typeof title !== "string" || (typeof description !== "string") 
+        || (typeof totalM3 !== "string") || (!companyId || typeof companyId !== "number")
+        || (typeof addressId !== "number") || (typeof minimumBusinessVolume !== "decimal")
+        || (typeof expectedPrice !== "decimal")
+        || (typeof minimumBusinessPeriod !== "number")) {
         return res.status(400).json({ message: "Invalid Params" });
       }
       const result = await this.depositService.create(title, description, totalM3, comment, minimumBusinessPeriod, minimumBusinessVolume, expectedPrice, companyId, addressId);

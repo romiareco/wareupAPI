@@ -16,7 +16,9 @@ class CompanyController {
         || (!userId || typeof userId !== "number")) {
         return res.status(400).json({ message: "Invalid Params" });
       }
-      const result = await this.companyService.create(userId, RUT, name, businessName, email, phone, contactName, enums.companyStatus.pending);
+      const result = await this.companyService.create(userId, RUT, name, businessName, email, phone, contactName, 
+        contactPhone, contactEmail, enums.companyStatus.pending);
+        
       return res.status(201).json(result);
     }
 

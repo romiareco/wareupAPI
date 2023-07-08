@@ -43,6 +43,14 @@ class CompanyModel extends Model {
           type: DataTypes.STRING,
           allowNull: false
         },
+        contactPhone: {
+          type: DataTypes.STRING,
+          allowNull: false
+        },
+        contactEmail: {
+          type: DataTypes.STRING,
+          allowNull: false
+        },
         status: {
           type: DataTypes.INTEGER,
           allowNull: false

@@ -7,7 +7,7 @@ class CompanyService {
     this.userRepository = userRepository;
   }
 
-  async create(userId, RUT, name, businessName, email, phone, contactName, status) {
+  async create(userId, RUT, name, businessName, email, phone, contactName, contactPhone, contactEmail, status) {
     let hasError = true;
     let message = 'Error creating company'; 
     let resultCode = enums.resultCodes.genericError;
@@ -21,7 +21,7 @@ class CompanyService {
           return {message, hasError, resultCode};
         } 
 
-        let company = await this.companyRepository.create(userId, RUT, name, businessName, email, phone, contactName, status);
+        let company = await this.companyRepository.create(userId, RUT, name, businessName, email, phone, contactName, contactPhone, contactEmail, status);
         if(company){
           message = 'Company created successfully';
           hasError = false;

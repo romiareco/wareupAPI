@@ -16,27 +16,27 @@ class DepositModel extends Model {
         },
         description: {
           type: DataTypes.STRING,
-          allowNull: false
+          allowNull: true
         },
         totalM3: {
           type: DataTypes.INTEGER,
-          allowNull: false
+          allowNull: true
         },
         comment: {
           type: DataTypes.STRING,
-          allowNull: false
+          allowNull: true
         },
         minimumBusinessPeriod: {
           type: DataTypes.INTEGER,
-          allowNull: false
+          allowNull: true
         },
         minimumBusinessVolume: {
           type: DataTypes.DECIMAL,
-          allowNull: false
+          allowNull: true
         },
         expectedPrice: {
           type: DataTypes.DECIMAL,
-          allowNull: false
+          allowNull: true
         },
         status: {
           type: DataTypes.INTEGER,
@@ -52,7 +52,7 @@ class DepositModel extends Model {
         },
         addressId: {
           type: DataTypes.INTEGER,
-          allowNull: false,
+          allowNull: true,
           references: {
             model: 'addresses',
             key: 'id'

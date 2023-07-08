@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 const Model = Sequelize.Model;
-class AddressModel extends Model {
+class ServiceModel extends Model {
   static init(sequelize, DataTypes) {
     return super.init(
       { 
@@ -9,34 +9,30 @@ class AddressModel extends Model {
           autoIncrement: true,
           primaryKey: true,
           type: DataTypes.INTEGER
-        },  
-        city: {
+        },
+        title: {
           type: DataTypes.STRING,
           allowNull: false
         },
-        street: {
-          type: DataTypes.STRING,
-          allowNull: false
-        },
-        postalCode: {
-          type: DataTypes.STRING,
-          allowNull: false
-        },
-        phone: {
+        description: {
           type: DataTypes.STRING,
           allowNull: false
         }, 
-        type: {
+        status: {
           type: DataTypes.INTEGER,
           allowNull: false
-        }
+        },  
       },
       {
         sequelize,
-        modelName: "address"
+        modelName: "service"
       }
     );
   }
+
+  static loadInitialData(sequelize, DataTypes) {
+    super.create({name: 'Neuquen',order_: 0});
+  }
 }
 
-module.exports = AddressModel;
+module.exports = ServiceModel;
