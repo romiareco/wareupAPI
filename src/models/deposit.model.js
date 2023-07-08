@@ -38,6 +38,22 @@ class DepositModel extends Model {
           type: DataTypes.DECIMAL,
           allowNull: true
         },
+        department: {
+          type: DataTypes.STRING,
+          allowNull: true
+        },
+        city: {
+          type: DataTypes.STRING,
+          allowNull: true
+        },
+        street: {
+          type: DataTypes.STRING,
+          allowNull: true
+        },
+        postalCode: {
+          type: DataTypes.STRING,
+          allowNull: true
+        }, 
         status: {
           type: DataTypes.INTEGER,
           allowNull: false
@@ -50,14 +66,6 @@ class DepositModel extends Model {
             key: 'id'
           }
         },
-        addressId: {
-          type: DataTypes.INTEGER,
-          allowNull: true,
-          references: {
-            model: 'addresses',
-            key: 'id'
-          }
-        }
       },
       {
         sequelize,

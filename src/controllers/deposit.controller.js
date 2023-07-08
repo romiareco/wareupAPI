@@ -41,6 +41,11 @@ class DepositController {
 
       const result = await this.depositService.getDeposit(id);
       return res.json(result);
+    } 
+    
+    async getAll(req, res, next) { 
+      const result = await this.depositService.getDeposits();
+      return res.json(result);
     }  
 }  
 

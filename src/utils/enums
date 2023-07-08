@@ -17,24 +17,17 @@ const logsType = {
     routes: 3
 }
 
-const addressType = {
-    billingAddress: 1,
-    companyAddress: 2,
-    depositAddress: 3
-}
-
 const companyStatus = {
-    active: 1,
-    paused: 2,
-    deleted: 3,
-    pending: 4 
+    ACTIVE: 1, 
+    DELETED: 2,
+    PENDING: 3 
 }
  
 const depositStatus = {
-    active: 1,
-    pending: 2,
-    paused: 3,
-    deleted: 4 
+    ACTIVE: 1,
+    DELETED: 2,
+    PENDING: 3,
+    PAUSED: 4
 }
 
 const resultCodes = {

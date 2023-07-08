@@ -2,7 +2,7 @@ const Sequelize = require("sequelize");
 const Model = Sequelize.Model;
 class ServiceGroupModel extends Model {
   static init(sequelize, DataTypes) {
-    return super.init(
+     let model = super.init(
       { 
         id: {
           allowNull: false,
@@ -10,12 +10,20 @@ class ServiceGroupModel extends Model {
           primaryKey: true,
           type: DataTypes.INTEGER
         },
+        code:{
+          type: DataTypes.STRING,
+          allowNull: false
+        },
         title: {
           type: DataTypes.STRING,
           allowNull: false
         }, 
         order: {
           type: DataTypes.INTEGER,
+          allowNull: true
+        },  
+        showTitle: {
+          type: DataTypes.BOOLEAN,
           allowNull: false
         }, 
         status: {
@@ -25,14 +33,23 @@ class ServiceGroupModel extends Model {
       },
       {
         sequelize,
-        modelName: "ServiceGroup"
+        modelName: "serviceGroup"
       }
-    );
+    ); 
+  
+    return model;
   }
 
-  static loadInitialData(sequelize, DataTypes) {
-    super.create({name: 'Neuquen',order_: 0});
+  static loadInitialData() {
+    super.create({title: 'Zona', code: 'ZONA', order: 1, showTitle:true, status: 1}); 
+    super.create({title: 'Piso', code: 'PISO', order: 2, showTitle:true, status: 1});
+    super.create({title: 'Varios', code: 'VARIOS', order: 3, showTitle:true, status: 1});
+    super.create({title: 'Seguros', code: 'SEGUROS', order: 4, showTitle:true, status: 1});
+    super.create({title: 'Certificaciones', code: 'CERT', order: 5, showTitle:true, status: 1});
+    super.create({title: 'Habilitaciones', code: 'HAB', order: 6, showTitle:true, status: 1});
   }
 }
 
 module.exports = ServiceGroupModel;
+
+

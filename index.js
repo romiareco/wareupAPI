@@ -6,9 +6,10 @@ const morgan = require("morgan");
 
 const companyRouter = require("./src/routes/company.route");
 const userRouter = require("./src/routes/user.route");
-const addressRouter = require("./src/routes/address.route");
 const authRouter = require("./src/routes/auth.route");
 const depositRouter = require("./src/routes/deposit.route");
+const serviceGroupRouter = require("./src/routes/serviceGroup.route"); 
+
 
 const {API_VERSION} = require("./constants");
 
@@ -23,9 +24,9 @@ const PORT = process.env.PORT || 3001;
 
 app.use(`/api/${API_VERSION}`, authRouter);
 app.use(`/api/${API_VERSION}`, userRouter);
-app.use(`/api/${API_VERSION}`, addressRouter);
 app.use(`/api/${API_VERSION}`, companyRouter);
 app.use(`/api/${API_VERSION}`, depositRouter);
+app.use(`/api/${API_VERSION}`, serviceGroupRouter); 
 
 app.get("*", (req, res) => {
   res.status(404).json({ message: "Welcome to the begining of nothingness" });

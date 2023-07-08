@@ -51,6 +51,22 @@ class CompanyModel extends Model {
           type: DataTypes.STRING,
           allowNull: false
         },
+        department: {
+          type: DataTypes.STRING,
+          allowNull: true
+        },
+        city: {
+          type: DataTypes.STRING,
+          allowNull: true
+        },
+        street: {
+          type: DataTypes.STRING,
+          allowNull: true
+        },
+        postalCode: {
+          type: DataTypes.STRING,
+          allowNull: true
+        }, 
         status: {
           type: DataTypes.INTEGER,
           allowNull: false

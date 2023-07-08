@@ -8,20 +8,10 @@ class CompanyRepository {
     this.company = CompanyModel;
   }
    
-  async create(userId, RUT, name, businessName, email, phone, contactName, contactPhone, contactEmail, status) {
-    try {
-        return this.company.create({
-          userId,
-          RUT,
-          name,
-          businessName,
-          email,
-          phone,
-          contactName,
-          contactPhone,
-          contactEmail,
-          status
-        });
+  async create(company) {
+    
+      try {
+        return this.company.create(company);
     }
     catch (error) {
       this.log.create('Error in company repository - create: '+error, enums.logsType.database);
@@ -42,9 +32,35 @@ class CompanyRepository {
 
   async getCompaniesByUser(userId) {
     try {
-      var companies = await this.company.findOne({
+      var companies = await this.company.findAll({
         where: {userId: userId}
       });
+     return companies;
+    }
+    catch (error) {
+      this.log.create('Error in company repository - getAddressesByUser: '+error, enums.logsType.database);
+    }
+
+    return null;
+  } 
+  
+  async getCompanyByRUT(RUT) {
+    try {
+      var companies = await this.company.findOne({
+        where: {RUT: RUT}
+      });
+     return companies;
+    }
+    catch (error) {
+      this.log.create('Error in company repository - getCompanyByRUT: '+error, enums.logsType.database);
+    }
+
+    return null;
+  }
+
+  async getCompanies() {
+    try {
+      var companies = await this.company.findAll();
      return companies;
     }
     catch (error) {

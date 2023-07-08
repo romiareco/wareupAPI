@@ -7,23 +7,33 @@ class CompanyService {
     this.userRepository = userRepository;
   }
 
-  async create(userId, RUT, name, businessName, email, phone, contactName, contactPhone, contactEmail, status) {
+  async create(companyToAdd) {
     let hasError = true;
-    let message = 'Error creating company'; 
+    let message = 'Error creando la compania'; 
     let resultCode = enums.resultCodes.genericError;
     let company = null;
-    
     try{ 
+       const {userId, RUT } = companyToAdd;  
+
         const user = await this.userRepository.getUser(userId);
         if(user == null){
-          message = 'Invalid user'; 
+          message = 'Usuario invalido'; 
           resultCode = enums.resultCodes.invalidUser;
           return {message, hasError, resultCode};
         } 
 
-        let company = await this.companyRepository.create(userId, RUT, name, businessName, email, phone, contactName, contactPhone, contactEmail, status);
+        const companyByRut = await this.companyRepository.getCompanyByRUT(RUT);
+        if(companyByRut != null){
+          message = 'El RUT ya se encuentra registrado'; 
+          resultCode = enums.resultCodes.genericError;
+          return {message, hasError, resultCode};
+        }  
+
+        companyToAdd.status = enums.companyStatus.PENDING;
+
+        let company = await this.companyRepository.create(companyToAdd);
         if(company){
-          message = 'Company created successfully';
+          message = 'compania creada correctamente.';
           hasError = false;
           resultCode = enums.resultCodes.OK;   
         }            
@@ -56,6 +66,26 @@ class CompanyService {
       } 
   
       return { message, hasError, resultCode, companies };
+  } 
+
+  async getCompanies(){ 
+    let hasError = false;
+    let message = null; 
+    let resultCode = enums.resultCodes.OK;
+    let companies = null;
+
+    try{ 
+      companies =  await this.companyRepository.getCompanies();
+    }
+    catch (error) {
+      resultCode = enums.resultCodes.genericError;
+      hasError = true;
+      message = 'Ha ocurrido un error obteniendo las companias';
+
+      this.log.create('Error in companyService - getCompanies: '+ error, enums.logsType.service);
+    } 
+
+    return { message, hasError, resultCode, companies };
   } 
 
   async getCompany(id){ 

@@ -16,9 +16,8 @@ class CompanyController {
         || (!userId || typeof userId !== "number")) {
         return res.status(400).json({ message: "Invalid Params" });
       }
-      const result = await this.companyService.create(userId, RUT, name, businessName, email, phone, contactName, 
-        contactPhone, contactEmail, enums.companyStatus.pending);
-        
+      const result = await this.companyService.create(req.body);
+
       return res.status(201).json(result);
     }
 
@@ -41,6 +40,11 @@ class CompanyController {
       }
 
       const result = await this.companyService.getCompany(id);
+      return res.json(result);
+    }  
+
+    async getAll(req, res, next) { 
+      const result = await this.companyService.getCompanies();
       return res.json(result);
     }  
 }  

@@ -7,22 +7,24 @@ class DepositService {
     this.companyRepository = companyRepository;
   }
 
-  async create(title, description, totalM3, comment, minimumBusinessPeriod, minimumBusinessVolume, expectedPrice, companyId, addressId) {
+  async create(depositToAdd) {
     let hasError = false;
     let message = null; 
     let resultCode = enums.resultCodes.OK;
     let deposit = null;
     
     try{ 
+      
+        const {companyId } = depositToAdd;  
         const company = await this.companyRepository.getCompany(companyId);
         if(company == null){
-          message = 'Invalid company'; 
+          message = 'Compania no valida'; 
           resultCode = enums.resultCodes.invalidUser;
           hasError = true;
         }
         else{
-          deposit = await this.depositRepository.create(title, description, totalM3, comment, minimumBusinessPeriod, minimumBusinessVolume, 
-            expectedPrice, enums.depositStatus.pending, companyId, addressId);   
+          depositToAdd.status = enums.depositStatus.PENDING;
+          deposit = await this.depositRepository.create(depositToAdd);   
         }      
     }
     catch (error) {
@@ -50,6 +52,26 @@ class DepositService {
       message = 'Ha ocurrido un error obteniendo los depositos de la compania';
 
       this.log.create('Error in depositService - getDepositsByCompany: '+ error, enums.logsType.service);
+    } 
+
+    return { message, hasError, resultCode, deposits };
+  } 
+
+  async getDeposits(){ 
+    let hasError = false;
+    let message = null; 
+    let resultCode = enums.resultCodes.OK;
+    let deposits = null;
+
+    try{ 
+      deposits = await this.depositRepository.getDeposits(); 
+    }
+    catch (error) {
+      resultCode = enums.resultCodes.genericError;
+      hasError = true;
+      message = 'Ha ocurrido un error obteniendo los depositos de la compania';
+
+      this.log.create('Error in depositService - getDeposits: '+ error, enums.logsType.service);
     } 
 
     return { message, hasError, resultCode, deposits };
