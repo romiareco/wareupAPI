@@ -11,7 +11,10 @@ class ServiceGroupRepository {
   async getServiceGroup(id) {
     try {
       return this.serviceGroup.findOne({
-        where: {id: id}
+        where: {id: id},
+        include: [{
+          model: ServiceModel
+        }]
       });
     }
     catch (error) {
@@ -28,7 +31,7 @@ class ServiceGroupRepository {
       }); 
     }
     catch (error) {
-      this.log.create('Error in company repository - getServiceGroups: '+error, enums.logsType.database);
+      this.log.create('Error in serviceGroup repository - getServiceGroups: '+error, enums.logsType.database);
     }
 
     return null;

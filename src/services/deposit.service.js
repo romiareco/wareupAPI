@@ -19,7 +19,7 @@ class DepositService {
         const company = await this.companyRepository.getCompany(companyId);
         if(company == null){
           message = 'Compania no valida'; 
-          resultCode = enums.resultCodes.invalidUser;
+          resultCode = enums.resultCodes.invalidData;
           hasError = true;
         }
         else{

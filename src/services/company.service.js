@@ -18,7 +18,7 @@ class CompanyService {
         const user = await this.userRepository.getUser(userId);
         if(user == null){
           message = 'Usuario invalido'; 
-          resultCode = enums.resultCodes.invalidUser;
+          resultCode = enums.resultCodes.invalidData;
           return {message, hasError, resultCode};
         } 
 

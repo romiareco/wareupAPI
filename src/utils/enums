@@ -1,14 +1,14 @@
 //TODO: analizar si deberiamos poner en mayusculas el nombre de los ENUMS
 const userStatus = {
-    pending: 1,
-    active: 2,
-    blocked: 3,
-    deleted: 4
-} 
+    ACTIVE: 1,
+    DELETED: 2,
+    PENDING: 3,
+    BLOCKED: 4
+}
 
 const role = {
-    admin: 1,
-    client: 2
+    ADMIN: 1,
+    CLIENT: 2
 }
 
 const logsType = {
@@ -33,9 +33,8 @@ const depositStatus = {
 const resultCodes = {
     OK: 1,
     genericError: 2,
-    invalidUser: 3,
-    invalidEmail: 4,
-    requiredEmail: 5
+    invalidData: 3, 
+    requiredData: 4, 
 }
 
 module.exports = {

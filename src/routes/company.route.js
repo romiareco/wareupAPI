@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const CompanyController = require("../controllers/company.controller");
-const AuthController = require("../controllers/auth.controller");
+const CompanyController = require("../controllers/company.controller"); 
 const { companyService } = require("./dependency");
 const mdAuth = require("../middleware/authenticated");
 

@@ -7,29 +7,32 @@ class UserService {
     this.mailService = mailService;
   }
 
-  async create(name, last_name, password, email) {
-    let hasError = true;
+  async create(userToAdd) {
+    let hasError = false;
     let message = null; 
-    let resultCode = enums.resultCodes.genericError;
+    let resultCode = enums.resultCodes.OK;
     let user = null;
 
     try{ 
+        const {email } = userToAdd;  
 
         const userByEmail = await this.userRepository.getUserByEmail(email);
         if(userByEmail != null){
-          message = 'El email ya se encuentra en uso.'; 
-          return {message, hasError, resultCode, user};
+          message = 'El email ya se encuentra en uso.';
+          resultCode = enums.resultCodes.invalidData;
+          hasError = true;
+          return {message, hasError, resultCode, userToAdd};
         }
          
-        user = await this.userRepository.create(name, last_name, password, email);
-        if(user){
-          message = 'El usuario se creo correctamente.';
-          hasError = false;
+        user = await this.userRepository.create(userToAdd);
+        if(user){  
           this.mailService.sendEmailUserCreated(email);    
         }            
     }
     catch (error) {
       message = 'Error al crear el usuario.';
+      resultCode = enums.resultCodes.genericError;
+      hasError = true;
       this.log.create('Error in userService - create: '+ error, enums.logsType.service);
     }
  
@@ -45,7 +48,7 @@ class UserService {
     if(email == null){
       message = 'El email es requerido.';
       hasError = true;
-      resultCode = enums.resultCodes.requiredEmail;
+      resultCode = enums.resultCodes.requiredData;
 
       return {message, hasError, resultCode};
     }
@@ -54,7 +57,7 @@ class UserService {
     if(user == null){
       message = 'El email no es valido.';
       hasError = true;
-      resultCode = enums.resultCodes.invaylidEmail; 
+      resultCode = enums.resultCodes.invalidData; 
     }
     else{
       this.mailService.sendEmailPasswordRecovery(user);  
@@ -66,14 +69,14 @@ class UserService {
     return {message, hasError, resultCode};
   }
 
-  getUserByEmail(email) {
+  async getUserByEmail(email) {
     let hasError = false;
     let message = null; 
     let resultCode = enums.resultCodes.OK;
     let user = null;
 
     try{
-      user = this.userRepository.getUserByEmail(email);
+      user = await this.userRepository.getUserByEmail(email);
     }
     catch (error) {
       resultCode = enums.resultCodes.genericError;

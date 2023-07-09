@@ -38,8 +38,7 @@ class ServiceGroupService {
     catch (error) {
       resultCode = enums.resultCodes.genericError;
       hasError = true;
-      message = 'Ha ocurrido un error obteniendo los service groups';
-
+      message = 'Ha ocurrido un error obteniendo los service groups ';
       this.log.create('Error in serviceGroupRepository - getServiceGroup: '+ error, enums.logsType.service);
     } 
 

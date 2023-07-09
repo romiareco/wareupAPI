@@ -11,7 +11,7 @@ class UserController {
         || (!last_name || typeof last_name !== "string") || (!password || typeof password !== "string")) {
         return res.status(400).json({ message: "Invalid Params" });
       }
-      const result = await this.userService.create(name, last_name, password, email);
+      const result = await this.userService.create(req.body);
       return res.status(201).json(result);
     }
 
@@ -44,9 +44,10 @@ class UserController {
     
       const result = await this.userService.getUser(id); 
       if (!result) {
-        res.status(400).send({ msg: "No se ha encontrado usuario" });
-      } else {
-        res.status(201).send(result);
+        return res.status(400).send(result);
+      } else { 
+        const result = await this.depositService.create(title, description, totalM3, comment, minimumBusinessPeriod, minimumBusinessVolume, expectedPrice, companyId, addressId);
+        return res.status(201).json(result); 
       }
     }
     

@@ -9,7 +9,6 @@ class CompanyRepository {
   }
    
   async create(company) {
-    
       try {
         return this.company.create(company);
     }
@@ -26,7 +25,7 @@ class CompanyRepository {
       });
     }
     catch (error) {
-      this.log.create('Error in company repository - get: '+error, enums.logsType.database);
+      this.log.create('Error in company repository - getCompany: '+error, enums.logsType.database);
     }
   }
 
@@ -38,7 +37,7 @@ class CompanyRepository {
      return companies;
     }
     catch (error) {
-      this.log.create('Error in company repository - getAddressesByUser: '+error, enums.logsType.database);
+      this.log.create('Error in company repository - getCompaniesByUser: '+error, enums.logsType.database);
     }
 
     return null;
@@ -64,7 +63,7 @@ class CompanyRepository {
      return companies;
     }
     catch (error) {
-      this.log.create('Error in company repository - getAddressesByUser: '+error, enums.logsType.database);
+      this.log.create('Error in company repository - getCompanies: '+error, enums.logsType.database);
     }
 
     return null;

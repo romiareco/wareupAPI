@@ -5,7 +5,7 @@ const config = {
       user: "wareupadmin",
       password: "Pass123*",
       database: "wareup",
-      recreate: true, //indicates if the tables are recreated in database
+      recreate: false, //indicates if the tables are recreated in database
       alter: true //indicates if the tables should be updated in database
     },
     listPerPage: 10,

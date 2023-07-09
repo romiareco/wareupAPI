@@ -27,11 +27,13 @@ class UserModel extends Model {
           allowNull: false,  
           unique: 'userEmailIndex'
         },
+        role: {
+          type: DataTypes.STRING,
+          allowNull: false        },
         status: {
           type: DataTypes.INTEGER,
           allowNull: false
-        }
-        //Falta agregar el rol?
+        } 
       },
       {
         sequelize,
