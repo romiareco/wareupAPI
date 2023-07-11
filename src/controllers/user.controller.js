@@ -11,8 +11,8 @@ class UserController {
         || (!last_name || typeof last_name !== "string") || (!password || typeof password !== "string")) {
         return res.status(400).json({ message: "Invalid Params" });
       }
-      const user = await this.userService.create(name, last_name, password, email);
-      return res.status(201).json({data: user });
+      const result = await this.userService.create(req.body);
+      return res.status(201).json(result);
     }
 
     async recoverPassword(req, res, next) {
@@ -28,30 +28,26 @@ class UserController {
     async getUser(req, res) {
       const { id } = req.params;
   
-      const user = await this.userService.getUser(id);
-      return res.json({
-        data: user
-      });
+      const result = await this.userService.getUser(id);
+      return res.json(result);
     }
 
     async getUsers(req, res) {
       const { id } = req.params;
   
-      const users = await this.userService.getUsers();
-      return res.json({
-        data: users
-      });
+      const result = await this.userService.getUsers();
+      return res.json(result);
     }
 
     async getMe(req, res) {
       const { id } = req.user;
     
-      const user = await this.userService.getUser(id);
-    
-      if (!user) {
-        res.status(400).send({ msg: "No se ha encontrado usuario" });
-      } else {
-        res.status(201).send(user);
+      const result = await this.userService.getUser(id); 
+      if (!result) {
+        return res.status(400).send(result);
+      } else { 
+        const result = await this.depositService.create(title, description, totalM3, comment, minimumBusinessPeriod, minimumBusinessVolume, expectedPrice, companyId, addressId);
+        return res.status(201).json(result); 
       }
     }
     

@@ -4,32 +4,24 @@ const config = require('../../config');
 const bcrypt = require("bcryptjs")
 class UserRepository {
   constructor(logRepository) {
-    this.log = logRepository;
-
-    this.user = UserModel;
-    //this.user.sync({ force: config.db.recreate,  alter: config.db.alter });
+    this.log = logRepository; 
+    this.user = UserModel; 
   }
 
-  async create(name, last_name, pass, email) {
+  async create(user) {
     try {
-        const status = enums.userStatus.active;
-        const role = enums.role.client;
-
-        //Método para encriptar password
+       
+        user.status = enums.userStatus.ACTIVE;
+        user.role = enums.role.CLIENT;
+ 
         const salt = bcrypt.genSaltSync(10);
-        const password = bcrypt.hashSync(pass, salt);
-
-        return this.user.create({
-          name,
-          last_name,
-          password,
-          email,
-          status,
-          role
-        });
+        user.password = bcrypt.hashSync(user.password, salt);
+        user.email = user.email.toLowerCase()
+         
+        return this.user.create(user);
     }
     catch (error) {
-      this.log.create('Error in user repository - create: '+error, enums.logsType.database);
+      this.log.create('Error in user repository - create: '+ error, enums.logsType.database);
     }
     return null;
   }
@@ -47,10 +39,9 @@ class UserRepository {
 
   async getUserByEmail(email) {
     try {
-      var user = await this.user.findOne({
-        where: {email: email}
-      });
-     return user;
+      return await this.user.findOne({
+        where: {email: email.toLowerCase()}
+      }); 
     }
     catch (error) {
       this.log.create('Error in user repository - getUserByEmail: '+error, enums.logsType.database);

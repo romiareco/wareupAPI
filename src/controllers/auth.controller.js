@@ -1,56 +1,33 @@
-const jwt = require("../utils/jwt");
-const bcrypt = require("bcryptjs");
+
 
 class AuthController {
-    constructor(userService) {
-        this.userService = userService;
+    constructor(authService) {
+        this.authService = authService;
       }
 
       async login(req, res) {
         const{email, password} = req.body;
     
-        if(!email) res.status(400).send({msg: "El email es obligatorio"});
-        if(!password) res.status(400).send({msg: "La contraseña es obligatoria"});
-    
-        const emailLowerCase = email.toLowerCase();        
-
-        const userFound = await this.userService.getUserByEmail(emailLowerCase);
-
-        if (!userFound) {
-            res.status(404).send( {msg: "Email no existe"});
-        } else {
-            bcrypt.compare(password, userFound.password, (bcriptError, success) => {
-                if(bcriptError) {
-                    res.status(500).send({ msg: "Error del servidor"}); 
-                } else if(!success) {
-                    res.status(400).send({msg: "Contraseña incorrecta"});
-                } else {
-                    res.status(200).send({
-                        access: jwt.createAccessToken(userFound),
-                        refresh: jwt.refreshToken(userFound)
-                    });
-                }
-            });
+        if(!email){
+            return res.status(400).send({ message: "El email es obligatorio", hasError: true});
         }
+        if(!password){
+            return res.status(400).send({ message: "La contraseña es obligatoria", hasError: true});
+        } 
+    
+        const result = await this.authService.login(email, password);
+
+        console.log('result : '+result);
+        return res.status(201).json(result); 
     }
 
     async refreshAccessToken(req, res) {
-        const { token } = req.body;
-
+        const { token } = req.body; 
         if(!token) {
-            res.status(400).send({msg: "Token requerido"});
+            return res.status(400).json({ message: "Invalid Params" });
         } else {
-            const { id } = jwt.decoded(token);
-        
-            const userFound = await this.userService.getUser(id);
-    
-            if (userFound) {
-                res.status(200).send({
-                    accessToken: jwt.createAccessToken(userFound)
-                })
-            } else {
-                res.status(500).send({msg: "Error del servidor al refrescar access token"});
-            }
+            const result = await this.authService.refreshAccessToken(token);
+            return res.status(201).json(result); 
         }
     }
 }

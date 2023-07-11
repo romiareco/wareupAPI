@@ -1,27 +1,16 @@
-
-/*
-const express = require("express");
-const cors = require("cors")
-
-const app = express();
-const path = require("path");
-app.use(express.static(path.join(__dirname, "..", "build")));
-app.use(express.static("public"));
-
-app.use(cors())
-app.use(express.json());
-app.use(
-  express.urlencoded({
-    extended: true,
-  })
-);
-*/
 const cors = require("cors")
 const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
+
+
+const companyRouter = require("./src/routes/company.route");
 const userRouter = require("./src/routes/user.route");
 const authRouter = require("./src/routes/auth.route");
+const depositRouter = require("./src/routes/deposit.route");
+const serviceGroupRouter = require("./src/routes/serviceGroup.route"); 
+
+
 const {API_VERSION} = require("./constants");
 
 const app = express();
@@ -35,6 +24,9 @@ const PORT = process.env.PORT || 3001;
 
 app.use(`/api/${API_VERSION}`, authRouter);
 app.use(`/api/${API_VERSION}`, userRouter);
+app.use(`/api/${API_VERSION}`, companyRouter);
+app.use(`/api/${API_VERSION}`, depositRouter);
+app.use(`/api/${API_VERSION}`, serviceGroupRouter); 
 
 app.get("*", (req, res) => {
   res.status(404).json({ message: "Welcome to the begining of nothingness" });

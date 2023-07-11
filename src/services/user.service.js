@@ -7,67 +7,126 @@ class UserService {
     this.mailService = mailService;
   }
 
-  async create(name, last_name, password, email) {
-    let hasError = true;
-    let message = 'Error creating a user'; 
-    
-    try{ 
+  async create(userToAdd) {
+    let hasError = false;
+    let message = null; 
+    let resultCode = enums.resultCodes.OK;
+    let user = null;
 
-        const user = await this.userRepository.getUserByEmail(email);
-        if(user != null){
-          message = 'Email already in use'; 
-          return {message, hasError};
+    try{ 
+        const {email } = userToAdd;  
+
+        const userByEmail = await this.userRepository.getUserByEmail(email);
+        if(userByEmail != null){
+          message = 'El email ya se encuentra en uso.';
+          resultCode = enums.resultCodes.invalidData;
+          hasError = true;
+          return {message, hasError, resultCode, userToAdd};
         }
          
-        let userWasCreated = await this.userRepository.create(name, last_name, password, email);
-        if(userWasCreated){
-          message = 'User created successfully';
-          hasError = false;
+        user = await this.userRepository.create(userToAdd);
+        if(user){  
           this.mailService.sendEmailUserCreated(email);    
         }            
-        
-        return {message, hasError};
     }
     catch (error) {
+      message = 'Error al crear el usuario.';
+      resultCode = enums.resultCodes.genericError;
+      hasError = true;
       this.log.create('Error in userService - create: '+ error, enums.logsType.service);
     }
-
-    return {message, hasError};
+ 
+    return {message, hasError, resultCode, user};
   }
 
   
   async recoverPassword(email){ 
-    let hasError = true;
-    let message = 'Error int password recovery'; 
+    let hasError = false;
+    let message = null; 
+    let resultCode = enums.resultCodes.OK;
 
     if(email == null){
-      message = 'Email required';
-      return {message, hasError};
+      message = 'El email es requerido.';
+      hasError = true;
+      resultCode = enums.resultCodes.requiredData;
+
+      return {message, hasError, resultCode};
     }
   
-    const user = await this.userRepository.getUserByEmail(email);
+    const user = await this.userRepository.getUserByEmail(email); 
     if(user == null){
-      message = 'Invalid email';
-      return {message, hasError};
+      message = 'El email no es valido.';
+      hasError = true;
+      resultCode = enums.resultCodes.invalidData; 
     }
-      
-    this.mailService.sendEmailPasswordRecovery(user);  
-    message = 'Password sent successfully';
-    hasError = false;
+    else{
+      this.mailService.sendEmailPasswordRecovery(user);  
+      message = 'Contrasena enviada correctamente.';
+      hasError = false;
+      resultCode = enums.resultCodes.OK;
+    } 
          
-    return {message, hasError};
+    return {message, hasError, resultCode};
   }
 
-  getUserByEmail(email) {
-    return this.userRepository.getUserByEmail(email);
+  async getUserByEmail(email) {
+    let hasError = false;
+    let message = null; 
+    let resultCode = enums.resultCodes.OK;
+    let user = null;
+
+    try{
+      user = await this.userRepository.getUserByEmail(email);
+    }
+    catch (error) {
+      resultCode = enums.resultCodes.genericError;
+      hasError = true;
+      message = 'Ha ocurrido un error obteniendo el usuario.';
+
+      this.log.create('Error in userService - getUserByEmail: '+ error, enums.logsType.service);
+    } 
+
+    return { message, hasError, resultCode, user };
   }
   
   getUser(id) {
-    return this.userRepository.getUser(id);
+    let hasError = false;
+    let message = null; 
+    let resultCode = enums.resultCodes.OK;
+    let user = null;
+
+    try{
+      user =  this.userRepository.getUser(id);
+    }
+    catch (error) {
+      resultCode = enums.resultCodes.genericError;
+      hasError = true;
+      message = 'Ha ocurrido un error obteniendo el usuario.';
+
+      this.log.create('Error in userService - getUser: '+ error, enums.logsType.service);
+    } 
+
+    return { message, hasError, resultCode, user };
   }
 
   getUsers() {
-    return this.userRepository.getUsers();
+    let hasError = false;
+    let message = null; 
+    let resultCode = enums.resultCodes.OK;
+    let users = null;
+
+    try{
+      users = this.userRepository.getUsers();
+    }
+    catch (error) {
+      resultCode = enums.resultCodes.genericError;
+      hasError = true;
+      message = 'Ha ocurrido un error obteniendo los usuarios.';
+
+      this.log.create('Error in userService - getUsers: '+ error, enums.logsType.service);
+    } 
+
+    return { message, hasError, resultCode, user };
   }
 }
 
