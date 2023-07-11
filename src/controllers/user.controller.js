@@ -32,21 +32,18 @@ class UserController {
       return res.json(result);
     }
 
-    async getUsers(req, res) {
-      const { id } = req.params;
-  
+    async getUsers(req, res) {  
       const result = await this.userService.getUsers();
       return res.json(result);
     }
 
     async getMe(req, res) {
       const { id } = req.user;
-    
-      const result = await this.userService.getUser(id); 
-      if (!result) {
+     
+      if (!id) {
         return res.status(400).send(result);
-      } else { 
-        const result = await this.depositService.create(title, description, totalM3, comment, minimumBusinessPeriod, minimumBusinessVolume, expectedPrice, companyId, addressId);
+      } else {  
+        const result = await this.userService.getUser(id); 
         return res.status(201).json(result); 
       }
     }
