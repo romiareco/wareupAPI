@@ -52,9 +52,7 @@ class UserRepository {
 
   async getUsers() {
     try {
-      return this.user.findAll({
-        where: {status: enums.userStatus.active}
-      });
+      return this.user.findAll();
     }
     catch (error) {
       this.log.create('Error in user repository - getUsers: '+error, enums.logsType.database);

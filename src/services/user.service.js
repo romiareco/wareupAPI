@@ -14,14 +14,14 @@ class UserService {
     let user = null;
 
     try{ 
-        const {email } = userToAdd;  
+        const { email } = userToAdd;  
 
         const userByEmail = await this.userRepository.getUserByEmail(email);
         if(userByEmail != null){
           message = 'El email ya se encuentra en uso.';
           resultCode = enums.resultCodes.invalidData;
           hasError = true;
-          return {message, hasError, resultCode, userToAdd};
+          return {message, hasError, resultCode, user};
         }
          
         user = await this.userRepository.create(userToAdd);
@@ -89,14 +89,14 @@ class UserService {
     return { message, hasError, resultCode, user };
   }
   
-  getUser(id) {
+  async getUser(id) {
     let hasError = false;
     let message = null; 
     let resultCode = enums.resultCodes.OK;
     let user = null;
 
     try{
-      user =  this.userRepository.getUser(id);
+      user = await this.userRepository.getUser(id);
     }
     catch (error) {
       resultCode = enums.resultCodes.genericError;
@@ -109,14 +109,14 @@ class UserService {
     return { message, hasError, resultCode, user };
   }
 
-  getUsers() {
+  async getUsers() {
     let hasError = false;
     let message = null; 
     let resultCode = enums.resultCodes.OK;
     let users = null;
 
     try{
-      users = this.userRepository.getUsers();
+      users = await this.userRepository.getUsers();
     }
     catch (error) {
       resultCode = enums.resultCodes.genericError;
@@ -126,7 +126,7 @@ class UserService {
       this.log.create('Error in userService - getUsers: '+ error, enums.logsType.service);
     } 
 
-    return { message, hasError, resultCode, user };
+    return { message, hasError, resultCode, users };
   }
 }
 
