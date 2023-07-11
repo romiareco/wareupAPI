@@ -40,7 +40,7 @@ class UserController {
     async getMe(req, res) {
       const { id } = req.user;
  
-      if (!id || typeof email !== "string") {
+      if (!id || typeof id !== "string") {
         return res.status(400).json({ message: "Invalid Params" });
       } else {  
         const result = await this.userService.getUser(id); 
