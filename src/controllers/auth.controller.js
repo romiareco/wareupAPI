@@ -9,10 +9,10 @@ class AuthController {
         const{email, password} = req.body;
     
         if(!email){
-            return res.status(400).send({ message: "El email es obligatorio", hasError: true});
+            return res.status(400).send({ message: "El email es obligatorio"});
         }
         if(!password){
-            return res.status(400).send({ message: "La contraseña es obligatoria", hasError: true});
+            return res.status(400).send({ message: "La contraseña es obligatoria"});
         } 
     
         const result = await this.authService.login(email, password);
