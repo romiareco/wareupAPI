@@ -77,7 +77,7 @@ async refreshAccessToken(token){
     }
   
     const { id } = jwt.decoded(token);  
-    const userFound = await this.userService.getUser(id); 
+    const userFound = await this.userRepository.getUser(id); 
     if (userFound == null) {
       message = 'El token no es valido.';
       hasError = true;
