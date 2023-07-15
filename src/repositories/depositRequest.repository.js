@@ -1,14 +1,14 @@
 const enums = require('../utils/enums');
-const { CompanyModel } = require("../database"); 
+const { DepositRequestModel } = require("../database"); 
 
-class CompanyRepository {
+class DepositRequestRepository {
   constructor(logRepository) {
     this.log = logRepository;
-    this.model = CompanyModel;
+    this.model = DepositRequestModel;
   }
    
   async create(request) {
-      try {
+    try { 
         return this.model.create(request);
     }
     catch (error) {
@@ -16,6 +16,16 @@ class CompanyRepository {
     }
     return null;
   }
+
+  async update(request) {
+    try { 
+        return this.model.update(request, { where: { id: request.id } });
+    }
+    catch (error) {
+      this.log.create('Error in update: '+error, enums.logsType.database);
+    }
+    return null;
+  } 
 
   async get(id) {
     try {
@@ -28,32 +38,17 @@ class CompanyRepository {
     }
   }
 
-  async getByUser(userId) {
+  async getByCompany(companyId) {
     try {
-      return await this.model.findAll({
-        where: {userId: userId}
-      }); 
+      return this.model.findOne({
+        where: {companyId: companyId}
+      });
     }
     catch (error) {
-      this.log.create('Error in getByUser: '+error, enums.logsType.database);
+      this.log.create('Error in getByCompany: '+error, enums.logsType.database);
     }
-
-    return null;
-  } 
-  
-  async getByRUT(RUT) {
-    try {
-      return await this.model.findOne({
-        where: {RUT: RUT}
-      }); 
-    }
-    catch (error) {
-      this.log.create('Error in getByRUT: '+error, enums.logsType.database);
-    }
-
-    return null;
   }
-
+ 
   async getAll() {
     try {
       return await this.model.findAll(); 
@@ -66,4 +61,4 @@ class CompanyRepository {
   } 
 }
 
-module.exports = CompanyRepository;
+module.exports = DepositRequestRepository;

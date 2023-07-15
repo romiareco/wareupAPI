@@ -74,7 +74,7 @@ describe("UserController", function() {
    
     it("should register a user when email, password, lastname and name params are provided", async function() {
       const req = {
-        body: { name: 'Juan', last_name: 'Perez', password: 'Pass123', email: 'Juan@email.com' }
+        body: { name: 'Juan', lastName: 'Perez', password: 'Pass123', email: 'Juan@email.com' }
       };
 
       const stubValue = {
@@ -82,7 +82,7 @@ describe("UserController", function() {
         name: 'Juan',
         email: 'Juan@email.com',
         password: 'Pass123',
-        last_name: 'Perez',
+        lastName: 'Perez',
         status: 2,
         role: 2
       };
@@ -98,7 +98,7 @@ describe("UserController", function() {
     });
   });
 
-  describe("getUser", function() {
+  describe("get", function() {
     let req;
     let res;
     let userService;
@@ -121,9 +121,9 @@ describe("UserController", function() {
         .once()
         .withExactArgs({ data: stubValue });
 
-      const stub = sinon.stub(userService, "getUser").returns(stubValue);
+      const stub = sinon.stub(userService, "get").returns(stubValue);
       userController = new UserController(userService);
-      const user = await userController.getUser(req, res);
+      const user = await userController.get(req, res);
       expect(stub.calledOnce).to.be.true;
       mock.verify();
     });

@@ -1,61 +1,67 @@
 const enums = require('../utils/enums');
-const { UserModel } = require("../database");
-const config = require('../../config');
-const bcrypt = require("bcryptjs")
+const { UserModel } = require("../database"); 
+
 class UserRepository {
   constructor(logRepository) {
     this.log = logRepository; 
-    this.user = UserModel; 
+    this.model = UserModel; 
   }
 
-  async create(user) {
+  async create(request) {
     try {
        
-        user.status = enums.userStatus.ACTIVE;
-        user.role = enums.role.CLIENT;
- 
-        const salt = bcrypt.genSaltSync(10);
-        user.password = bcrypt.hashSync(user.password, salt);
-        user.email = user.email.toLowerCase()
+      request.status = enums.userStatus.ACTIVE;
+      request.role = enums.role.CLIENT;
          
-        return this.user.create(user);
+      return this.model.create(request);
     }
     catch (error) {
-      this.log.create('Error in user repository - create: '+ error, enums.logsType.database);
+      this.log.create('Error in create: '+ error, enums.logsType.database);
     }
     return null;
   }
 
-  async getUser(id) {
+  async update(request) {
     try {
-      return this.user.findOne({
+        
+        return this.model.update(request);
+    }
+    catch (error) {
+      this.log.create('Error in update: '+ error, enums.logsType.database);
+    }
+    return null;
+  }
+
+  async get(id) {
+    try {
+      return this.model.findOne({
         where: {id: id}
       });
     }
     catch (error) {
-      this.log.create('Error in user repository - get: '+error, enums.logsType.database);
+      this.log.create('Error in get: '+error, enums.logsType.database);
     }
   }
 
-  async getUserByEmail(email) {
+  async getByEmail(email) {
     try {
-      return await this.user.findOne({
+      return await this.model.findOne({
         where: {email: email.toLowerCase()}
       }); 
     }
     catch (error) {
-      this.log.create('Error in user repository - getUserByEmail: '+error, enums.logsType.database);
+      this.log.create('Error in getByEmail: '+error, enums.logsType.database);
     }
 
     return null;
   }
 
-  async getUsers() {
+  async getAll() {
     try {
-      return this.user.findAll();
+      return this.model.findAll();
     }
     catch (error) {
-      this.log.create('Error in user repository - getUsers: '+error, enums.logsType.database);
+      this.log.create('Error in getAll: '+error, enums.logsType.database);
     }
   }
 }

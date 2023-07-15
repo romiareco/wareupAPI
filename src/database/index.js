@@ -9,6 +9,7 @@ const DepositImageModel = require("../models/depositImage.model");
 const CompanyModel = require("../models/company.model"); 
 const ServiceGroupModel = require("../models/serviceGroups.model"); 
 const ServiceModel = require("../models/services.model"); 
+const DepositRequestModel = require("../models/depositRequest.model"); 
 
 const sequelize = new Sequelize(
     config.db.database,
@@ -42,10 +43,10 @@ const models = {
   CompanyModel: CompanyModel.init(sequelize, Sequelize),
   DepositModel: DepositModel.init(sequelize, Sequelize),
   DepositImageModel: DepositImageModel.init(sequelize, Sequelize),
+  DepositRequestModel: DepositRequestModel.init(sequelize, Sequelize),
 }; 
 
-ServiceGroupModel.hasMany(ServiceModel)
-//ServiceModel.belongsTo(ServiceGroupModel);
+ServiceGroupModel.hasMany(ServiceModel) 
 
 const db = {
   ...models,

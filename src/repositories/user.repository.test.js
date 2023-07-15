@@ -29,7 +29,7 @@ describe("UserRepository", function() {
       };
       const stub = sinon.stub(UserModel, "create").returns(stubValue);
       const userRepository = new UserRepository();
-      const user = await userRepository.create(stubValue.name, stubValue.last_name, stubValue.password, stubValue.email);
+      const user = await userRepository.create(stubValue);
 
       expect(stub.calledOnce).to.be.true;
       expect(user.id).to.equal(stubValue.id);
@@ -40,11 +40,11 @@ describe("UserRepository", function() {
     });
   });
 
-  describe("getUser", function() {
+  describe("get", function() {
     it("should retrieve a user with specific id", async function() {
       const stub = sinon.stub(UserModel, "findOne").returns(stubValue);
       const userRepository = new UserRepository();
-      const user = await userRepository.getUser(stubValue.id);
+      const user = await userRepository.get(stubValue.id);
 
       expect(stub.calledOnce).to.be.true;
       expect(user.id).to.equal(stubValue.id);

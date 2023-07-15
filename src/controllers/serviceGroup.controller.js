@@ -3,7 +3,7 @@ const enums = require('../utils/enums');
 class ServiceGroupController {
 
     constructor(serviceGroupService) {
-      this.serviceGroupService = serviceGroupService;
+      this.service = serviceGroupService;
     }
     
     async get(req, res, next) {
@@ -13,12 +13,12 @@ class ServiceGroupController {
         return res.status(400).json({ message: "Invalid Params" });
       }
 
-      const result = await this.serviceGroupService.getServiceGroup(id);
+      const result = await this.service.getServiceGroup(id);
       return res.json(result);
     }  
 
     async getAll(req, res, next) { 
-      const result = await this.serviceGroupService.getServiceGroups();
+      const result = await this.service.getServiceGroups();
       return res.json(result);
     }  
 }  

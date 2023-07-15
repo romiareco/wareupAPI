@@ -37,7 +37,7 @@ class AuthService {
       return {message, hasError, resultCode, tokens};
     }
 
-    let userFound = await this.userRepository.getUserByEmail(email); 
+    let userFound = await this.userRepository.getByEmail(email); 
     if (!userFound) {
       message = 'El email no es valido.';
       hasError = true;
@@ -55,10 +55,9 @@ class AuthService {
           access: jwt.createAccessToken(userFound),
           refresh: jwt.refreshToken(userFound)
       }; 
-      user = userFound;
     } 
       
-    return {message, hasError, resultCode, tokens, user};
+    return {message, hasError, resultCode, tokens};
 }
 
 
@@ -77,7 +76,7 @@ async refreshAccessToken(token){
     }
   
     const { id } = jwt.decoded(token);  
-    const userFound = await this.userRepository.getUser(id); 
+    const userFound = await this.userService.get(id); 
     if (userFound == null) {
       message = 'El token no es valido.';
       hasError = true;

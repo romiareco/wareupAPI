@@ -18,7 +18,7 @@ class AuthController {
         const result = await this.authService.login(email, password);
 
         console.log('result : '+result);
-        return res.status(201).json(result); 
+        return res.status(200).json(result); 
     }
 
     async refreshAccessToken(req, res) {
@@ -27,7 +27,7 @@ class AuthController {
             return res.status(400).json({ message: "Invalid Params" });
         } else {
             const result = await this.authService.refreshAccessToken(token);
-            return res.status(201).json(result); 
+            return res.status(200).json(result); 
         }
     }
 }
