@@ -22,19 +22,21 @@ class UserController {
         return res.status(400).json({ message: "Invalid Params" });
       }
       const result = await this.service.recoverPassword(email);
-      return res.status(201).json({data: result });
+      return res.status(200).json({data: result });
     }
   
     async get(req, res) {
       const { id } = req.params;
-  
+      if (!id || typeof id !== "string") {
+        return res.status(400).json({ message: "Invalid Params" });
+      }
       const result = await this.service.get(id);
-      return res.json(result);
+      return res.status(200).json(result);
     }
 
     async getAll(req, res) {  
       const result = await this.service.getAll();
-      return res.json(result);
+      return res.status(200).json(result);
     }
 
     async getMe(req, res) {
@@ -44,9 +46,22 @@ class UserController {
         return res.status(400).json({ message: "Invalid Params" });
       } else {  
         const result = await this.service.get(id); 
-        return res.status(201).json(result); 
+        return res.status(200).json(result); 
       }
     }
+
+    async contact(req, res) {
+      const { email, phone, message } = req.body;
+ 
+      if (!email || typeof email !== "string"  || !phone || typeof phone !== "string"
+          || !message || typeof message !== "string") {
+        return res.status(400).json({ message: "Invalid Params" });
+      } else {  
+        const result = await this.service.contact(req.body); 
+        return res.status(200).json(result); 
+      }
+    }
+
     
 }  
 

@@ -45,7 +45,7 @@ class MailService {
                 subject: 'Recuperacion de contraseña',
                 template_id: 'd-ff8f6eee18964ab6a6bc704be3d4da37',
                 dynamicTemplateData: {
-                password: password
+                    password: password
                 }
             }
             sgMail
@@ -60,5 +60,35 @@ class MailService {
             this.log.create('Error in sendEmailPasswordRecovery: '+error, enums.logsType.service);
         }
     }
+    async sendContactForm(contactForm) {
+        try{ 
+            const sgMail = require('@sendgrid/mail');
+            sgMail.setApiKey(config.sendgrid.apikey);
+            
+            const msg = {
+                to: config.sendgrid.contactTo, 
+                from: config.sendgrid.from,
+                subject: 'Contacto',
+                template_id: 'd-48b73a2b24ae42adbe37ba1291adc9f4',
+                dynamicTemplateData: {
+                    clientName: contactForm.clientName,
+                    email: contactForm.email,
+                    phone: contactForm.phone,
+                    message: contactForm.message,
+                }
+            }
+            sgMail
+            .send(msg)
+            .then(() => {
+            })
+            .catch((error) => {
+                this.log.create('Error in sendContactForm: '+error, enums.logsType.service);
+            })
+        }
+        catch (error) {
+            this.log.create('Error in sendContactForm: '+error, enums.logsType.service);
+        }
+    }
+   
 }
 module.exports = MailService;

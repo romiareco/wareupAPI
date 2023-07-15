@@ -14,12 +14,12 @@ class ServiceGroupController {
       }
 
       const result = await this.service.getServiceGroup(id);
-      return res.json(result);
+      return res.status(200).json(result);
     }  
 
     async getAll(req, res, next) { 
       const result = await this.service.getServiceGroups();
-      return res.json(result);
+      return res.status(200).json(result);
     }  
 }  
 
