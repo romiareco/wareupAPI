@@ -1,8 +1,9 @@
-const enums = require('../utils/enums');
- 
+const enums = require('../utils/enums'); 
+const bcrypt = require("bcryptjs")
+
 class UserService {
   constructor(userRepository, logRepository, mailService) {
-    this.userRepository = userRepository;
+    this.repository = userRepository;
     this.log = logRepository;
     this.mailService = mailService;
   }
@@ -14,17 +15,21 @@ class UserService {
     let user = null;
 
     try{ 
-        const {email } = userToAdd;  
+        const { email } = userToAdd;  
 
-        const userByEmail = await this.userRepository.getUserByEmail(email);
+        const userByEmail = await this.repository.getByEmail(email);
         if(userByEmail != null){
           message = 'El email ya se encuentra en uso.';
           resultCode = enums.resultCodes.invalidData;
           hasError = true;
-          return {message, hasError, resultCode, userToAdd};
+          return {message, hasError, resultCode, user};
         }
+ 
+        const salt = bcrypt.genSaltSync(10);
+        userToAdd.password = bcrypt.hashSync(userToAdd.password, salt);
+        userToAdd.email = userToAdd.email.toLowerCase()
          
-        user = await this.userRepository.create(userToAdd);
+        user = await this.repository.create(userToAdd);
         if(user){  
           this.mailService.sendEmailUserCreated(email);    
         }            
@@ -33,7 +38,7 @@ class UserService {
       message = 'Error al crear el usuario.';
       resultCode = enums.resultCodes.genericError;
       hasError = true;
-      this.log.create('Error in userService - create: '+ error, enums.logsType.service);
+      this.log.create('Error in create: '+ error, enums.logsType.service);
     }
  
     return {message, hasError, resultCode, user};
@@ -53,7 +58,7 @@ class UserService {
       return {message, hasError, resultCode};
     }
   
-    const user = await this.userRepository.getUserByEmail(email); 
+    const user = await this.repository.getByEmail(email); 
     if(user == null){
       message = 'El email no es valido.';
       hasError = true;
@@ -69,64 +74,64 @@ class UserService {
     return {message, hasError, resultCode};
   }
 
-  async getUserByEmail(email) {
+  async getByEmail(email) {
     let hasError = false;
     let message = null; 
     let resultCode = enums.resultCodes.OK;
     let user = null;
 
     try{
-      user = await this.userRepository.getUserByEmail(email);
+      user = await this.repository.getByEmail(email);
     }
     catch (error) {
       resultCode = enums.resultCodes.genericError;
       hasError = true;
       message = 'Ha ocurrido un error obteniendo el usuario.';
 
-      this.log.create('Error in userService - getUserByEmail: '+ error, enums.logsType.service);
+      this.log.create('Error in getByEmail: '+ error, enums.logsType.service);
     } 
 
     return { message, hasError, resultCode, user };
   }
   
-  getUser(id) {
+  async get(id) {
     let hasError = false;
     let message = null; 
     let resultCode = enums.resultCodes.OK;
     let user = null;
 
     try{
-      user =  this.userRepository.getUser(id);
+      user = await this.repository.get(id);
     }
     catch (error) {
       resultCode = enums.resultCodes.genericError;
       hasError = true;
       message = 'Ha ocurrido un error obteniendo el usuario.';
 
-      this.log.create('Error in userService - getUser: '+ error, enums.logsType.service);
+      this.log.create('Error in get: '+ error, enums.logsType.service);
     } 
 
     return { message, hasError, resultCode, user };
   }
 
-  getUsers() {
+  async getAll() {
     let hasError = false;
     let message = null; 
     let resultCode = enums.resultCodes.OK;
     let users = null;
 
     try{
-      users = this.userRepository.getUsers();
+      users = await this.repository.getAll();
     }
     catch (error) {
       resultCode = enums.resultCodes.genericError;
       hasError = true;
       message = 'Ha ocurrido un error obteniendo los usuarios.';
 
-      this.log.create('Error in userService - getUsers: '+ error, enums.logsType.service);
+      this.log.create('Error in getAll: '+ error, enums.logsType.service);
     } 
 
-    return { message, hasError, resultCode, user };
+    return { message, hasError, resultCode, users };
   }
 }
 

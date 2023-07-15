@@ -1,19 +1,34 @@
 const enums = require('../utils/enums');
 
-class DepositController {
+class DepositRequestController {
 
-    constructor(depositService) {
-      this.service = depositService;
+    constructor(depositRequestService) {
+      this.service = depositRequestService;
     }
   
     async register(req, res, next) {
   
-      const { title, description, totalM3, comment, minimumBusinessPeriod, minimumBusinessVolume, expectedPrice, companyId, addressId} = req.body;
+      const { title, description, email, companyId, phone} = req.body;
    
-      if (!title || typeof title !== "string" || !description || typeof description !== "string") {
+      if (!title || typeof title !== "string" || (typeof description !== "string") 
+        || (!companyId || typeof companyId !== "number")
+        || (!email || typeof email !== "string") || (!phone || typeof phone !== "string") ) {
         return res.status(400).json({ message: "Invalid Params" });
       }
       const result = await this.service.create(req.body);
+      return res.status(201).json(result);
+    }
+
+    async update(req, res, next) {
+  
+      const { title, description, email, companyId, phone} = req.body;
+   
+      if (!title || typeof title !== "string" || (typeof description !== "string") 
+        || (!companyId || typeof companyId !== "number")
+        || (!email || typeof email !== "string") || (!phone || typeof phone !== "string") ) {
+        return res.status(400).json({ message: "Invalid Params" });
+      }
+      const result = await this.service.update(req.body);
       return res.status(201).json(result);
     }
 
@@ -43,5 +58,5 @@ class DepositController {
     }  
 }  
 
-module.exports = DepositController;
+module.exports = DepositRequestController;
   

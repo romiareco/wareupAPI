@@ -9,17 +9,21 @@ const DepositRepository = require("../repositories/deposit.repository");
 const ServiceGroupService = require("../services/serviceGroup.service");
 const ServiceGroupRepository = require("../repositories/serviceGroup.repository");
 const AuthService = require("../services/auth.service");
+const DepositRequestRepository = require("../repositories/depositRequest.repository");
+const DepositRequestService = require("../services/depositRequest.service");
 
 const logRepository = new LogRepository();
 const userRepository = new UserRepository(logRepository);
 const companyRepository = new CompanyRepository(logRepository);
 const depositRepository = new DepositRepository(logRepository);
 const serviceGroupRepository = new ServiceGroupRepository(logRepository);
+const depositRequestRepository = new DepositRequestRepository(logRepository);
 
 const mailService = new MailService(logRepository);
 const userService = new UserService(userRepository, logRepository, mailService); 
 const authService = new AuthService(userRepository, logRepository);
 const companyService = new CompanyService(companyRepository, logRepository, userRepository);
+const depositRequestService = new DepositRequestService(depositRequestRepository, logRepository, companyRepository);
 const depositService = new DepositService(depositRepository, logRepository, companyRepository);
 const serviceGroupService = new ServiceGroupService(serviceGroupRepository, logRepository);
 
@@ -34,6 +38,8 @@ module.exports = {
   depositRepository,
   serviceGroupService,
   serviceGroupRepository,
-  authService
+  authService,
+  depositRequestService,
+  depositRequestRepository
 };
 

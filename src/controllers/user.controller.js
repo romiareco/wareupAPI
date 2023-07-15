@@ -1,7 +1,7 @@
 class UserController {
 
     constructor(userService) {
-      this.userService = userService;
+      this.service = userService;
     }
   
     async register(req, res, next) {
@@ -11,7 +11,7 @@ class UserController {
         || (!last_name || typeof last_name !== "string") || (!password || typeof password !== "string")) {
         return res.status(400).json({ message: "Invalid Params" });
       }
-      const result = await this.userService.create(req.body);
+      const result = await this.service.create(req.body);
       return res.status(201).json(result);
     }
 
@@ -21,32 +21,29 @@ class UserController {
       if (!email || typeof email !== "string") {
         return res.status(400).json({ message: "Invalid Params" });
       }
-      const result = await this.userService.recoverPassword(email);
+      const result = await this.service.recoverPassword(email);
       return res.status(201).json({data: result });
     }
   
-    async getUser(req, res) {
+    async get(req, res) {
       const { id } = req.params;
   
-      const result = await this.userService.getUser(id);
+      const result = await this.service.get(id);
       return res.json(result);
     }
 
-    async getUsers(req, res) {
-      const { id } = req.params;
-  
-      const result = await this.userService.getUsers();
+    async getAll(req, res) {  
+      const result = await this.service.getAll();
       return res.json(result);
     }
 
     async getMe(req, res) {
       const { id } = req.user;
-    
-      const result = await this.userService.getUser(id); 
-      if (!result) {
-        return res.status(400).send(result);
-      } else { 
-        const result = await this.depositService.create(title, description, totalM3, comment, minimumBusinessPeriod, minimumBusinessVolume, expectedPrice, companyId, addressId);
+ 
+      if (!id || typeof id !== "number") {
+        return res.status(400).json({ message: "Invalid Params" });
+      } else {  
+        const result = await this.service.get(id); 
         return res.status(201).json(result); 
       }
     }

@@ -3,7 +3,7 @@ const enums = require('../utils/enums');
 class CompanyController {
 
     constructor(companyService) {
-      this.companyService = companyService;
+      this.service = companyService;
     }
   
     async register(req, res, next) {
@@ -16,7 +16,7 @@ class CompanyController {
         || (!userId || typeof userId !== "number")) {
         return res.status(400).json({ message: "Invalid Params" });
       }
-      const result = await this.companyService.create(req.body);
+      const result = await this.service.create(req.body);
 
       return res.status(201).json(result);
     }
@@ -28,7 +28,7 @@ class CompanyController {
         return res.status(400).json({ message: "Invalid Params" });
       }
 
-      const result = await this.companyService.getCompaniesByUser(userId);
+      const result = await this.service.getByUser(userId);
       return res.json(result);
     }
 
@@ -39,12 +39,12 @@ class CompanyController {
         return res.status(400).json({ message: "Invalid Params" });
       }
 
-      const result = await this.companyService.getCompany(id);
+      const result = await this.service.get(id);
       return res.json(result);
     }  
 
     async getAll(req, res, next) { 
-      const result = await this.companyService.getCompanies();
+      const result = await this.service.getAll();
       return res.json(result);
     }  
 }  

@@ -30,6 +30,12 @@ const depositStatus = {
     PAUSED: 4
 }
 
+const depositRequestStatus = { 
+    PENDING: 1,
+    COMPLETED: 2,
+    CANCELED: 3
+}
+
 const resultCodes = {
     OK: 1,
     genericError: 2,
@@ -43,5 +49,6 @@ module.exports = {
     logsType,
     depositStatus,
     resultCodes,
-    companyStatus
+    companyStatus,
+    depositRequestStatus
 }

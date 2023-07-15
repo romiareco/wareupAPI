@@ -1,55 +1,52 @@
 const enums = require('../utils/enums');
-const { DepositModel } = require("../database");
-const config = require('../../config'); 
+const { DepositModel } = require("../database"); 
 
 class DepositRepository {
   constructor(logRepository) {
     this.log = logRepository;
-    this.deposit = DepositModel;
+    this.model = DepositModel;
   }
    
-  async create(deposit) {
+  async create(request) {
     try { 
-        return this.deposit.create(deposit);
+        return this.model.create(request);
     }
     catch (error) {
-      this.log.create('Error in deposit repository - create: '+error, enums.logsType.database);
+      this.log.create('Error in create: '+error, enums.logsType.database);
     }
     return null;
   }
 
-  async getDeposit(id) {
+  async get(id) {
     try {
-      return this.deposit.findOne({
+      return this.model.findOne({
         where: {id: id}
       });
     }
     catch (error) {
-      this.log.create('Error in deposit repository - getDeposit: '+error, enums.logsType.database);
+      this.log.create('Error in get: '+error, enums.logsType.database);
     }
   }
 
-  async getDepositsByCompany(companyId) {
+  async getByCompany(companyId) {
     try {
-      var deposits = await this.deposit.findAll({
+      return await this.model.findAll({
         where: {companyId: companyId}
-      });
-     return deposits;
+      }); 
     }
     catch (error) {
-      this.log.create('Error in deposit repository - getDepositsByCompany: '+error, enums.logsType.database);
+      this.log.create('Error in getByCompany: '+error, enums.logsType.database);
     }
 
     return null;
   } 
 
-  async getDeposits() {
+  async getAll() {
     try {
-      var deposits = await this.deposit.findAll();
-     return deposits;
+      return await this.model.findAll(); 
     }
     catch (error) {
-      this.log.create('Error in deposit repository - getDeposits: '+error, enums.logsType.database);
+      this.log.create('Error in getAll: '+error, enums.logsType.database);
     }
 
     return null;
