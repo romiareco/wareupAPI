@@ -74,6 +74,28 @@ class UserService {
     return {message, hasError, resultCode};
   }
 
+  async contact(contactForm){ 
+    let hasError = false;
+    let message = null; 
+    let resultCode = enums.resultCodes.OK;
+
+    const { email, phone } = contactForm;
+    if(email == null){
+      message = 'El email es requerido.';
+      hasError = true;
+      resultCode = enums.resultCodes.requiredData;
+    }
+    else if(phone == null){
+      message = 'El telefono  es requerido.';
+      hasError = true;
+      resultCode = enums.resultCodes.requiredData;
+    }
+     
+    this.mailService.sendContactForm(contactForm);  
+      
+    return {message, hasError, resultCode};
+  }
+
   async getByEmail(email) {
     let hasError = false;
     let message = null; 

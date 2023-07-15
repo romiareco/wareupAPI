@@ -29,7 +29,7 @@ class CompanyController {
       }
 
       const result = await this.service.getByUser(userId);
-      return res.json(result);
+      return res.status(200).json(result);
     }
 
     async get(req, res, next) {
@@ -40,12 +40,12 @@ class CompanyController {
       }
 
       const result = await this.service.get(id);
-      return res.json(result);
+      return res.status(200).json(result);
     }  
 
     async getAll(req, res, next) { 
       const result = await this.service.getAll();
-      return res.json(result);
+      return res.status(200).json(result);
     }  
 }  
 

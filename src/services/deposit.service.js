@@ -15,7 +15,7 @@ class DepositService {
     
     try{ 
       
-        const {companyId } = depositToAdd;  
+        const { companyId } = depositToAdd;  
         const company = await this.companyRepository.get(companyId);
         if(company == null){
           message = 'Compania no valida'; 
