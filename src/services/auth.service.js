@@ -27,8 +27,7 @@ class AuthService {
     let hasError = false;
     let message = null; 
     let resultCode = enums.resultCodes.OK;
-    let tokens = null;
-    let user = null;
+    let tokens = null; 
 
     if(!email || !password){
       message = 'Los datos son requeridos.';

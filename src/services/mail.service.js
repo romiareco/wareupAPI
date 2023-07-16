@@ -32,20 +32,19 @@ class MailService {
     }
 
 
-    async sendEmailPasswordRecovery(user) {
-        try{
-            const { email, password } = user;
-
+    async sendEmailPasswordRecovery(user, dataEncrypt) {
+        try{ 
             const sgMail = require('@sendgrid/mail');
             sgMail.setApiKey(config.sendgrid.apikey);
             
             const msg = {
-                to: email, 
+                to: user.email, 
                 from: config.sendgrid.from,
                 subject: 'Recuperacion de contraseña',
                 template_id: 'd-ff8f6eee18964ab6a6bc704be3d4da37',
-                dynamicTemplateData: {
-                    password: password
+                dynamicTemplateData: { 
+                    linkEncrypt: config.frontendUrl+'/users/password-recovery?'+dataEncrypt,
+                    name: user.name
                 }
             }
             sgMail

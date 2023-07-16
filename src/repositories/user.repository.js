@@ -1,10 +1,11 @@
 const enums = require('../utils/enums');
-const { UserModel } = require("../database"); 
+const { UserModel, UserPasswordChangeModel } = require("../database"); 
 
 class UserRepository {
   constructor(logRepository) {
     this.log = logRepository; 
     this.model = UserModel; 
+    this.modelPasswordChange = UserPasswordChangeModel; 
   }
 
   async create(request) {
@@ -22,9 +23,17 @@ class UserRepository {
   }
 
   async update(request) {
-    try {
-        
-        return this.model.update(request);
+    try { 
+        return this.model.update(
+          {
+            lastName: request.lastName,
+            name: request.name,
+            password: request.password,
+            email: request.email
+          },
+          {
+            where: { id : request.id}
+          });
     }
     catch (error) {
       this.log.create('Error in update: '+ error, enums.logsType.database);
@@ -34,9 +43,9 @@ class UserRepository {
 
   async get(id) {
     try {
-      return this.model.findOne({
+      return await this.model.findOne({
         where: {id: id}
-      });
+      }); 
     }
     catch (error) {
       this.log.create('Error in get: '+error, enums.logsType.database);
@@ -58,12 +67,13 @@ class UserRepository {
 
   async getAll() {
     try {
-      return this.model.findAll();
+      return await this.model.findAll();
     }
     catch (error) {
       this.log.create('Error in getAll: '+error, enums.logsType.database);
     }
   }
+ 
 }
 
 module.exports = UserRepository;
