@@ -16,10 +16,10 @@ class UserController {
     }
 
     async update(req, res, next) {
-      const { name, lastName, password, email, id } = req.body; 
+      const { name, lastName, email, id } = req.body; 
   
       if (!id || !name || typeof name !== "string" || (!email || typeof email !== "string") 
-        || (!lastName || typeof lastName !== "string") || (!password || typeof password !== "string")) {
+        || (!lastName || typeof lastName !== "string")) {
         return res.status(400).json({ message: "Invalid Params" });
       }
       const result = await this.service.update(req.body);

@@ -66,7 +66,7 @@ class UserService {
         userInDb.lastName = userToUpdate.lastName.toLowerCase();
    
         await this.repository.update(userInDb); 
-        user = await this.repository.get(userId); 
+        user = await this.repository.get(userToUpdate.id); 
     }
     catch (error) {
       message = 'Error al actualizar el usuario.';
