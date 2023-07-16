@@ -48,13 +48,12 @@ const models = {
   DepositRequestModel: DepositRequestModel.init(sequelize, Sequelize),  
 }; 
 
-ServiceGroupModel.hasMany(ServiceModel) 
+ServiceGroupModel.hasMany(ServiceModel);  
+DepositRequestModel.belongsTo(CompanyModel, { foreignKey: 'companyId', });
 
 const db = {
   ...models,
   sequelize
 };
-
- 
 
 module.exports = db;
