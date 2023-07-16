@@ -14,8 +14,6 @@ class DepositRequestService {
     let depositRequest = null;
     
     try{ 
-      
-      console.log('asdadsadss');
         const { companyId } = depositRequestToAdd;  
         const company = await this.companyRepository.get(companyId);
         if(company == null){
@@ -26,9 +24,7 @@ class DepositRequestService {
         else{
           depositRequestToAdd.status = enums.depositRequestStatus.PENDING;
           depositRequest = await this.repository.create(depositRequestToAdd);   
-        }  
-        
-        console.log(depositRequest);
+        }   
     }
     catch (error) {
       resultCode = enums.resultCodes.genericError;

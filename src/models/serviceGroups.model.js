@@ -63,12 +63,6 @@ class ServiceGroupModel extends Model {
     super.findOrCreate({where: { code: 'HAB' },
       defaults: {title: 'Habilitaciones', code: 'HAB', order: 6, showTitle:true, status: 1}
     });
-    //super.create({title: 'Zona', code: 'ZONA', order: 1, showTitle:true, status: 1}); 
-    //super.create({title: 'Piso', code: 'PISO', order: 2, showTitle:true, status: 1});
-    //super.create({title: 'Varios', code: 'VARIOS', order: 3, showTitle:true, status: 1});
-    //super.create({title: 'Seguros', code: 'SEGUROS', order: 4, showTitle:true, status: 1});
-    //super.create({title: 'Certificaciones', code: 'CERT', order: 5, showTitle:true, status: 1});
-    //super.create({title: 'Habilitaciones', code: 'HAB', order: 6, showTitle:true, status: 1});
   }
 }
 
