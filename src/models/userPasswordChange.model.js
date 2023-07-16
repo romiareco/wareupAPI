@@ -1,6 +1,6 @@
 const Sequelize = require("sequelize");
 const Model = Sequelize.Model;
-class UserModel extends Model {
+class UserPasswordChangeModel extends Model {
   static init(sequelize, DataTypes) {
     return super.init(
       {
@@ -9,28 +9,17 @@ class UserModel extends Model {
           autoIncrement: true,
           primaryKey: true,
           type: DataTypes.INTEGER
-        },
-        name: {
-          type: DataTypes.STRING,
-          allowNull: false
-        },
-        lastName: {
-          type: DataTypes.STRING,
-          allowNull: false
-        },
-        password: {
-          type: DataTypes.STRING,
-          allowNull: false
-        },
+        },  
         email: {
           type: DataTypes.STRING,
           allowNull: false,  
           unique: 'userEmailIndex'
-        },
-        role: {
+        },   
+        data: {
           type: DataTypes.STRING,
-          allowNull: false        
-        },
+          allowNull: false,  
+          unique: 'userEmailIndex'
+        }, 
         status: {
           type: DataTypes.INTEGER,
           allowNull: false
@@ -38,10 +27,10 @@ class UserModel extends Model {
       },
       {
         sequelize,
-        modelName: "user"
+        modelName: "userPasswordChange"
       }
     );
   }
 }
 
-module.exports = UserModel;
+module.exports = UserPasswordChangeModel;

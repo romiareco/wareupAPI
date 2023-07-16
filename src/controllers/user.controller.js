@@ -5,13 +5,34 @@ class UserController {
     }
   
     async register(req, res, next) {
-      const { name, last_name, password, email } = req.body;
+      const { name, lastName, password, email } = req.body;
   
       if (!name || typeof name !== "string" || (!email || typeof email !== "string") 
-        || (!last_name || typeof last_name !== "string") || (!password || typeof password !== "string")) {
+        || (!lastName || typeof lastName !== "string") || (!password || typeof password !== "string")) {
         return res.status(400).json({ message: "Invalid Params" });
       }
       const result = await this.service.create(req.body);
+      return res.status(201).json(result);
+    }
+
+    async update(req, res, next) {
+      const { name, lastName, email, id } = req.body; 
+  
+      if (!id || !name || typeof name !== "string" || (!email || typeof email !== "string") 
+        || (!lastName || typeof lastName !== "string")) {
+        return res.status(400).json({ message: "Invalid Params" });
+      }
+      const result = await this.service.update(req.body);
+      return res.status(201).json(result);
+    }
+
+    async updatePassword(req, res, next) {
+      const { linkEncrypt, password } = req.body; 
+  
+      if((!linkEncrypt || typeof linkEncrypt !== "string") || (!password || typeof password !== "string")) {
+        return res.status(400).json({ message: "Invalid Params" });
+      }
+      const result = await this.service.updatePassword(linkEncrypt, password);
       return res.status(201).json(result);
     }
 

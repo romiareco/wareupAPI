@@ -8,14 +8,14 @@ class DepositController {
   
     async register(req, res, next) {
   
-      const { title, description, totalM3, comment, minimumBusinessPeriod, minimumBusinessVolume, expectedPrice, companyId, addressId} = req.body;
+      const { title, description} = req.body;
    
       if (!title || typeof title !== "string" || !description || typeof description !== "string") {
         return res.status(400).json({ message: "Invalid Params" });
       }
       const result = await this.service.create(req.body);
       return res.status(201).json(result);
-    }
+    } 
 
     async getByCompany(req, res, next) {
       const { companyId } = req.params; 

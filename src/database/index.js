@@ -10,6 +10,7 @@ const CompanyModel = require("../models/company.model");
 const ServiceGroupModel = require("../models/serviceGroups.model"); 
 const ServiceModel = require("../models/services.model"); 
 const DepositRequestModel = require("../models/depositRequest.model"); 
+const UseUserPasswordChangeModel= require("../models/userPasswordChange.model"); 
 
 const sequelize = new Sequelize(
     config.db.database,
@@ -18,7 +19,7 @@ const sequelize = new Sequelize(
     {
       host:  config.db.host,
       dialect: "mysql",
-      logging: true
+      logging: false
     },    
   );
 
@@ -37,13 +38,14 @@ sequelize.sync({ force: config.db.recreate,  alter: config.db.alter }).then(() =
 
 const models = {
   UserModel: UserModel.init(sequelize, Sequelize),
+  UserPasswordChangeModel: UseUserPasswordChangeModel.init(sequelize, Sequelize),
   LogModel: LogModel.init(sequelize, Sequelize), 
   ServiceGroupModel: ServiceGroupModel.init(sequelize, Sequelize), 
   ServiceModel: ServiceModel.init(sequelize, Sequelize),
   CompanyModel: CompanyModel.init(sequelize, Sequelize),
   DepositModel: DepositModel.init(sequelize, Sequelize),
   DepositImageModel: DepositImageModel.init(sequelize, Sequelize),
-  DepositRequestModel: DepositRequestModel.init(sequelize, Sequelize),
+  DepositRequestModel: DepositRequestModel.init(sequelize, Sequelize),  
 }; 
 
 ServiceGroupModel.hasMany(ServiceModel) 
@@ -53,6 +55,6 @@ const db = {
   sequelize
 };
 
-
+ 
 
 module.exports = db;
