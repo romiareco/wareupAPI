@@ -1,10 +1,11 @@
 const enums = require('../utils/enums');
  
 class DepositService {
-  constructor(depositRepository, logRepository, companyRepository) {
+  constructor(depositRepository, logRepository, companyRepository, depositServiceRepository) {
     this.repository = depositRepository;
     this.log = logRepository; 
     this.companyRepository = companyRepository;
+    this.depositServiceRepository = depositServiceRepository
   }
 
   async create(depositToAdd) {
@@ -109,23 +110,51 @@ class DepositService {
        deposit = this.repository.get(depositId);   
         
       if(deposit == null){
-        message = 'Deposito no valida'; 
+        message = 'Deposito no valido'; 
         resultCode = enums.resultCodes.invalidData;
         hasError = true;
       }
-      else{
-        //innsert depositId servicesId
-  
+      else{ 
+        servicesId.forEach(serviceId => {
+           this.depositServiceRepository.create({depositId, serviceId});
+        });
       }      
     }
     catch (error) {
       resultCode = enums.resultCodes.genericError;
       hasError = true;
       message = "Error asociando los servicios al deposito.";
-      this.log.create('Error in create: '+ error, enums.logsType.service);
+      this.log.create('Error in addDepositServices: '+ error, enums.logsType.service);
     }
 
     return { message, hasError, resultCode, deposit };
+  }
+
+  async getServicesByDeposit(depositId) {
+    let hasError = false;
+    let message = null; 
+    let resultCode = enums.resultCodes.OK;
+    let depositServices = null;
+    
+    try{  
+      let deposit = await this.repository.get(depositId);   
+      if(deposit == null){
+        message = 'Deposito no valido'; 
+        resultCode = enums.resultCodes.invalidData;
+        hasError = true;
+      }
+      else{ 
+        depositServices = await this.depositServiceRepository.getByDeposit(depositId);   
+      }
+    }
+    catch (error) {
+      resultCode = enums.resultCodes.genericError;
+      hasError = true;
+      message = "Error consultando los servicios del deposito.";
+      this.log.create('Error in getServicesByDeposit: '+ error, enums.logsType.service);
+    }
+
+    return { message, hasError, resultCode, depositServices };
   }
 }
 

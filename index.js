@@ -10,6 +10,7 @@ const authRouter = require("./src/routes/auth.route");
 const depositRequestRouter = require("./src/routes/depositRequest.route");
 const depositRouter = require("./src/routes/deposit.route");
 const serviceGroupRouter = require("./src/routes/serviceGroup.route"); 
+const commonRouter = require("./src/routes/common.route"); 
 
 
 const {API_VERSION} = require("./constants");
@@ -29,6 +30,7 @@ app.use(`/api/${API_VERSION}`, companyRouter);
 app.use(`/api/${API_VERSION}`, depositRouter);
 app.use(`/api/${API_VERSION}`, serviceGroupRouter); 
 app.use(`/api/${API_VERSION}`, depositRequestRouter);
+app.use(`/api/${API_VERSION}`, commonRouter);
 
 app.get("*", (req, res) => {
   res.status(404).json({ message: "Welcome to the begining of nothingness" });

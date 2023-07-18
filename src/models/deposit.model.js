@@ -38,13 +38,13 @@ class DepositModel extends Model {
           type: DataTypes.DECIMAL,
           allowNull: true
         },
-        department: {
-          type: DataTypes.STRING,
-          allowNull: true
-        },
-        city: {
-          type: DataTypes.STRING,
-          allowNull: true
+        cityId: {
+          type: DataTypes.INTEGER,
+          allowNull: true,
+          references: {
+            model: 'cities',
+            key: 'id'
+          }
         },
         street: {
           type: DataTypes.STRING,

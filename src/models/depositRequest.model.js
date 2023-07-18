@@ -25,7 +25,15 @@ class DepositRequestModel extends Model {
         phone: {
           type: DataTypes.STRING,
           allowNull: true
-        }, 
+        },  
+        cityId: {
+          type: DataTypes.INTEGER,
+          allowNull: true,
+          references: {
+            model: 'cities',
+            key: 'id'
+          }
+        },
         status: {
           type: DataTypes.STRING,
           allowNull: true
