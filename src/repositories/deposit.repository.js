@@ -1,10 +1,11 @@
 const enums = require('../utils/enums');
 const { DepositModel } = require("../database"); 
+const DepositServiceModel = require('../models/depositService.model');
 
 class DepositRepository {
   constructor(logRepository) {
     this.log = logRepository;
-    this.model = DepositModel;
+    this.model = DepositModel; 
   }
    
   async create(request) {
@@ -17,6 +18,7 @@ class DepositRepository {
     return null;
   }
 
+ 
   async get(id) {
     try {
       return this.model.findOne({
@@ -50,7 +52,8 @@ class DepositRepository {
     }
 
     return null;
-  } 
+  }  
+
 }
 
 module.exports = DepositRepository;

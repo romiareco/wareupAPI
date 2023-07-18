@@ -33,7 +33,7 @@ class CompanyService {
         }  
 
         companyToAdd.status = enums.companyStatus.PENDING; 
-        await this.repository.create(companyToAdd); 
+        company = await this.repository.create(companyToAdd); 
     }
     catch (error) {
       resultCode = enums.resultCodes.genericError;

@@ -1,11 +1,10 @@
 const enums = require('../utils/enums');
-const { UserModel, UserPasswordChangeModel } = require("../database"); 
+const { UserModel } = require("../database"); 
 
 class UserRepository {
   constructor(logRepository) {
     this.log = logRepository; 
-    this.model = UserModel; 
-    this.modelPasswordChange = UserPasswordChangeModel; 
+    this.model = UserModel;  
   }
 
   async create(request) {

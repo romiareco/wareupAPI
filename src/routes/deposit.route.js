@@ -6,9 +6,11 @@ const mdAuth = require("../middleware/authenticated");
 
 const controller = new DepositController(depositService);
 
-router.post("/deposits", /*[mdAuth.validateAuth], */(req, res) => controller.register(req, res));  
+router.post("/deposits", /*[mdAuth.validateAuth], */(req, res) => controller.register(req, res)); 
+router.post("/deposits/registerServices", /*[mdAuth.validateAuth], */(req, res) => controller.registerServices(req, res));  
 router.get("/deposits", /*[mdAuth.validateAuth], */(req, res) => controller.getAll(req, res)); 
 router.get("/deposits/:id",/* [mdAuth.validateAuth], */(req, res) => controller.get(req, res)); 
 router.get("/deposits/byCompany/:companyId", /*[mdAuth.validateAuth], */(req, res) => controller.getByCompany(req, res)); 
+router.get("/deposits/services/:depositId", /*[mdAuth.validateAuth], */(req, res) => controller.getServicesByDeposit(req, res)); 
 
 module.exports = router;

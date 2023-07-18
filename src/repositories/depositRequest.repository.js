@@ -1,5 +1,5 @@
 const enums = require('../utils/enums');
-const { DepositRequestModel, CompanyModel } = require("../database"); 
+const { DepositRequestModel, CompanyModel, CityModel } = require("../database"); 
 
 class DepositRequestRepository {
   constructor(logRepository) {
@@ -19,7 +19,10 @@ class DepositRequestRepository {
 
   async update(request) {
     try { 
-        return this.model.update(request, { where: { id: request.id } });
+        return this.model.update( 
+          {
+            status: request.status, 
+          }, { where: { id: request.id } });
     }
     catch (error) {
       this.log.create('Error in update: '+error, enums.logsType.database);
@@ -31,9 +34,7 @@ class DepositRequestRepository {
     try {
       return this.model.findOne({
         where: {id: id},
-        include: {
-          model: CompanyModel
-        }
+        include: [CompanyModel, CityModel]
       });
     }
     catch (error) {
@@ -44,10 +45,8 @@ class DepositRequestRepository {
   async getByCompany(companyId) {
     try {
       return this.model.findOne({
-        where: {companyId: companyId},
-        include: {
-          model: CompanyModel
-        }
+        where: {companyId: companyId}, 
+        include: [CompanyModel, CityModel]
       });
     }
     catch (error) {
@@ -57,10 +56,8 @@ class DepositRequestRepository {
  
   async getAll() {
     try {
-      return await this.model.findAll({  
-        include: [{
-          model: CompanyModel
-        }]
+      return await this.model.findAll({   
+        include: [CompanyModel, CityModel]
       });  
     }
     catch (error) {

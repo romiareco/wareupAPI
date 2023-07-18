@@ -23,10 +23,6 @@ class CompanyModel extends Model {
           allowNull: false,
           unique: 'rutIndex'
         },
-        name: {
-          type: DataTypes.STRING,
-          allowNull: false
-        },
         businessName: {
           type: DataTypes.STRING,
           allowNull: false
@@ -50,14 +46,14 @@ class CompanyModel extends Model {
         contactEmail: {
           type: DataTypes.STRING,
           allowNull: false
-        },
-        department: {
-          type: DataTypes.STRING,
-          allowNull: true
-        },
-        city: {
-          type: DataTypes.STRING,
-          allowNull: true
+        }, 
+        cityId: {
+          type: DataTypes.INTEGER,
+          allowNull: true,
+          references: {
+            model: 'cities',
+            key: 'id'
+          }
         },
         street: {
           type: DataTypes.STRING,
