@@ -19,7 +19,7 @@ class DepositService {
         const { companyId } = depositToAdd;  
         const company = await this.companyRepository.get(companyId);
         if(company == null){
-          message = 'Compania no valida'; 
+          message = 'Compañia no valida'; 
           resultCode = enums.resultCodes.invalidData;
           hasError = true;
         }
@@ -50,7 +50,7 @@ class DepositService {
     catch (error) {
       resultCode = enums.resultCodes.genericError;
       hasError = true;
-      message = 'Ha ocurrido un error obteniendo los depositos de la compania';
+      message = 'Ha ocurrido un error obteniendo los depositos de la compañia';
 
       this.log.create('Error in getByCompany: '+ error, enums.logsType.service);
     } 
@@ -70,7 +70,7 @@ class DepositService {
     catch (error) {
       resultCode = enums.resultCodes.genericError;
       hasError = true;
-      message = 'Ha ocurrido un error obteniendo los depositos de la compania';
+      message = 'Ha ocurrido un error obteniendo los depositos de la compañia';
 
       this.log.create('Error in getAll: '+ error, enums.logsType.service);
     } 
@@ -90,7 +90,7 @@ class DepositService {
     catch (error) {
       resultCode = enums.resultCodes.genericError;
       hasError = true;
-      message = 'Ha ocurrido un error obteniendo el deposit';
+      message = 'Ha ocurrido un error obteniendo el depositO';
 
       this.log.create('Error in get: '+ error, enums.logsType.service);
     } 

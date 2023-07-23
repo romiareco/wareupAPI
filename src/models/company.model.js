@@ -39,14 +39,10 @@ class CompanyModel extends Model {
           type: DataTypes.STRING,
           allowNull: false
         },
-        contactPhone: {
+        position: {
           type: DataTypes.STRING,
-          allowNull: false
+          allowNull: true
         },
-        contactEmail: {
-          type: DataTypes.STRING,
-          allowNull: false
-        }, 
         cityId: {
           type: DataTypes.INTEGER,
           allowNull: true,
@@ -55,7 +51,7 @@ class CompanyModel extends Model {
             key: 'id'
           }
         },
-        street: {
+        address: {
           type: DataTypes.STRING,
           allowNull: true
         },

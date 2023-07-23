@@ -37,6 +37,7 @@ class CompanyService {
     }
     catch (error) {
       resultCode = enums.resultCodes.genericError;
+      message = 'Ocurrio un error al intentar crear la compañia'
       this.log.create('Error in create: '+ error, enums.logsType.service);
     }
 
@@ -55,7 +56,7 @@ class CompanyService {
       catch (error) {
         resultCode = enums.resultCodes.genericError;
         hasError = true;
-        message = 'Ha ocurrido un error obteniendo las companias';
+        message = 'Ha ocurrido un error obteniendo las compañias';
   
         this.log.create('Error in getByUser: '+ error, enums.logsType.service);
       } 
@@ -75,7 +76,7 @@ class CompanyService {
     catch (error) {
       resultCode = enums.resultCodes.genericError;
       hasError = true;
-      message = 'Ha ocurrido un error obteniendo las companias';
+      message = 'Ha ocurrido un error obteniendo las compañias';
 
       this.log.create('Error in getAll: '+ error, enums.logsType.service);
     } 
@@ -95,7 +96,7 @@ class CompanyService {
     catch (error) {
       resultCode = enums.resultCodes.genericError;
       hasError = true;
-      message = 'Ha ocurrido un error obteniendo la compania';
+      message = 'Ha ocurrido un error obteniendo la compañia';
 
       this.log.create('Error in get: '+ error, enums.logsType.service);
     } 
