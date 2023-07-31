@@ -8,7 +8,7 @@ class CompanyController {
   
     async register(req, res, next) {
   
-      const {userId, RUT, businessName, email, phone, contactName } = req.body;
+      const {userId, RUT, businessName, email, phone, contactName, position, address } = req.body;
     
       if ((!RUT || typeof RUT !== "string")  
         || (!businessName || typeof businessName !== "string") || (!email || typeof email !== "string")

@@ -46,6 +46,10 @@ class DepositRequestModel extends Model {
             key: 'id'
           }
         },
+        address: {
+          type: DataTypes.STRING,
+          allowNull: true
+        },  
       },
       {
         sequelize,
