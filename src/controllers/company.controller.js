@@ -10,11 +10,11 @@ class CompanyController {
   
       const {userId, RUT, businessName, email, phone, contactName, position, address } = req.body;
     
-      if ((!RUT || typeof RUT !== "string")  
+      if ((!RUT || typeof RUT !== "string") 
         || (!businessName || typeof businessName !== "string") || (!email || typeof email !== "string")
         || (!phone || typeof phone !== "string") || (!contactName || typeof contactName !== "string")
         || (!userId || typeof userId !== "number")) {
-        return res.status(400).json({ message: "Invalid Params" });
+        return res.status(400).json({ message: "Invalid Params"});
       }
       const result = await this.service.create(req.body);
 

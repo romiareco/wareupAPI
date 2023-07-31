@@ -2,12 +2,12 @@ const enums = require('../utils/enums');
 const {  DepartmentModel, CityModel } = require("../database"); 
 
 class DepartmentRepository {
-  constructor(logRepository) {
+  constructor(logRepository){
     this.log = logRepository;
-    this.model = DepartmentModel; 
+    this.model = DepartmentModel;
   }
- 
-  async get(id) {
+
+  async get(id){
     try {
       return this.model.findOne({
         where: {id: id}
@@ -16,18 +16,18 @@ class DepartmentRepository {
     catch (error) {
       this.log.create('Error in get: '+error, enums.logsType.database);
     }
-  } 
+    return null;
+  }
 
   async getAll() {
     try {
-      return await this.model.findAll({include:[CityModel]}); 
+      return await this.model.findAll({include:[CityModel]});
     }
     catch (error) {
       this.log.create('Error in getAll: '+error, enums.logsType.database);
     }
-
     return null;
-  }  
+  }
 
 }
 

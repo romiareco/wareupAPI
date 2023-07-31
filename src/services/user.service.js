@@ -60,13 +60,13 @@ class UserService {
           hasError = true;
           return {message, hasError, resultCode, user};
         }
-  
+
         userInDb.email = userToUpdate.email.toLowerCase();
         userInDb.name = userToUpdate.name.toLowerCase();
         userInDb.lastName = userToUpdate.lastName.toLowerCase();
-   
-        await this.repository.update(userInDb); 
-        user = await this.repository.get(userToUpdate.id); 
+
+        await this.repository.update(userInDb);
+        user = await this.repository.get(userToUpdate.id);
     }
     catch (error) {
       message = 'Error al actualizar el usuario.';
@@ -74,22 +74,22 @@ class UserService {
       hasError = true;
       this.log.create('Error in update: '+ error, enums.logsType.service);
     }
- 
+
     return {message, hasError, resultCode, user};
   }
- 
+
   async updatePassword(linkEncrypt, password) {
     let hasError = false;
     let message = null; 
     let resultCode = enums.resultCodes.OK;
     let user = null;
 
-    try{  
-       
+    try{ 
+
       const values = helper.decrypt(linkEncrypt);
       const userId = values.split(" ")[0];
       const email = values.split(" ")[1];
-        
+
       let userInDb = await this.repository.get(userId);       
 
       if(userInDb == null){
@@ -102,13 +102,13 @@ class UserService {
         resultCode = enums.resultCodes.invalidData;
         hasError = true;
         return {message, hasError, resultCode, user};
-      }  
- 
-      const salt = bcrypt.genSaltSync(10); 
-      userInDb.password = bcrypt.hashSync(password, salt); 
+      }
 
-      await this.repository.update(userInDb); 
-      user = await this.repository.get(userId);       
+      const salt = bcrypt.genSaltSync(10); 
+      userInDb.password = bcrypt.hashSync(password, salt);
+
+      await this.repository.update(userInDb);
+      user = await this.repository.get(userId);
     }
     catch (error) {
       message = 'Error al actualizar la password del usuario.';
@@ -116,13 +116,13 @@ class UserService {
       hasError = true;
       this.log.create('Error in updatePassword: '+ error, enums.logsType.service);
     }
- 
+
     return {message, hasError, resultCode, user};
   }
-  
+
   async recoverPassword(email){ 
     let hasError = false;
-    let message = null; 
+    let message = null;
     let resultCode = enums.resultCodes.OK;
 
     if(email == null){
@@ -132,16 +132,16 @@ class UserService {
 
       return {message, hasError, resultCode};
     }
-  
-    let user = await this.repository.getByEmail(email); 
+
+    let user = await this.repository.getByEmail(email);
     if(user == null){
       message = 'El email no es valido.';
       hasError = true;
       resultCode = enums.resultCodes.invalidData; 
     }
     else{ 
-      const linkEncrypt = helper.encrypt(user.id + " " + user.email ); 
-      this.mailService.sendEmailPasswordRecovery(user, linkEncrypt);  
+      const linkEncrypt = helper.encrypt(user.id + " " + user.email );
+      this.mailService.sendEmailPasswordRecovery(user, linkEncrypt);
       message = 'Mail enviado correctamente.';
       hasError = false;
       resultCode = enums.resultCodes.OK;
