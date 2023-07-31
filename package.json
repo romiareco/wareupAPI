@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha './src/**/*.test.js'",
+    "test": "nyc --reporter=text mocha './src/**/*.test.js'",
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
@@ -21,6 +21,7 @@
     "dotenv": "^16.3.0",
     "express": "^4.18.2",
     "faker": "^6.6.6",
+    "jslint": "^0.12.1",
     "jsonwebtoken": "^9.0.0",
     "mocha": "^10.2.0",
     "morgan": "^1.10.0",
@@ -32,5 +33,9 @@
   },
   "engines": {
     "node": ">=16.14.0"
+  },
+  "devDependencies": {
+    "find-unused-exports": "^5.0.0",
+    "nyc": "^15.1.0"
   }
 }

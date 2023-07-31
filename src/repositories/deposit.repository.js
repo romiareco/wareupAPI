@@ -3,12 +3,12 @@ const { DepositModel } = require("../database");
 const DepositServiceModel = require('../models/depositService.model');
 
 class DepositRepository {
-  constructor(logRepository) {
+  constructor(logRepository){
     this.log = logRepository;
-    this.model = DepositModel; 
+    this.model = DepositModel;
   }
-   
-  async create(request) {
+
+  async create(request){
     try { 
         return this.model.create(request);
     }
@@ -18,8 +18,7 @@ class DepositRepository {
     return null;
   }
 
- 
-  async get(id) {
+  async get(id){
     try {
       return this.model.findOne({
         where: {id: id}
@@ -28,31 +27,32 @@ class DepositRepository {
     catch (error) {
       this.log.create('Error in get: '+error, enums.logsType.database);
     }
+    return null;
   }
 
   async getByCompany(companyId) {
     try {
       return await this.model.findAll({
         where: {companyId: companyId}
-      }); 
+      });
     }
     catch (error) {
       this.log.create('Error in getByCompany: '+error, enums.logsType.database);
     }
 
     return null;
-  } 
+  }
 
   async getAll() {
     try {
-      return await this.model.findAll(); 
+      return await this.model.findAll();
     }
     catch (error) {
       this.log.create('Error in getAll: '+error, enums.logsType.database);
     }
 
     return null;
-  }  
+  }
 
 }
 

@@ -1,14 +1,15 @@
 const enums = require('../utils/enums');
-const { CompanyModel, CityModel, DepartmentModel } = require("../database"); 
+const { CompanyModel, CityModel, DepartmentModel } = require("../database");
 
 class CompanyRepository {
-  constructor(logRepository) {
+
+  constructor(logRepository){
     this.log = logRepository;
     this.model = CompanyModel;
   }
-   
-  async create(request) {
-      try {
+
+  async create(request){
+    try {
         return this.model.create(request);
     }
     catch (error) {
@@ -17,7 +18,7 @@ class CompanyRepository {
     return null;
   }
 
-  async get(id) {
+  async get(id){
     try {
       return this.model.findOne({
         where: {id: id},
@@ -27,28 +28,29 @@ class CompanyRepository {
     catch (error) {
       this.log.create('Error in get: '+error, enums.logsType.database);
     }
+    return null;
   }
 
-  async getByUser(userId) {
+  async getByUser(userId){
     try {
       return await this.model.findAll({
         where: {userId: userId},
         include:[CityModel]
-      }); 
+      });
     }
     catch (error) {
       this.log.create('Error in getByUser: '+error, enums.logsType.database);
     }
 
     return null;
-  } 
-  
+  }
+
   async getByRUT(RUT) {
     try {
       return await this.model.findOne({
         where: {RUT: RUT},
         include: [CityModel]
-      }); 
+      });
     }
     catch (error) {
       this.log.create('Error in getByRUT: '+error, enums.logsType.database);
@@ -66,7 +68,7 @@ class CompanyRepository {
     }
 
     return null;
-  } 
+  }
 }
 
 module.exports = CompanyRepository;
