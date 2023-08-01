@@ -17,15 +17,15 @@ class DepositRequestModel extends Model {
         description: {
           type: DataTypes.STRING,
           allowNull: true
-        }, 
+        },
         email: {
           type: DataTypes.STRING,
           allowNull: true
-        }, 
+        },
         phone: {
           type: DataTypes.STRING,
           allowNull: true
-        },  
+        },
         cityId: {
           type: DataTypes.INTEGER,
           allowNull: true,
@@ -37,7 +37,7 @@ class DepositRequestModel extends Model {
         status: {
           type: DataTypes.STRING,
           allowNull: true
-        }, 
+        },
         companyId: {
           type: DataTypes.INTEGER,
           allowNull: false,
@@ -46,10 +46,18 @@ class DepositRequestModel extends Model {
             key: 'id'
           }
         },
+        userId: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+          references: {
+            model: 'users',
+            key: 'id'
+          }
+        },
         address: {
           type: DataTypes.STRING,
           allowNull: true
-        },  
+        },
       },
       {
         sequelize,

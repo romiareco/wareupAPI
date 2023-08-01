@@ -8,11 +8,13 @@ class DepositRequestController {
   
     async register(req, res, next) {
   
-      const { title, description, email, companyId, phone, address, cityId} = req.body;
+      const { title, description, email, companyId, phone, address, userId} = req.body;
    
-      if (!title || typeof title !== "string" || (typeof description !== "string") 
+      if (!title || typeof title !== "string" || (typeof description !== "string")
         || (!companyId || typeof companyId !== "number")
-        || (!email || typeof email !== "string") || (!phone || typeof phone !== "string") || (!address || typeof address !== "string")) {
+        || (!userId || typeof userId !== "number")
+        || (!email || typeof email !== "string") || (!phone || typeof phone !== "string") 
+        || (!address || typeof address !== "string")) {
         return res.status(400).json({ message: "Invalid Params" });
       }
       const result = await this.service.create(req.body);
@@ -23,8 +25,7 @@ class DepositRequestController {
   
       const { title, description, email, companyId, phone} = req.body;
    
-      if (!title || typeof title !== "string" || (typeof description !== "string") 
-        || (!companyId || typeof companyId !== "number")
+      if (!title || typeof title !== "string" || (typeof description !== "string")
         || (!email || typeof email !== "string") || (!phone || typeof phone !== "string") ) {
         return res.status(400).json({ message: "Invalid Params" });
       }
@@ -41,9 +42,18 @@ class DepositRequestController {
       return res.status(200).json(result);
     }
 
+    async getByUser(req, res, next) {
+      const { userId } = req.params; 
+      if (!userId || typeof userId !== "string") {
+        return res.status(400).json({ message: "Invalid Params" });
+      }
+      const result = await this.service.getByUser(userId);
+      return res.status(200).json(result);
+    }
+
     async get(req, res, next) {
   
-      const { id } = req.params;  
+      const { id } = req.params;
       if (!id || typeof id !== "string") {
         return res.status(400).json({ message: "Invalid Params" });
       }

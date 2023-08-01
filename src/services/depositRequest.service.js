@@ -83,6 +83,26 @@ class DepositRequestService {
     } 
 
     return { message, hasError, resultCode, depositRequests };
+  }
+
+  async getByUser(userId){ 
+    let hasError = false;
+    let message = null; 
+    let resultCode = enums.resultCodes.OK;
+    let depositRequests = null;
+
+    try{ 
+      depositRequests = await this.repository.getByUser(userId);
+    }
+    catch (error) {
+      resultCode = enums.resultCodes.genericError;
+      hasError = true;
+      message = 'Ha ocurrido un error obteniendo las solicitudes de depositos del usuario';
+
+      this.log.create('Error in getByUser: '+ error, enums.logsType.service);
+    } 
+
+    return { message, hasError, resultCode, depositRequests };
   } 
 
   async getAll(){ 

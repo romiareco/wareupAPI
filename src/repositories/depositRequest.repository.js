@@ -19,9 +19,9 @@ class DepositRequestRepository {
 
   async update(request) {
     try { 
-        return this.model.update( 
+        return this.model.update(
           {
-            status: request.status, 
+            status: request.status,
           }, { where: { id: request.id } });
     }
     catch (error) {
@@ -45,12 +45,24 @@ class DepositRequestRepository {
   async getByCompany(companyId) {
     try {
       return this.model.findOne({
-        where: {companyId: companyId}, 
+        where: {companyId: companyId},
         include: [CompanyModel, CityModel]
       });
     }
     catch (error) {
       this.log.create('Error in getByCompany: '+error, enums.logsType.database);
+    }
+  }
+
+  async getByUser(userId) {
+    try {
+      return this.model.findOne({
+        where: {userId: userId},
+        include: [CompanyModel, CityModel]
+      });
+    }
+    catch (error) {
+      this.log.create('Error in getByUser: '+error, enums.logsType.database);
     }
   }
  

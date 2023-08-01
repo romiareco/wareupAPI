@@ -5,11 +5,10 @@ class DepositController {
     constructor(depositService) {
       this.service = depositService;
     }
-  
+
     async register(req, res, next) {
-  
       const { title, description} = req.body;
-   
+
       if (!title || typeof title !== "string" || !description || typeof description !== "string") {
         return res.status(400).json({ message: "Invalid Params" });
       }
@@ -18,9 +17,9 @@ class DepositController {
     } 
 
     async registerServices(req, res, next) {
-  
+
       const { depositId, servicesId } = req.body;
-    
+
       if (!depositId || typeof depositId !== "string") {
         return res.status(400).json({ message: "Invalid Params" });
       }

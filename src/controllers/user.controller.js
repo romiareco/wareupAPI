@@ -3,10 +3,10 @@ class UserController {
     constructor(userService) {
       this.service = userService;
     }
-  
+
     async register(req, res, next) {
       const { name, lastName, password, email } = req.body;
-  
+
       if (!name || typeof name !== "string" || (!email || typeof email !== "string") 
         || (!lastName || typeof lastName !== "string") || (!password || typeof password !== "string")) {
         return res.status(400).json({ message: "Invalid Params" });
@@ -16,7 +16,7 @@ class UserController {
     }
 
     async update(req, res, next) {
-      const { name, lastName, email, id } = req.body; 
+      const { name, lastName, email, id } = req.body;
   
       if (!id || !name || typeof name !== "string" || (!email || typeof email !== "string") 
         || (!lastName || typeof lastName !== "string")) {
@@ -28,7 +28,7 @@ class UserController {
 
     async updatePassword(req, res, next) {
       const { linkEncrypt, password } = req.body; 
-  
+
       if((!linkEncrypt || typeof linkEncrypt !== "string") || (!password || typeof password !== "string")) {
         return res.status(400).json({ message: "Invalid Params" });
       }
@@ -38,14 +38,14 @@ class UserController {
 
     async recoverPassword(req, res, next) {
       const { email } = req.body;
-  
+
       if (!email || typeof email !== "string") {
         return res.status(400).json({ message: "Invalid Params" });
       }
       const result = await this.service.recoverPassword(email);
       return res.status(200).json({data: result });
     }
-  
+
     async get(req, res) {
       const { id } = req.params;
       if (!id || typeof id !== "string") {
@@ -55,17 +55,18 @@ class UserController {
       return res.status(200).json(result);
     }
 
-    async getAll(req, res) {  
+    async getAll(req, res) {
+
       const result = await this.service.getAll();
       return res.status(200).json(result);
     }
 
     async getMe(req, res) {
       const { id } = req.user;
- 
+
       if (!id || typeof id !== "number") {
         return res.status(400).json({ message: "Invalid Params" });
-      } else {  
+      } else {
         const result = await this.service.get(id); 
         return res.status(200).json(result); 
       }
@@ -73,7 +74,7 @@ class UserController {
 
     async contact(req, res) {
       const { email, phone, message } = req.body;
- 
+
       if (!email || typeof email !== "string"  || !phone || typeof phone !== "string"
           || !message || typeof message !== "string") {
         return res.status(400).json({ message: "Invalid Params" });
@@ -82,9 +83,6 @@ class UserController {
         return res.status(200).json(result); 
       }
     }
-
-    
-}  
+}
 
 module.exports = UserController;
-  
