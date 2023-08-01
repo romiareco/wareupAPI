@@ -49,6 +49,7 @@ class UserRepository {
     catch (error) {
       this.log.create('Error in get: '+error, enums.logsType.database);
     }
+    return null;
   }
 
   async getByEmail(email) {
@@ -71,8 +72,8 @@ class UserRepository {
     catch (error) {
       this.log.create('Error in getAll: '+error, enums.logsType.database);
     }
-  }
- 
+    return null;
+  } 
 }
 
 module.exports = UserRepository;

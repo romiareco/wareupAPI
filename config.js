@@ -6,7 +6,8 @@ const config = {
       password: "Pass123*",
       database: "wareup",
       recreate: false, //indicates if the tables are recreated in database
-      alter: true //indicates if the tables should be updated in database
+      alter: true, //indicates if the tables should be updated in database
+      logging: false
     },
     listPerPage: 10,
     mode: "dev", //dev - prod 

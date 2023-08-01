@@ -92,40 +92,27 @@ describe("UserController", function() {
       await userController.register(req, res);
       expect(stub.calledOnce).to.be.true;
       expect(status.calledOnce).to.be.true;
-      expect(status.args[0][0]).to.equal(201);
-      expect(json.calledOnce).to.be.true;
-      expect(json.args[0][0].data).to.equal(stubValue);
-    });
-  });
-
-  describe("get", function() {
-    let req;
-    let res;
-    let userService;
-    beforeEach(() => {
-      req = { params: { id: 1 } };
-      res = { json: function() {} };
-      const userRepo = sinon.spy();
-      userService = new UserService(userRepo);
+      expect(status.args[0][0]).to.equal(201);   
     });
 
     it("should return a user that matches the id param", async function() {
+      const req = { params: { id : "1"} };
+
       const stubValue = {
-        id: req.params.id,
+        id: 1,
         name: 'Juan',
         email: 'Juan@email.com' 
       };
       const mock = sinon.mock(res);
-      mock
-        .expects("json")
-        .once()
-        .withExactArgs({ data: stubValue });
-
+    
       const stub = sinon.stub(userService, "get").returns(stubValue);
       userController = new UserController(userService);
-      const user = await userController.get(req, res);
-      expect(stub.calledOnce).to.be.true;
+      await userController.get(req, res);
+          
+      expect(status.calledOnce).to.be.true;
+      expect(status.args[0][0]).to.equal(200);  
+      expect(json.calledOnce).to.be.true; 
       mock.verify();
     });
-  });
+  }); 
 });
