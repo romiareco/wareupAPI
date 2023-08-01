@@ -285,8 +285,7 @@ describe("UserService", function() {
 
       const logRepository = new LogRepository();
       const mailService = new MailService();
-      const userRepo = new UserRepository(logRepository); 
-      const stubMailSent = sinon.stub(mailService, "sendEmailUserCreated");
+      const userRepo = new UserRepository(logRepository);  
       const stubCheckEmail = sinon.stub(userRepo, "get").returns(null);
 
       const userService = new UserService(userRepo, logRepository, mailService);

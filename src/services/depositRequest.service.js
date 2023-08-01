@@ -9,12 +9,12 @@ class DepositRequestService {
 
   async create(depositRequestToAdd) {
     let hasError = false;
-    let message = null; 
+    let message = null;
     let resultCode = enums.resultCodes.OK;
     let depositRequest = null;
     
     try{ 
-        const { companyId } = depositRequestToAdd;  
+        const { companyId } = depositRequestToAdd;
         const company = await this.companyRepository.get(companyId);
         if(company == null){
           message = 'Compania no valida'; 
@@ -23,8 +23,8 @@ class DepositRequestService {
         }
         else{
           depositRequestToAdd.status = enums.depositRequestStatus.PENDING;
-          depositRequest = await this.repository.create(depositRequestToAdd);   
-        }   
+          depositRequest = await this.repository.create(depositRequestToAdd);
+        }
     }
     catch (error) {
       resultCode = enums.resultCodes.genericError;
@@ -41,9 +41,8 @@ class DepositRequestService {
     let message = null; 
     let resultCode = enums.resultCodes.OK;
     let depositRequest = null;
-    
+
     try{ 
-      
         const { companyId } = depositRequestToUpdate;  
         const company = await this.companyRepository.get(companyId);
         if(company == null){
@@ -52,8 +51,8 @@ class DepositRequestService {
           hasError = true;
         }
         else{ 
-          depositRequest = await this.repository.update(depositRequestToUpdate);   
-        }      
+          depositRequest = await this.repository.update(depositRequestToUpdate);
+        }
     }
     catch (error) {
       resultCode = enums.resultCodes.genericError;
@@ -67,11 +66,11 @@ class DepositRequestService {
 
   async getByCompany(companyId){ 
     let hasError = false;
-    let message = null; 
+    let message = null;
     let resultCode = enums.resultCodes.OK;
     let depositRequests = null;
 
-    try{ 
+    try{
       depositRequests = await this.repository.getByCompany(companyId); 
     }
     catch (error) {
@@ -80,7 +79,7 @@ class DepositRequestService {
       message = 'Ha ocurrido un error obteniendo las solicitudes de depositos de la compania';
 
       this.log.create('Error in getByCompany: '+ error, enums.logsType.service);
-    } 
+    }
 
     return { message, hasError, resultCode, depositRequests };
   }
