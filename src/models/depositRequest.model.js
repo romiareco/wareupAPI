@@ -3,7 +3,7 @@ const Model = Sequelize.Model;
 class DepositRequestModel extends Model {
   static init(sequelize, DataTypes) {
     return super.init(
-      { 
+      {
         id: {
           allowNull: false,
           autoIncrement: true,
@@ -48,7 +48,7 @@ class DepositRequestModel extends Model {
         },
         userId: {
           type: DataTypes.INTEGER,
-          allowNull: false,
+          allowNull: true, //momentaneo, porqe si no tenog qe recrear la base.
           references: {
             model: 'users',
             key: 'id'

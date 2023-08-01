@@ -2,12 +2,12 @@ const enums = require('../utils/enums');
 const { ServiceGroupModel, ServiceModel } = require("../database");
 const config = require('../../config'); 
 
-class ServiceGroupRepository {
-  constructor(logRepository) {
+class ServiceGroupRepository{
+  constructor(logRepository){
     this.log = logRepository;
     this.serviceGroup = ServiceGroupModel;
   }
-    
+
   async get(id) {
     try {
       return this.serviceGroup.findOne({
@@ -20,9 +20,10 @@ class ServiceGroupRepository {
     catch (error) {
       this.log.create('Error in get: '+error, enums.logsType.database);
     }
+    return null;
   }
 
-  async getAll() {
+  async getAll(){
     try {
       return await this.serviceGroup.findAll({
         include: [{
@@ -35,7 +36,7 @@ class ServiceGroupRepository {
     }
 
     return null;
-  } 
+  }
 }
 
 module.exports = ServiceGroupRepository;
