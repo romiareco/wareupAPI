@@ -1,32 +1,36 @@
 const enums = require('../utils/enums');
- 
+
 class DepositService {
-  constructor(depositRepository, logRepository, companyRepository, depositServiceRepository) {
+  constructor(depositRepository, logRepository, companyRepository, depositServiceRepository){
     this.repository = depositRepository;
-    this.log = logRepository; 
+    this.log = logRepository;
     this.companyRepository = companyRepository;
-    this.depositServiceRepository = depositServiceRepository
+    this.depositServiceRepository = depositServiceRepository; 
   }
 
-  async create(depositToAdd) {
+  async create(depositToAdd){
     let hasError = false;
-    let message = null; 
+    let message = null;
     let resultCode = enums.resultCodes.OK;
     let deposit = null;
-    
-    try{ 
-      
-        const { companyId } = depositToAdd;  
+
+    try{
+        const { companyId } = depositToAdd;
         const company = await this.companyRepository.get(companyId);
         if(company == null){
-          message = 'Compañia no valida'; 
+          message = 'Compañia no valida';
           resultCode = enums.resultCodes.invalidData;
           hasError = true;
         }
         else{
           depositToAdd.status = enums.depositStatus.PENDING;
-          deposit = await this.repository.create(depositToAdd);   
-        }      
+          deposit = await this.repository.create(depositToAdd);
+
+          const depositId = deposit.id;
+          depositToAdd.servicesId.forEach(serviceId => {
+            this.depositServiceRepository.create({depositId, serviceId});
+         });
+        }
     }
     catch (error) {
       resultCode = enums.resultCodes.genericError;
@@ -38,7 +42,7 @@ class DepositService {
     return { message, hasError, resultCode, deposit };
   }
 
-  async getByCompany(companyId){ 
+  async getByCompany(companyId){
     let hasError = false;
     let message = null; 
     let resultCode = enums.resultCodes.OK;
