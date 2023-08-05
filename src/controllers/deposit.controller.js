@@ -57,7 +57,16 @@ class DepositController {
       return res.status(200).json(result);
     }
     
+    async getImagesByDeposit(req, res, next) {
+      const { depositId } = req.params; 
+      if (!depositId || typeof depositId !== "string") {
+        return res.status(400).json({ message: "Invalid Params" });
+      }
+      const result = await this.service.getImagesByDeposit(depositId);
+      return res.status(200).json(result);
+    }
     
+
     async get(req, res, next) {
   
       const { id } = req.params;  

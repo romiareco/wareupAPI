@@ -153,7 +153,7 @@ class DepositService {
 
     try{
 
-      deposit = this.repository.get(depositId);
+      deposit = await this.repository.get(depositId);
 
       if(deposit == null){
         message = 'Deposito no valido';
@@ -161,8 +161,8 @@ class DepositService {
         hasError = true;
       }
       else{
-        images.forEach(image => {
-           this.depositImagesRepository.create({depositId, image});
+        images.forEach(async image => {
+           await this.depositImagesRepository.create({depositId, image});
         });
       }
     }
@@ -178,19 +178,19 @@ class DepositService {
 
   async getServicesByDeposit(depositId) {
     let hasError = false;
-    let message = null; 
+    let message = null;
     let resultCode = enums.resultCodes.OK;
     let depositServices = null;
-    
-    try{  
-      let deposit = await this.repository.get(depositId);   
+
+    try{
+      let deposit = await this.repository.get(depositId);
       if(deposit == null){
-        message = 'Deposito no valido'; 
+        message = 'Deposito no valido';
         resultCode = enums.resultCodes.invalidData;
         hasError = true;
       }
       else{ 
-        depositServices = await this.depositServiceRepository.getByDeposit(depositId);   
+        depositServices = await this.depositServiceRepository.getByDeposit(depositId);
       }
     }
     catch (error) {
@@ -201,6 +201,32 @@ class DepositService {
     }
 
     return { message, hasError, resultCode, depositServices };
+  }
+
+  async getImagesByDeposit(depositId) {
+    let hasError = false;
+    let message = null;
+    let resultCode = enums.resultCodes.OK;
+    let depositImages = null;
+    try{
+      let deposit = await this.repository.get(depositId);
+      if(deposit == null){
+        message = 'Deposito no valido';
+        resultCode = enums.resultCodes.invalidData;
+        hasError = true;
+      }
+      else{
+        depositImages = await this.depositImagesRepository.getByDeposit(depositId);
+      }
+    }
+    catch (error) {
+      resultCode = enums.resultCodes.genericError;
+      hasError = true;
+      message = "Error consultando las imagenes del deposito.";
+      this.log.create('Error in getImagesByDeposit: '+ error, enums.logsType.service);
+    }
+
+    return { message, hasError, resultCode, depositImages };
   }
 }
 

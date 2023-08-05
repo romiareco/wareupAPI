@@ -12,7 +12,7 @@ const ServiceModel = require("../models/services.model");
 const DepositRequestModel = require("../models/depositRequest.model");
 const DepositServiceModel= require("../models/depositService.model");
 const DepartmentModel= require("../models/department.model");
-const CityModel= require("../models/city.model");
+const CityModel = require("../models/city.model"); 
 
 const sequelize = new Sequelize(
     config.db.database,

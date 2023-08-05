@@ -4,12 +4,38 @@ const { DepositImageModel } = require("../database");
 class DepositImageRepository {
   constructor(logRepository) {
     this.log = logRepository;
-    this.model = DepositImageModel; 
+    this.model = DepositImageModel;
+  }
+
+ b64toBlob = (b64Data, contentType='', sliceSize=512) => {
+    const byteCharacters = atob(b64Data);
+    const byteArrays = [];
+
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+      const byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+
+    const blob = new Blob(byteArrays, {type: contentType});
+    return blob;
   }
 
   async create(request) {
-    try { 
-      return this.model.create(request);
+    try {
+      const blobImage = this.b64toBlob(request.image, 'image/jpeg');
+      const blobUrl = URL.createObjectURL(blobImage);
+      var blobToSave = Buffer.from(await blobImage.arrayBuffer());
+
+      return this.model.create({
+        depositId : request.depositId,
+        image : blobToSave
+      });
     }
     catch (error) {
       this.log.create('Error in create: '+error, enums.logsType.database);
