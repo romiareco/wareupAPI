@@ -16,7 +16,7 @@ class DepositController {
       return res.status(201).json(result);
     } 
 
-    async registerServices(req, res, next) {
+    /*async registerServices(req, res, next) {
 
       const { depositId, servicesId } = req.body;
 
@@ -24,6 +24,17 @@ class DepositController {
         return res.status(400).json({ message: "Invalid Params" });
       }
       const result = await this.service.addDepositServices(depositId, servicesId);
+      return res.status(200).json(result);
+    }  */
+
+    async registerImages(req, res, next) {
+
+      const { depositId, images } = req.body;
+
+      if (!depositId || typeof depositId !== "string") {
+        return res.status(400).json({ message: "Invalid Params" });
+      }
+      const result = await this.service.addDepositImages(depositId, images);
       return res.status(200).json(result);
     }  
 
@@ -35,7 +46,14 @@ class DepositController {
       const result = await this.service.getByCompany(companyId);
       return res.status(200).json(result);
     }
-
+    async getByUser(req, res, next) {
+      const { userId } = req.params; 
+      if (!userId || typeof userId !== "string") {
+        return res.status(400).json({ message: "Invalid Params" });
+      }
+      const result = await this.service.getByUser(userId);
+      return res.status(200).json(result);
+    }
     
     async getServicesByDeposit(req, res, next) {
       const { depositId } = req.params; 
@@ -46,7 +64,16 @@ class DepositController {
       return res.status(200).json(result);
     }
     
+    async getImagesByDeposit(req, res, next) {
+      const { depositId } = req.params; 
+      if (!depositId || typeof depositId !== "string") {
+        return res.status(400).json({ message: "Invalid Params" });
+      }
+      const result = await this.service.getImagesByDeposit(depositId);
+      return res.status(200).json(result);
+    }
     
+
     async get(req, res, next) {
   
       const { id } = req.params;  
@@ -60,6 +87,11 @@ class DepositController {
     
     async getAll(req, res, next) { 
       const result = await this.service.getAll();
+      return res.status(200).json(result);
+    }
+
+    async getByFilter(req, res, next) { 
+      const result = await this.service.getByFilter(req.body);
       return res.status(200).json(result);
     }  
 }  

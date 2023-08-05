@@ -66,6 +66,14 @@ class DepositModel extends Model {
             key: 'id'
           }
         },
+        userId: {
+          type: DataTypes.INTEGER,
+          allowNull: true,
+          references: {
+            model: 'users',
+            key: 'id'
+          }
+        },
       },
       {
         sequelize,

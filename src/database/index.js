@@ -12,7 +12,7 @@ const ServiceModel = require("../models/services.model");
 const DepositRequestModel = require("../models/depositRequest.model");
 const DepositServiceModel= require("../models/depositService.model");
 const DepartmentModel= require("../models/department.model");
-const CityModel= require("../models/city.model");
+const CityModel = require("../models/city.model"); 
 
 const sequelize = new Sequelize(
     config.db.database,
@@ -60,9 +60,12 @@ DepartmentModel.hasMany(CityModel);
 DepositRequestModel.belongsTo(CompanyModel, { foreignKey: 'companyId', });
 DepositRequestModel.belongsTo(CityModel, { foreignKey: 'cityId', });
 
+DepositModel.belongsTo(CompanyModel, { foreignKey: 'companyId', });
+DepositModel.belongsTo(CityModel, { foreignKey: 'cityId', });
+DepositModel.hasMany(DepositServiceModel);
+ 
 CompanyModel.belongsTo(CityModel, { foreignKey: 'cityId', });
 
-DepositModel.hasMany(DepositServiceModel);
 DepositServiceModel.belongsTo(DepositModel, { foreignKey: 'depositId', });
 DepositServiceModel.belongsTo(ServiceModel, { foreignKey: 'serviceId', });
 
