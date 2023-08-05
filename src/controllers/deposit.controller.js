@@ -81,6 +81,11 @@ class DepositController {
     async getAll(req, res, next) { 
       const result = await this.service.getAll();
       return res.status(200).json(result);
+    }
+
+    async getByFilter(req, res, next) { 
+      const result = await this.service.getByFilter(req.body);
+      return res.status(200).json(result);
     }  
 }  
 

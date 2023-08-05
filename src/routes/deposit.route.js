@@ -1,10 +1,10 @@
-const express = require("express");
-const router = express.Router();
-const DepositController = require("../controllers/deposit.controller"); 
-const { depositService } = require("./dependency");
-const mdAuth = require("../middleware/authenticated");
+var express = require("express");
+var router = express.Router();
+var DepositController = require("../controllers/deposit.controller");
+var { depositService } = require("./dependency");
+var mdAuth = require("../middleware/authenticated");
 
-const controller = new DepositController(depositService);
+var controller = new DepositController(depositService);
 
 router.post("/deposits", /*[mdAuth.validateAuth], */(req, res) => controller.register(req, res));
 router.post("/deposits/images", /*[mdAuth.validateAuth], */(req, res) => controller.registerImages(req, res));
@@ -13,5 +13,6 @@ router.get("/deposits/:id",/* [mdAuth.validateAuth], */(req, res) => controller.
 router.get("/deposits/byCompany/:companyId", /*[mdAuth.validateAuth], */(req, res) => controller.getByCompany(req, res));
 router.get("/deposits/services/:depositId", /*[mdAuth.validateAuth], */(req, res) => controller.getServicesByDeposit(req, res));
 router.get("/deposits/images/:depositId", /*[mdAuth.validateAuth], */(req, res) => controller.getImagesByDeposit(req, res));
+router.get("/deposits/byFilter", /*[mdAuth.validateAuth], */(req, res) => controller.getByFilter(req, res));
 
 module.exports = router;

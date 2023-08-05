@@ -1,4 +1,4 @@
-const enums = require('../utils/enums');
+var enums = require('../utils/enums');
 
 class DepositService {
   constructor(depositRepository, logRepository, companyRepository, depositServiceRepository, depositImagesRepository){
@@ -9,19 +9,17 @@ class DepositService {
     this.depositImagesRepository = depositImagesRepository;
   }
 
-  
-  getDepositTitle(deposit) {
+  getDepositTitle(deposit){
     var title = '';
-
+    title = deposit.title;
     return title;
   }
-  
 
   async create(depositToAdd){
-    let hasError = false;
-    let message = null;
-    let resultCode = enums.resultCodes.OK;
-    let deposit = null;
+    var hasError = false;
+    var message = null;
+    var resultCode = enums.resultCodes.OK;
+    var deposit = null;
 
     try{
         const { companyId } = depositToAdd;
@@ -37,8 +35,8 @@ class DepositService {
 
           deposit = await this.repository.create(depositToAdd);
 
-          const depositId = deposit.id;
-          depositToAdd.servicesId.forEach(serviceId => {
+          var depositId = deposit.id;
+          depositToAdd.servicesId.forEach((serviceId) => {
             this.depositServiceRepository.create({depositId, serviceId});
          });
         }
@@ -54,13 +52,13 @@ class DepositService {
   }
 
   async getByCompany(companyId){
-    let hasError = false;
-    let message = null; 
-    let resultCode = enums.resultCodes.OK;
-    let deposits = null;
+    var hasError = false;
+    var message = null;
+    var resultCode = enums.resultCodes.OK;
+    var deposits = null;
 
-    try{ 
-      deposits = await this.repository.getByCompany(companyId); 
+    try{
+      deposits = await this.repository.getByCompany(companyId);
     }
     catch (error) {
       resultCode = enums.resultCodes.genericError;
@@ -68,19 +66,39 @@ class DepositService {
       message = 'Ha ocurrido un error obteniendo los depositos de la compañia';
 
       this.log.create('Error in getByCompany: '+ error, enums.logsType.service);
-    } 
+    }
 
     return { message, hasError, resultCode, deposits };
   } 
 
-  async getAll(){ 
+  async getByFilter(filterOptions){
+    var hasError = false;
+    var message = null;
+    var resultCode = enums.resultCodes.OK;
+    var deposits = null;
+
+    try{
+      deposits = await this.repository.getByFilter(filterOptions);
+    }
+    catch (error) {
+      resultCode = enums.resultCodes.genericError;
+      hasError = true;
+      message = 'Ha ocurrido un error obteniendo los depositos de la compañia';
+
+      this.log.create('Error in getByFilter: '+ error, enums.logsType.service);
+    }
+
+    return { message, hasError, resultCode, deposits };
+  }
+
+  async getAll(){
     let hasError = false;
-    let message = null; 
+    let message = null;
     let resultCode = enums.resultCodes.OK;
     let deposits = null;
 
-    try{ 
-      deposits = await this.repository.getAll(); 
+    try{
+      deposits = await this.repository.getAll();
     }
     catch (error) {
       resultCode = enums.resultCodes.genericError;
@@ -88,10 +106,10 @@ class DepositService {
       message = 'Ha ocurrido un error obteniendo los depositos de la compañia';
 
       this.log.create('Error in getAll: '+ error, enums.logsType.service);
-    } 
+    }
 
     return { message, hasError, resultCode, deposits };
-  } 
+  }
 
   async get(id){ 
     let hasError = false;
@@ -99,7 +117,7 @@ class DepositService {
     let resultCode = enums.resultCodes.OK;
     let deposit = null;
 
-    try{ 
+    try{
       deposit = await this.repository.get(id);
     }
     catch (error) {
@@ -108,7 +126,7 @@ class DepositService {
       message = 'Ha ocurrido un error obteniendo el depositO';
 
       this.log.create('Error in get: '+ error, enums.logsType.service);
-    } 
+    }
 
     return { message, hasError, resultCode, deposit };
   } 

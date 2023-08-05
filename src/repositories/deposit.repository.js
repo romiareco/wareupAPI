@@ -43,6 +43,19 @@ class DepositRepository {
     return null;
   }
 
+  async getByFilter(filterOptions) {
+    try {
+      return await this.model.findAll({
+        where:  { title: { $like: '%'+filterOptions.title+'%' } }
+      });
+    }
+    catch (error) {
+      this.log.create('Error in getByCompany: '+error, enums.logsType.database);
+    }
+
+    return null;
+  }
+
   async getAll() {
     try {
       return await this.model.findAll();

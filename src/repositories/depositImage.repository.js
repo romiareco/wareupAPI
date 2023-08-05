@@ -29,7 +29,6 @@ class DepositImageRepository {
   async create(request) {
     try {
       const blobImage = this.b64toBlob(request.image, 'image/jpeg');
-      const blobUrl = URL.createObjectURL(blobImage);
       var blobToSave = Buffer.from(await blobImage.arrayBuffer());
 
       return this.model.create({
