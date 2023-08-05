@@ -31,7 +31,7 @@ class DepositService {
         }
         else{
           depositToAdd.status = enums.depositStatus.PENDING;
-          depositToAdd.title = getDepositTitle(depositToAdd);
+          depositToAdd.title = this.getDepositTitle(depositToAdd);
 
           deposit = await this.repository.create(depositToAdd);
 
@@ -50,6 +50,26 @@ class DepositService {
 
     return { message, hasError, resultCode, deposit };
   }
+
+  async getByUser(userId){
+    var hasError = false;
+    var message = null;
+    var resultCode = enums.resultCodes.OK;
+    var deposits = null;
+
+    try{
+      deposits = await this.repository.getByUser(userId);
+    }
+    catch (error) {
+      resultCode = enums.resultCodes.genericError;
+      hasError = true;
+      message = 'Ha ocurrido un error obteniendo los depositos del usuario';
+
+      this.log.create('Error in getByUser: '+ error, enums.logsType.service);
+    }
+
+    return { message, hasError, resultCode, deposits };
+  } 
 
   async getByCompany(companyId){
     var hasError = false;

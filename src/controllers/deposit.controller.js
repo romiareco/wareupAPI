@@ -46,7 +46,14 @@ class DepositController {
       const result = await this.service.getByCompany(companyId);
       return res.status(200).json(result);
     }
-
+    async getByUser(req, res, next) {
+      const { userId } = req.params; 
+      if (!userId || typeof userId !== "string") {
+        return res.status(400).json({ message: "Invalid Params" });
+      }
+      const result = await this.service.getByUser(userId);
+      return res.status(200).json(result);
+    }
     
     async getServicesByDeposit(req, res, next) {
       const { depositId } = req.params; 

@@ -1,5 +1,5 @@
 const enums = require('../utils/enums');
-const { DepositModel } = require("../database"); 
+const { DepositModel, CityModel, CompanyModel } = require("../database"); 
 const DepositServiceModel = require('../models/depositService.model');
 
 class DepositRepository {
@@ -62,6 +62,20 @@ class DepositRepository {
     }
     catch (error) {
       this.log.create('Error in getAll: '+error, enums.logsType.database);
+    }
+
+    return null;
+  }
+
+  async getByUser(userId) {
+    try {
+      return await this.model.findAll({
+        where: {userId: userId},
+        include: [CompanyModel, CityModel]
+      });
+    }
+    catch (error) {
+      this.log.create('Error in getByUser: '+error, enums.logsType.database);
     }
 
     return null;

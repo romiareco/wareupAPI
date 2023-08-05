@@ -60,9 +60,12 @@ DepartmentModel.hasMany(CityModel);
 DepositRequestModel.belongsTo(CompanyModel, { foreignKey: 'companyId', });
 DepositRequestModel.belongsTo(CityModel, { foreignKey: 'cityId', });
 
+DepositModel.belongsTo(CompanyModel, { foreignKey: 'companyId', });
+DepositModel.belongsTo(CityModel, { foreignKey: 'cityId', });
+DepositModel.hasMany(DepositServiceModel);
+ 
 CompanyModel.belongsTo(CityModel, { foreignKey: 'cityId', });
 
-DepositModel.hasMany(DepositServiceModel);
 DepositServiceModel.belongsTo(DepositModel, { foreignKey: 'depositId', });
 DepositServiceModel.belongsTo(ServiceModel, { foreignKey: 'serviceId', });
 
