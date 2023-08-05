@@ -15,6 +15,7 @@ const DepositServiceRepository = require("../repositories/depositService.reposit
 const DepartmentRepository = require("../repositories/department.repository");
 const CityRepository = require("../repositories/city.repository");
 const CommonService = require("../services/common.service");
+const DepositImageRepository = require("../repositories/depositImage.repository");
 
 const logRepository = new LogRepository();
 const userRepository = new UserRepository(logRepository);
@@ -25,13 +26,14 @@ const depositRequestRepository = new DepositRequestRepository(logRepository);
 const depositServiceRepository = new DepositServiceRepository(logRepository); 
 const departmentRepository = new DepartmentRepository(logRepository);
 const cityRepository = new CityRepository(logRepository);
+const depositImageRepository = new DepositImageRepository(logRepository);
 
 const mailService = new MailService(logRepository);
 const userService = new UserService(userRepository, logRepository, mailService); 
 const authService = new AuthService(userRepository, logRepository);
 const companyService = new CompanyService(companyRepository, logRepository, userRepository);
 const depositRequestService = new DepositRequestService(depositRequestRepository, logRepository, companyRepository);
-const depositService = new DepositService(depositRepository, logRepository, companyRepository, depositServiceRepository);
+const depositService = new DepositService(depositRepository, logRepository, companyRepository, depositServiceRepository, depositImageRepository);
 const serviceGroupService = new ServiceGroupService(serviceGroupRepository, logRepository);
 const commonService = new CommonService(departmentRepository, cityRepository, logRepository);
 

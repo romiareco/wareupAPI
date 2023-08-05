@@ -1,12 +1,21 @@
 const enums = require('../utils/enums');
 
 class DepositService {
-  constructor(depositRepository, logRepository, companyRepository, depositServiceRepository){
+  constructor(depositRepository, logRepository, companyRepository, depositServiceRepository, depositImagesRepository){
     this.repository = depositRepository;
     this.log = logRepository;
     this.companyRepository = companyRepository;
-    this.depositServiceRepository = depositServiceRepository; 
+    this.depositServiceRepository = depositServiceRepository;
+    this.depositImagesRepository = depositImagesRepository;
   }
+
+  
+  getDepositTitle(deposit) {
+    var title = '';
+
+    return title;
+  }
+  
 
   async create(depositToAdd){
     let hasError = false;
@@ -24,6 +33,8 @@ class DepositService {
         }
         else{
           depositToAdd.status = enums.depositStatus.PENDING;
+          depositToAdd.title = getDepositTitle(depositToAdd);
+
           deposit = await this.repository.create(depositToAdd);
 
           const depositId = deposit.id;
@@ -103,7 +114,7 @@ class DepositService {
   } 
 
 
-  async addDepositServices(depositId, servicesId) {
+  /*async addDepositServices(depositId, servicesId) {
     let hasError = false;
     let message = null; 
     let resultCode = enums.resultCodes.OK;
@@ -129,6 +140,37 @@ class DepositService {
       hasError = true;
       message = "Error asociando los servicios al deposito.";
       this.log.create('Error in addDepositServices: '+ error, enums.logsType.service);
+    }
+
+    return { message, hasError, resultCode, deposit };
+  }*/
+
+  async addDepositImages(depositId, images) {
+    let hasError = false;
+    let message = null;
+    let resultCode = enums.resultCodes.OK;
+    let deposit = null;
+
+    try{
+
+      deposit = this.repository.get(depositId);
+
+      if(deposit == null){
+        message = 'Deposito no valido';
+        resultCode = enums.resultCodes.invalidData;
+        hasError = true;
+      }
+      else{
+        images.forEach(image => {
+           this.depositImagesRepository.create({depositId, image});
+        });
+      }
+    }
+    catch (error) {
+      resultCode = enums.resultCodes.genericError;
+      hasError = true;
+      message = "Error asociando las imagenes al deposito.";
+      this.log.create('Error in addDepositImages: '+ error, enums.logsType.service);
     }
 
     return { message, hasError, resultCode, deposit };

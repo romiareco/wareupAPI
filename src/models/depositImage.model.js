@@ -19,13 +19,9 @@ class DepositImageModel extends Model {
           }
         },
         image: {
-          type: DataTypes.STRING,
+          type: DataTypes.LONGTEXT,
           allowNull: false
-        },
-        order: {
-          type: DataTypes.INTEGER,
-          allowNull: false
-        } 
+        }
       },
       {
         sequelize,

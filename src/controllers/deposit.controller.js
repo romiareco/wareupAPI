@@ -16,7 +16,7 @@ class DepositController {
       return res.status(201).json(result);
     } 
 
-    async registerServices(req, res, next) {
+    /*async registerServices(req, res, next) {
 
       const { depositId, servicesId } = req.body;
 
@@ -24,6 +24,17 @@ class DepositController {
         return res.status(400).json({ message: "Invalid Params" });
       }
       const result = await this.service.addDepositServices(depositId, servicesId);
+      return res.status(200).json(result);
+    }  */
+
+    async registerImages(req, res, next) {
+
+      const { depositId, images } = req.body;
+
+      if (!depositId || typeof depositId !== "string") {
+        return res.status(400).json({ message: "Invalid Params" });
+      }
+      const result = await this.service.addDepositImages(depositId, images);
       return res.status(200).json(result);
     }  
 

@@ -1,14 +1,14 @@
 const enums = require('../utils/enums');
- 
+
 class ServiceGroupService {
   constructor(serviceGroupRepository, logRepository) {
     this.repository = serviceGroupRepository;
-    this.log = logRepository;  
+    this.log = logRepository;
   }
    
   async getAll(){ 
     let hasError = false;
-    let message = null; 
+    let message = null;
     let resultCode = enums.resultCodes.OK;
     let serviceGroups = null;
 
@@ -28,11 +28,11 @@ class ServiceGroupService {
 
   async get(id){ 
     let hasError = false;
-    let message = null; 
+    let message = null;
     let resultCode = enums.resultCodes.OK;
     let serviceGroup = null;
 
-    try{ 
+    try{
       serviceGroup =  await this.repository.get(id);
     }
     catch (error) {
@@ -40,9 +40,9 @@ class ServiceGroupService {
       hasError = true;
       message = 'Ha ocurrido un error obteniendo los service groups ';
       this.log.create('Error in get: '+ error, enums.logsType.service);
-    } 
+    }
 
-    return { message, hasError, resultCode, serviceGroup };
+    return {message, hasError, resultCode, serviceGroup};
   }
 }
 
