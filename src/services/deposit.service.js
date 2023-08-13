@@ -51,6 +51,43 @@ class DepositService {
     return { message, hasError, resultCode, deposit };
   }
 
+  async update(depositToUpdate) {
+    let hasError = false;
+    let message = null; 
+    let resultCode = enums.resultCodes.OK;
+    let deposit = null;
+
+    try{  
+        let depositInDb = await this.repository.get(depositToUpdate.id);
+        if(depositInDb == null){
+          message = 'El deposito no existe.';
+          resultCode = enums.resultCodes.invalidData;
+          hasError = true;
+          return {message, hasError, resultCode, deposit};
+        }
+
+        depositInDb.status = depositToUpdate.status;
+        depositInDb.title = depositToUpdate.title;
+        depositInDb.description = depositToUpdate.description;
+        depositInDb.totalM3 = depositToUpdate.totalM3;
+        depositInDb.comment = depositToUpdate.comment;
+        depositInDb.minimumBusinessPeriod = depositToUpdate.minimumBusinessPeriod;
+        depositInDb.minimumBusinessVolume = depositToUpdate.minimumBusinessVolume;
+        depositInDb.expectedPrice = depositToUpdate.expectedPrice;
+   
+        await this.repository.update(depositInDb);
+        deposit = await this.repository.get(depositToUpdate.id);
+    }
+    catch (error) {
+      message = 'Error al actualizar el deposito.';
+      resultCode = enums.resultCodes.genericError;
+      hasError = true;
+      this.log.create('Error in update: '+ error, enums.logsType.service);
+    }
+
+    return {message, hasError, resultCode, deposit};
+  }
+
   async getByUser(userId){
     var hasError = false;
     var message = null;

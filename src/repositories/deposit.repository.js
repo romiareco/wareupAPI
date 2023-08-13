@@ -18,6 +18,29 @@ class DepositRepository {
     return null;
   }
 
+  async update(request) {
+    try { 
+        return this.model.update(
+          { 
+            status: request.status,
+            title: request.title,
+            description: request.description,
+            totalM3: request.totalM3,
+            comment: request.comment,
+            minimumBusinessPeriod: request.minimumBusinessPeriod ,
+            minimumBusinessVolume: request.minimumBusinessVolume,
+            expectedPrice: request.expectedPrice
+          },
+          {
+            where: { id : request.id}
+          });
+    }
+    catch (error) {
+      this.log.create('Error in update: '+ error, enums.logsType.database);
+    }
+    return null;
+  }
+
   async get(id){
     try {
       return this.model.findOne({

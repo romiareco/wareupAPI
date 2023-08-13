@@ -8,17 +8,47 @@ class CompanyController {
   
     async register(req, res, next) {
   
-      const {userId, RUT, businessName, email, phone, contactName, position, address } = req.body;
+      const {userId, RUT, businessName, email, phone, contactName } = req.body;
     
       if ((!RUT || typeof RUT !== "string") 
-        || (!businessName || typeof businessName !== "string") || (!email || typeof email !== "string")
-        || (!phone || typeof phone !== "string") || (!contactName || typeof contactName !== "string")
+        || (!businessName || typeof businessName !== "string") 
+        || (!email || typeof email !== "string")
+        || (!phone || typeof phone !== "string") 
+        || (!contactName || typeof contactName !== "string")
         || (!userId || typeof userId !== "number")) {
         return res.status(400).json({ message: "Invalid Params"});
       }
       const result = await this.service.create(req.body);
 
-      return res.status(201).json(result);
+      return res.status(200).json(result);
+    }
+
+    async update(req, res, next) {
+      const { status, email, phone, id, businessName, contactName, RUT } = req.body;
+  
+      if (!id 
+         || (!status || typeof status !== "number")
+         || (!email || typeof email !== "string") 
+         || (!phone || typeof phone !== "string")
+         || (!businessName || typeof businessName !== "string")
+         || (!contactName || typeof contactName !== "string") 
+         || (!RUT || typeof RUT !== "string") ) {
+        return res.status(400).json({ message: "Invalid Params" });
+      }   
+ 
+      const result = await this.service.update(req.body);
+      return res.status(200).json(result);
+    }
+
+    async delete(req, res, next) {
+      const { id } = req.body;
+  
+      if (!id) {
+        return res.status(400).json({ message: "Invalid Params" });
+      }   
+ 
+      const result = await this.service.delete(req.body);
+      return res.status(200).json(result);
     }
 
     async getByUser(req, res, next) {
