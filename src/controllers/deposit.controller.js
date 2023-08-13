@@ -13,8 +13,22 @@ class DepositController {
         return res.status(400).json({ message: "Invalid Params" });
       }
       const result = await this.service.create(req.body);
-      return res.status(201).json(result);
+      return res.status(200).json(result);
     } 
+
+    async update(req, res, next) {
+      const { status, description, title, id } = req.body;
+  
+      if (!id 
+        || !status || typeof status !== "number" 
+        || (!description || typeof description !== "string") 
+        || (!title || typeof title !== "string")) {
+        return res.status(400).json({ message: "Invalid Params" });
+      }
+ 
+      const result = await this.service.update(req.body);
+      return res.status(200).json(result);
+    }
 
     /*async registerServices(req, res, next) {
 

@@ -93,21 +93,96 @@ describe("UserController", function() {
       expect(stub.calledOnce).to.be.true;
       expect(status.calledOnce).to.be.true;
       expect(status.args[0][0]).to.equal(201);   
-    });
+    }); 
+  }); 
 
-    it("should return a user that matches the id param", async function() {
+
+  describe("get", function() {
+    let status, json, res, controller, service;
+    beforeEach(() => {
+      status = sinon.stub();
+      json = sinon.spy();
+      res = { json, status };
+      status.returns(res);
+      const repository = sinon.spy();
+      service = new UserService(repository);
+    });   
+   
+    it("should return a user that matches id", async function() {
       const req = { params: { id : "1"} };
 
       const stubValue = {
         id: 1,
-        name: 'Juan',
-        email: 'Juan@email.com' 
+        name: 'Juan'
       };
       const mock = sinon.mock(res);
     
-      const stub = sinon.stub(userService, "get").returns(stubValue);
-      userController = new UserController(userService);
-      await userController.get(req, res);
+      const stub = sinon.stub(service, "get").returns(stubValue);
+      controller = new UserController(service);
+      await controller.get(req, res);
+          
+      expect(status.calledOnce).to.be.true;
+      expect(status.args[0][0]).to.equal(200);  
+      expect(json.calledOnce).to.be.true; 
+      mock.verify();
+    });
+  }); 
+
+
+  describe("getAll", function() {
+    let status, json, res, controller, service;
+    beforeEach(() => {
+      status = sinon.stub();
+      json = sinon.spy();
+      res = { json, status };
+      status.returns(res);
+      const repository = sinon.spy();
+      service = new UserService(repository);
+    });   
+   
+    it("should return all users", async function() {
+      const req = { params: { id : "1"} };
+
+      const stubValue = {
+        id: 1,
+        name: 'Juan'
+      };
+      const mock = sinon.mock(res);
+    
+      const stub = sinon.stub(service, "getAll").returns([stubValue]);
+      controller = new UserController(service);
+      await controller.getAll(req, res);
+          
+      expect(status.calledOnce).to.be.true;
+      expect(status.args[0][0]).to.equal(200);  
+      expect(json.calledOnce).to.be.true; 
+      mock.verify();
+    });
+  }); 
+
+  describe("recoverPassword", function() {
+    let status, json, res, controller, service;
+    beforeEach(() => {
+      status = sinon.stub();
+      json = sinon.spy();
+      res = { json, status };
+      status.returns(res);
+      const repository = sinon.spy();
+      service = new UserService(repository);
+    });   
+   
+    it("should recoverPassword password", async function() {
+      const req = { body: { id : "1", email: 'email@email.com'} };
+
+      const stubValue = {
+        id: 1,
+        name: 'Juan'
+      };
+      const mock = sinon.mock(res);
+    
+      const stub = sinon.stub(service, "recoverPassword").returns(stubValue);
+      controller = new UserController(service);
+      await controller.recoverPassword(req, res);
           
       expect(status.calledOnce).to.be.true;
       expect(status.args[0][0]).to.equal(200);  

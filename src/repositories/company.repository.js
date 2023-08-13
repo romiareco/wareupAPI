@@ -18,6 +18,31 @@ class CompanyRepository {
     return null;
   }
 
+  async update(request) {
+    try { 
+        return this.model.update(
+          { 
+            status: request.status,
+            RUT: request.RUT,
+            businessName: request.businessName,
+            email: request.email,
+            phone: request.phone,
+            contactName: request.contactName,
+            position: request.position, 
+            cityId: request.cityId,
+            address: request.address,
+            postalCode: request.postalCode
+          },
+          {
+            where: { id : request.id}
+          });
+    }
+    catch (error) {
+      this.log.create('Error in update: '+ error, enums.logsType.database);
+    }
+    return null;
+  }
+
   async get(id){
     try {
       return this.model.findOne({

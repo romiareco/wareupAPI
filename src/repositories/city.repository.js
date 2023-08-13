@@ -1,5 +1,5 @@
 const enums = require('../utils/enums');
-const {  CityModel } = require("../database"); 
+const { CityModel } = require("../database");
 
 class CityRepository {
   constructor(logRepository) {
