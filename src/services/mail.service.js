@@ -67,7 +67,7 @@ class MailService {
             const msg = {
                 to: config.sendgrid.contactTo, 
                 from: config.sendgrid.from,
-                subject: 'Contacto',
+                subject: contactForm.subject,
                 template_id: 'd-48b73a2b24ae42adbe37ba1291adc9f4',
                 dynamicTemplateData: {
                     clientName: contactForm.clientName,

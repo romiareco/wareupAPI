@@ -22,7 +22,7 @@ class DepositModel extends Model {
           type: DataTypes.INTEGER,
           allowNull: true
         },
-        comment: {
+        currency: {
           type: DataTypes.STRING,
           allowNull: true
         },

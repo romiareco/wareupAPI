@@ -71,7 +71,7 @@ class ServiceModel extends Model {
     super.findOrCreate({where: { title: 'Verificacion de carga' }, defaults:  {title: 'Verificacion de carga', description: null, serviceGroupId:3, order: 11, status: 1}});
     super.findOrCreate({where: { title: 'Otros' }, defaults:  {title: 'Otros', description: null, serviceGroupId:3, order: 12, status: 1}});
 
-    super.findOrCreate({where: { title: 'Algun Seguro...' }, defaults:  {title: 'Algun Seguro...', description: null, serviceGroupId:4, order: 1, status: 1}}); 
+    super.findOrCreate({where: { title: 'Otros' }, defaults:  {title: 'Otros', description: null, serviceGroupId:4, order: 1, status: 1}}); 
 
     super.findOrCreate({where: { title: 'ISO' }, defaults:  {title: 'ISO', description: null, serviceGroupId:5, order: 1, status: 1}}); 
     super.findOrCreate({where: { title: 'OSSAS' }, defaults:  {title: 'OSSAS', description: null, serviceGroupId:5, order: 2, status: 1}});
@@ -84,6 +84,14 @@ class ServiceModel extends Model {
     super.findOrCreate({where: { title: 'DINIMA' }, defaults:  {title: 'DINIMA', description: null, serviceGroupId:6, order: 4, status: 1}});
     super.findOrCreate({where: { title: 'Bomberos' }, defaults:  {title: 'Bomberos', description: null, serviceGroupId:6, order: 5, status: 1}});
     super.findOrCreate({where: { title: 'Otras' }, defaults:  {title: 'Otras', description: null, serviceGroupId:6, order: 6, status: 1}});
+
+    super.findOrCreate({where: { title: 'Lunes' }, defaults:  {title: 'Lunes', description: null, serviceGroupId:7, order: 1, status: 1}});
+    super.findOrCreate({where: { title: 'Martes' }, defaults:  {title: 'Martes', description: null, serviceGroupId:7, order: 2, status: 1}});
+    super.findOrCreate({where: { title: 'Miercoles' }, defaults:  {title: 'Miercoles', description: null, serviceGroupId:7, order: 3, status: 1}});
+    super.findOrCreate({where: { title: 'Jueves' }, defaults:  {title: 'Jueves', description: null, serviceGroupId:7, order: 4, status: 1}});
+    super.findOrCreate({where: { title: 'Viernes' }, defaults:  {title: 'Viernes', description: null, serviceGroupId:7, order: 5, status: 1}});
+    super.findOrCreate({where: { title: 'Sabado' }, defaults:  {title: 'Sabado', description: null, serviceGroupId:7, order: 6, status: 1}});
+    super.findOrCreate({where: { title: 'Domingo' }, defaults:  {title: 'Domingo', description: null, serviceGroupId:7, order: 6, status: 1}});
   } 
 }   
 module.exports = ServiceModel;

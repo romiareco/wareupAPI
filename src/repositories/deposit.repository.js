@@ -26,10 +26,13 @@ class DepositRepository {
             title: request.title,
             description: request.description,
             totalM3: request.totalM3,
-            comment: request.comment,
+            currency: request.currency,
+            cityId: request.cityId,
             minimumBusinessPeriod: request.minimumBusinessPeriod ,
             minimumBusinessVolume: request.minimumBusinessVolume,
-            expectedPrice: request.expectedPrice
+            expectedPrice: request.expectedPrice,
+            street: request.street,
+            postalCode: request.postalCode
           },
           {
             where: { id : request.id}
