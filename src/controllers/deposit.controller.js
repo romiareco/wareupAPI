@@ -10,7 +10,7 @@ class DepositController {
       const { description, cityId, totalM3} = req.body;
 
       if (!description || typeof description !== "string" || !cityId || typeof cityId !== "number"
-        || !totalM3 || typeof totalM3 !== "string") {
+        || !totalM3 || typeof totalM3 !== "number") {
         return res.status(400).json({ message: "Invalid Params" });
       }
       const result = await this.service.create(req.body);
@@ -23,7 +23,7 @@ class DepositController {
       if (!id 
         || !status || typeof status !== "number" 
         || !description || typeof description !== "string" || !cityId || typeof cityId !== "number"
-        || !totalM3 || typeof totalM3 !== "string") {
+        || !totalM3 || typeof totalM3 !== "number") {
         return res.status(400).json({ message: "Invalid Params" });
       }
  
