@@ -35,9 +35,11 @@ class DepositService {
           deposit = await this.repository.create(depositToAdd);
 
           var depositId = deposit.id;
-          depositToAdd.servicesId.forEach((serviceId) => {
-            this.depositServiceRepository.create({depositId, serviceId});
-         });
+          if(!!depositToAdd.servicesId){
+            depositToAdd.servicesId.forEach((serviceId) => {
+              this.depositServiceRepository.create({depositId, serviceId});
+           });
+          }
         }
     }
     catch (error) {
@@ -66,7 +68,7 @@ class DepositService {
         }
 
         var city = await this.cityRepository.get(depositToUpdate.cityId); 
-        depositInDb.title = city.title + ' ' + depositToUpdate.totalM3 + ' m3';
+        depositInDb.title = city.title + ' ' + depositToUpdate.totalM3 + ' M3';
  
         depositInDb.status = depositToUpdate.status; 
         depositInDb.cityId = depositToUpdate.cityId; 
@@ -78,6 +80,25 @@ class DepositService {
         depositInDb.expectedPrice = depositToUpdate.expectedPrice;
      
         await this.repository.update(depositInDb);
+
+        //Update services
+        let depositId = depositToUpdate.id;
+        if(!!depositToUpdate.servicesId){
+          depositToUpdate.servicesId.forEach(async (serviceId) => {
+            await this.depositServiceRepository.create({depositId, serviceId});
+         });
+        }
+        
+        console.log(depositInDb);
+        if(!!depositInDb.depositServices){
+          depositInDb.depositServices.forEach(async (depositService) => {
+            if(!depositToUpdate.servicesId || !depositToUpdate.servicesId.find(s=>s == depositService.serviceId)){
+              let serviceId = depositService.serviceId;
+              await this.depositServiceRepository.delete({depositId, serviceId});
+            }
+         });
+        }
+
         deposit = await this.repository.get(depositToUpdate.id);
     }
     catch (error) {

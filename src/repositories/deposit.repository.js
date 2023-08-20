@@ -1,5 +1,5 @@
 const enums = require('../utils/enums');
-const { DepositModel, CityModel, CompanyModel } = require("../database"); 
+const { DepositModel, CityModel, CompanyModel, ServiceModel } = require("../database"); 
 const DepositServiceModel = require('../models/depositService.model');
 
 class DepositRepository {
@@ -47,7 +47,8 @@ class DepositRepository {
   async get(id){
     try {
       return this.model.findOne({
-        where: {id: id}
+        where: {id: id},
+        include: [CompanyModel, CityModel, DepositServiceModel]
       });
     }
     catch (error) {
@@ -59,7 +60,8 @@ class DepositRepository {
   async getByCompany(companyId) {
     try {
       return await this.model.findAll({
-        where: {companyId: companyId}
+        where: {companyId: companyId},
+        include: [CompanyModel, CityModel, DepositServiceModel]
       });
     }
     catch (error) {
@@ -72,7 +74,8 @@ class DepositRepository {
   async getByFilter(filterOptions) {
     try {
       return await this.model.findAll({
-        where:  { title: { $like: '%'+filterOptions.title+'%' } }
+        where:  { title: { $like: '%'+filterOptions.title+'%' }},
+        include: [CompanyModel, CityModel, DepositServiceModel] 
       });
     }
     catch (error) {
@@ -84,7 +87,8 @@ class DepositRepository {
 
   async getAll() {
     try {
-      return await this.model.findAll();
+      return await this.model.findAll({
+        include: [CompanyModel, CityModel, DepositServiceModel]});
     }
     catch (error) {
       this.log.create('Error in getAll: '+error, enums.logsType.database);
@@ -97,7 +101,7 @@ class DepositRepository {
     try {
       return await this.model.findAll({
         where: {userId: userId},
-        include: [CompanyModel, CityModel]
+        include: [CompanyModel, CityModel, DepositServiceModel]
       });
     }
     catch (error) {
