@@ -33,7 +33,7 @@ const userService = new UserService(userRepository, logRepository, mailService);
 const authService = new AuthService(userRepository, logRepository);
 const companyService = new CompanyService(companyRepository, logRepository, userRepository);
 const depositRequestService = new DepositRequestService(depositRequestRepository, logRepository, companyRepository);
-const depositService = new DepositService(depositRepository, logRepository, companyRepository, depositServiceRepository, depositImageRepository);
+const depositService = new DepositService(depositRepository, logRepository, companyRepository, depositServiceRepository, depositImageRepository, cityRepository);
 const serviceGroupService = new ServiceGroupService(serviceGroupRepository, logRepository);
 const commonService = new CommonService(departmentRepository, cityRepository, logRepository);
 

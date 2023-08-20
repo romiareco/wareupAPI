@@ -7,9 +7,10 @@ class DepositController {
     }
 
     async register(req, res, next) {
-      const { title, description} = req.body;
+      const { description, cityId, totalM3} = req.body;
 
-      if (!title || typeof title !== "string" || !description || typeof description !== "string") {
+      if (!description || typeof description !== "string" || !cityId || typeof cityId !== "number"
+        || !totalM3 || typeof totalM3 !== "string") {
         return res.status(400).json({ message: "Invalid Params" });
       }
       const result = await this.service.create(req.body);
@@ -17,12 +18,12 @@ class DepositController {
     } 
 
     async update(req, res, next) {
-      const { status, description, title, id } = req.body;
+      const { status, description, cityId, id, totalM3 } = req.body;
   
       if (!id 
         || !status || typeof status !== "number" 
-        || (!description || typeof description !== "string") 
-        || (!title || typeof title !== "string")) {
+        || !description || typeof description !== "string" || !cityId || typeof cityId !== "number"
+        || !totalM3 || typeof totalM3 !== "string") {
         return res.status(400).json({ message: "Invalid Params" });
       }
  
@@ -30,6 +31,17 @@ class DepositController {
       return res.status(200).json(result);
     }
 
+    async delete(req, res, next) {
+      const { id } = req.body;
+  
+      if (!id) {
+        return res.status(400).json({ message: "Invalid Params" });
+      }   
+ 
+      const result = await this.service.delete(req.body);
+      return res.status(200).json(result);
+    }
+    
     /*async registerServices(req, res, next) {
 
       const { depositId, servicesId } = req.body;

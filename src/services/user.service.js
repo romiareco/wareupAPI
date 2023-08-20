@@ -231,6 +231,35 @@ class UserService {
 
     return { message, hasError, resultCode, users };
   }
+
+  async delete(userToDelete) {
+    let hasError = false;
+    let message = null; 
+    let resultCode = enums.resultCodes.OK;
+    let user = null;
+
+    try{  
+        let userInDb = await this.repository.get(userToDelete.id);
+        if(userInDb == null){
+          message = 'El usuario no existe.';
+          resultCode = enums.resultCodes.invalidData;
+          hasError = true;
+          return {message, hasError, resultCode, user};
+        }   
+        userInDb.status = enums.userStatus.DELETED;
+
+        await this.repository.update(userInDb);
+        user = await this.repository.get(userToDelete.id);
+    }
+    catch (error) {
+      message = 'Error al eliminar el usuario.';
+      resultCode = enums.resultCodes.genericError;
+      hasError = true;
+      this.log.create('Error in delete: '+ error, enums.logsType.service);
+    }
+
+    return {message, hasError, resultCode, user};
+  }
 }
 
 module.exports = UserService;

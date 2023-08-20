@@ -20,7 +20,7 @@ class DepositServiceRepository {
 
   async delete(request) {
     try { 
-        return this.model.delete(request);
+        return this.model.destroy({where: { serviceId: request.serviceId, depositId: request.depositId },});
     }
     catch (error) {
       this.log.create('Error in create: '+error, enums.logsType.database);

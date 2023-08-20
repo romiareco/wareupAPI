@@ -1,19 +1,16 @@
 var enums = require('../utils/enums');
 
 class DepositService {
-  constructor(depositRepository, logRepository, companyRepository, depositServiceRepository, depositImagesRepository){
+  constructor(depositRepository, logRepository, companyRepository, depositServiceRepository, 
+    depositImagesRepository, cityRepository){
     this.repository = depositRepository;
     this.log = logRepository;
     this.companyRepository = companyRepository;
     this.depositServiceRepository = depositServiceRepository;
     this.depositImagesRepository = depositImagesRepository;
+    this.cityRepository = cityRepository;
   }
-
-  getDepositTitle(deposit){
-    var title = '';
-    title = deposit.title;
-    return title;
-  }
+ 
 
   async create(depositToAdd){
     var hasError = false;
@@ -31,14 +28,18 @@ class DepositService {
         }
         else{
           depositToAdd.status = enums.depositStatus.PENDING;
-          depositToAdd.title = this.getDepositTitle(depositToAdd);
+ 
+          var city = await this.cityRepository.get(depositToAdd.cityId); 
+          depositToAdd.title = city.title + ' ' + depositToAdd.totalM3 + ' m3';
 
           deposit = await this.repository.create(depositToAdd);
 
           var depositId = deposit.id;
-          depositToAdd.servicesId.forEach((serviceId) => {
-            this.depositServiceRepository.create({depositId, serviceId});
-         });
+          if(!!depositToAdd.servicesId){
+            depositToAdd.servicesId.forEach((serviceId) => {
+              this.depositServiceRepository.create({depositId, serviceId});
+           });
+          }
         }
     }
     catch (error) {
@@ -66,16 +67,38 @@ class DepositService {
           return {message, hasError, resultCode, deposit};
         }
 
-        depositInDb.status = depositToUpdate.status;
-        depositInDb.title = depositToUpdate.title;
+        var city = await this.cityRepository.get(depositToUpdate.cityId); 
+        depositInDb.title = city.title + ' ' + depositToUpdate.totalM3 + ' M3';
+ 
+        depositInDb.status = depositToUpdate.status; 
+        depositInDb.cityId = depositToUpdate.cityId; 
         depositInDb.description = depositToUpdate.description;
         depositInDb.totalM3 = depositToUpdate.totalM3;
-        depositInDb.comment = depositToUpdate.comment;
+        depositInDb.currency = depositToUpdate.currency;
         depositInDb.minimumBusinessPeriod = depositToUpdate.minimumBusinessPeriod;
         depositInDb.minimumBusinessVolume = depositToUpdate.minimumBusinessVolume;
         depositInDb.expectedPrice = depositToUpdate.expectedPrice;
-   
+     
         await this.repository.update(depositInDb);
+
+        //Update services
+        let depositId = depositToUpdate.id;
+        if(!!depositToUpdate.servicesId){
+          depositToUpdate.servicesId.forEach(async (serviceId) => {
+            await this.depositServiceRepository.create({depositId, serviceId});
+         });
+        }
+        
+        console.log(depositInDb);
+        if(!!depositInDb.depositServices){
+          depositInDb.depositServices.forEach(async (depositService) => {
+            if(!depositToUpdate.servicesId || !depositToUpdate.servicesId.find(s=>s == depositService.serviceId)){
+              let serviceId = depositService.serviceId;
+              await this.depositServiceRepository.delete({depositId, serviceId});
+            }
+         });
+        }
+
         deposit = await this.repository.get(depositToUpdate.id);
     }
     catch (error) {
@@ -302,6 +325,35 @@ class DepositService {
     }
 
     return { message, hasError, resultCode, depositImages };
+  }
+
+  async delete(depositToDelete) {
+    let hasError = false;
+    let message = null; 
+    let resultCode = enums.resultCodes.OK;
+    let deposit = null;
+
+    try{  
+        let depositInDb = await this.repository.get(depositToDelete.id);
+        if(depositInDb == null){
+          message = 'El deposito no existe.';
+          resultCode = enums.resultCodes.invalidData;
+          hasError = true;
+          return {message, hasError, resultCode, deposit};
+        }   
+        depositInDb.status = enums.depositStatus.DELETED;
+
+        await this.repository.update(depositInDb);
+        deposit = await this.repository.get(depositToDelete.id);
+    }
+    catch (error) {
+      message = 'Error al eliminar el deposito.';
+      resultCode = enums.resultCodes.genericError;
+      hasError = true;
+      this.log.create('Error in delete: '+ error, enums.logsType.service);
+    }
+
+    return {message, hasError, resultCode, deposit};
   }
 }
 

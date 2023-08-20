@@ -83,6 +83,17 @@ class UserController {
         return res.status(200).json(result); 
       }
     }
+
+    async delete(req, res, next) {
+      const { id } = req.body;
+  
+      if (!id) {
+        return res.status(400).json({ message: "Invalid Params" });
+      }   
+ 
+      const result = await this.service.delete(req.body);
+      return res.status(200).json(result);
+    }
 }
 
 module.exports = UserController;

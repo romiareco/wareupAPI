@@ -43,25 +43,29 @@ class ServiceGroupModel extends Model {
   static loadInitialData() {
 
     super.findOrCreate({where: { code: 'ZONA' },
-      defaults: {title: 'Zona', code: 'ZONA', order: 1, showTitle:true, status: 1}
+      defaults: {id:1, title: 'Zona', code: 'ZONA', order: 1, showTitle:true, status: 1}
     });
 
     super.findOrCreate({where: { code: 'PISO' },
-      defaults: {title: 'Piso', code: 'PISO', order: 2, showTitle:true, status: 1}
+      defaults: {id:2, title: 'Piso', code: 'PISO', order: 2, showTitle:true, status: 1}
     });
 
     super.findOrCreate({where: { code: 'VARIOS' },
-      defaults: {title: 'Varios', code: 'VARIOS', order: 3, showTitle:true, status: 1}
+      defaults: {id:3,title: 'Varios', code: 'VARIOS', order: 3, showTitle:true, status: 1}
     });
 
     super.findOrCreate({where: { code: 'SEGUROS' },
-      defaults: {title: 'Seguros', code: 'SEGUROS', order: 4, showTitle:true, status: 1}
+      defaults: {id:4, title: 'Seguros', code: 'SEGUROS', order: 4, showTitle:true, status: 1}
     });
     super.findOrCreate({where: { code: 'CERT' },
-      defaults: {title: 'Certificaciones', code: 'CERT', order: 5, showTitle:true, status: 1}
+      defaults: {id:5, title: 'Certificaciones', code: 'CERT', order: 5, showTitle:true, status: 1}
     });
     super.findOrCreate({where: { code: 'HAB' },
-      defaults: {title: 'Habilitaciones', code: 'HAB', order: 6, showTitle:true, status: 1}
+      defaults: {id:6, title: 'Habilitaciones', code: 'HAB', order: 6, showTitle:true, status: 1}
+    });
+
+    super.findOrCreate({where: { code: 'DAYS' },
+      defaults: {id:7, title: 'Dias', code: 'DAYS', order: 7, showTitle:true, status: 1}
     });
   }
 }
