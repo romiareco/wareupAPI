@@ -28,7 +28,8 @@ class DepositService {
         }
         else{
           depositToAdd.status = enums.depositStatus.PENDING;
- 
+          depositToAdd.userId = company.userId;
+          
           var city = await this.cityRepository.get(depositToAdd.cityId); 
           depositToAdd.title = city.title + ' ' + depositToAdd.totalM3 + ' m3';
 
