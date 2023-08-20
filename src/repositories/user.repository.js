@@ -28,7 +28,8 @@ class UserRepository {
             lastName: request.lastName,
             name: request.name,
             password: request.password,
-            email: request.email
+            email: request.email,
+            status: request.status
           },
           {
             where: { id : request.id}
