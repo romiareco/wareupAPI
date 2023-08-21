@@ -36,8 +36,9 @@ class CompanyController {
          || (!RUT || typeof RUT !== "string") ) {
         return res.status(400).json({ message: "Invalid Params" });
       }   
- 
-      const result = await this.service.update(req.body);
+      let company = req.body;
+      company.id = id;
+      const result = await this.service.update(company);
       return res.status(200).json(result);
     }
 
@@ -48,7 +49,7 @@ class CompanyController {
         return res.status(400).json({ message: "Invalid Params" });
       }   
  
-      const result = await this.service.delete(req.body);
+      const result = await this.service.delete(id);
       return res.status(200).json(result);
     }
 

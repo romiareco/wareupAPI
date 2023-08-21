@@ -18,27 +18,29 @@ class DepositController {
     } 
 
     async update(req, res, next) {
-      const { status, description, cityId, id, totalM3 } = req.body;
-  
+      const { status, description, cityId, totalM3 } = req.body;
+      const { id } = req.params;
+
       if (!id 
         || !status || typeof status !== "number" 
         || !description || typeof description !== "string" || !cityId || typeof cityId !== "number"
         || !totalM3 || typeof totalM3 !== "number") {
         return res.status(400).json({ message: "Invalid Params" });
       }
- 
-      const result = await this.service.update(req.body);
+      let deposit = req.body;
+      deposit.id = id;
+      const result = await this.service.update(deposit);
       return res.status(200).json(result);
     }
 
     async delete(req, res, next) {
-      const { id } = req.body;
+      const { id } = req.params;
   
       if (!id) {
         return res.status(400).json({ message: "Invalid Params" });
       }   
  
-      const result = await this.service.delete(req.body);
+      const result = await this.service.delete(id);
       return res.status(200).json(result);
     }
     

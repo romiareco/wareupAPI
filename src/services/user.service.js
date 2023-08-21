@@ -232,14 +232,14 @@ class UserService {
     return { message, hasError, resultCode, users };
   }
 
-  async delete(userToDelete) {
+  async delete(id) {
     let hasError = false;
     let message = null; 
     let resultCode = enums.resultCodes.OK;
     let user = null;
 
     try{  
-        let userInDb = await this.repository.get(userToDelete.id);
+        let userInDb = await this.repository.get(id);
         if(userInDb == null){
           message = 'El usuario no existe.';
           resultCode = enums.resultCodes.invalidData;
@@ -249,7 +249,7 @@ class UserService {
         userInDb.status = enums.userStatus.DELETED;
 
         await this.repository.update(userInDb);
-        user = await this.repository.get(userToDelete.id);
+        user = await this.repository.get(id);
     }
     catch (error) {
       message = 'Error al eliminar el usuario.';
