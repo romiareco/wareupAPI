@@ -24,8 +24,9 @@ class CompanyController {
     }
 
     async update(req, res, next) {
-      const { status, email, phone, id, businessName, contactName, RUT } = req.body;
-  
+      const { status, email, phone, businessName, contactName, RUT } = req.body;
+      const { id } = req.params;
+
       if (!id 
          || (!status || typeof status !== "number")
          || (!email || typeof email !== "string") 
@@ -41,7 +42,7 @@ class CompanyController {
     }
 
     async delete(req, res, next) {
-      const { id } = req.body;
+      const { id } = req.params;
   
       if (!id) {
         return res.status(400).json({ message: "Invalid Params" });

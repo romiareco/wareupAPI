@@ -16,7 +16,8 @@ class UserController {
     }
 
     async update(req, res, next) {
-      const { name, lastName, email, id } = req.body;
+      const { name, lastName, email } = req.body;
+      const { id } = req.params;
   
       if (!id || !name || typeof name !== "string" || (!email || typeof email !== "string") 
         || (!lastName || typeof lastName !== "string")) {
@@ -85,7 +86,7 @@ class UserController {
     }
 
     async delete(req, res, next) {
-      const { id } = req.body;
+      const { id } = req.params;
   
       if (!id) {
         return res.status(400).json({ message: "Invalid Params" });
