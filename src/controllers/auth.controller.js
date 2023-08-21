@@ -16,8 +16,6 @@ class AuthController {
         } 
     
         const result = await this.authService.login(email, password);
-
-        console.log('result : '+result);
         return res.status(200).json(result); 
     }
 

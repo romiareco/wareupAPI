@@ -8,7 +8,6 @@ class AuthService {
     this.log = logRepository; 
   }
    
-  
   async compareAsync(param1, param2) {
     return new Promise(function(resolve, reject) {
         bcrypt.compare(param1, param2, function(err, res) {
@@ -41,20 +40,27 @@ class AuthService {
       message = 'El email no es valido.';
       hasError = true;
       resultCode = enums.resultCodes.requiredValue; 
-      return {message, hasError, resultCode, tokens}; 
     } 
-    
-    const success = await this.compareAsync(password, userFound.password);
-    if(!success) { 
-      message = 'Contraseña incorrecta.';
+    else if(userFound.status != enums.userStatus.ACTIVE){
+      message = 'El usuario se encuentra eliminado.';
       hasError = true;    
-      console.log(message);
-    } else { 
-      tokens = {
-          access: jwt.createAccessToken(userFound),
-          refresh: jwt.refreshToken(userFound)
-      }; 
-    } 
+    }
+    else if(userFound.status != enums.userStatus.BLOCKED){
+      message = 'El usuario se encuentra bloqueado.';
+      hasError = true;    
+    }
+    else{
+      const success = await this.compareAsync(password, userFound.password);
+      if(!success) { 
+        message = 'Contraseña incorrecta.';
+        hasError = true;
+      } else { 
+        tokens = {
+            access: jwt.createAccessToken(userFound),
+            refresh: jwt.refreshToken(userFound)
+        }; 
+      } 
+    }
       
     return {message, hasError, resultCode, tokens};
 }

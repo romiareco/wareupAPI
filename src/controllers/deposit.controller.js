@@ -57,12 +57,13 @@ class DepositController {
 
     async registerImages(req, res, next) {
 
-      const { depositId, images } = req.body;
+      const { images } = req.body;
+      const { id } = req.params;
 
-      if (!depositId || typeof depositId !== "string") {
+      if (!id || typeof id !== "number") {
         return res.status(400).json({ message: "Invalid Params" });
       }
-      const result = await this.service.addDepositImages(depositId, images);
+      const result = await this.service.addDepositImages(id, images);
       return res.status(200).json(result);
     }  
 
