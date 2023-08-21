@@ -29,7 +29,7 @@ class DepositService {
         else{
           depositToAdd.status = enums.depositStatus.PENDING;
           depositToAdd.userId = company.userId;
-          
+
           var city = await this.cityRepository.get(depositToAdd.cityId); 
           depositToAdd.title = city.title + ' ' + depositToAdd.totalM3 + ' m3';
 
@@ -328,14 +328,14 @@ class DepositService {
     return { message, hasError, resultCode, depositImages };
   }
 
-  async delete(depositToDelete) {
+  async delete(id) {
     let hasError = false;
     let message = null; 
     let resultCode = enums.resultCodes.OK;
     let deposit = null;
 
     try{  
-        let depositInDb = await this.repository.get(depositToDelete.id);
+        let depositInDb = await this.repository.get(id);
         if(depositInDb == null){
           message = 'El deposito no existe.';
           resultCode = enums.resultCodes.invalidData;
@@ -345,7 +345,7 @@ class DepositService {
         depositInDb.status = enums.depositStatus.DELETED;
 
         await this.repository.update(depositInDb);
-        deposit = await this.repository.get(depositToDelete.id);
+        deposit = await this.repository.get(id);
     }
     catch (error) {
       message = 'Error al eliminar el deposito.';

@@ -82,14 +82,14 @@ class CompanyService {
     return {message, hasError, resultCode, company};
   }
 
-  async delete(companyToDelete) {
+  async delete(id) {
     let hasError = false;
     let message = null; 
     let resultCode = enums.resultCodes.OK;
     let company = null;
 
     try{  
-        let companyInDb = await this.repository.get(companyToDelete.id);
+        let companyInDb = await this.repository.get(id);
         if(companyInDb == null){
           message = 'La compania no existe.';
           resultCode = enums.resultCodes.invalidData;
@@ -99,7 +99,7 @@ class CompanyService {
         companyInDb.status = enums.companyStatus.DELETED;
 
         await this.repository.update(companyInDb);
-        company = await this.repository.get(companyToDelete.id);
+        company = await this.repository.get(id);
     }
     catch (error) {
       message = 'Error al eliminar la compania.';

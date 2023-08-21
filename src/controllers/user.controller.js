@@ -16,13 +16,16 @@ class UserController {
     }
 
     async update(req, res, next) {
-      const { name, lastName, email, id } = req.body;
+      const { name, lastName, email } = req.body;
+      const { id } = req.params;
   
       if (!id || !name || typeof name !== "string" || (!email || typeof email !== "string") 
         || (!lastName || typeof lastName !== "string")) {
         return res.status(400).json({ message: "Invalid Params" });
       }
-      const result = await this.service.update(req.body);
+      let user = req.body;
+      user.id = id;
+      const result = await this.service.update(user);
       return res.status(201).json(result);
     }
 
@@ -85,13 +88,13 @@ class UserController {
     }
 
     async delete(req, res, next) {
-      const { id } = req.body;
+      const { id } = req.params;
   
       if (!id) {
         return res.status(400).json({ message: "Invalid Params" });
       }   
  
-      const result = await this.service.delete(req.body);
+      const result = await this.service.delete(id);
       return res.status(200).json(result);
     }
 }

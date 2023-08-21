@@ -24,8 +24,9 @@ class CompanyController {
     }
 
     async update(req, res, next) {
-      const { status, email, phone, id, businessName, contactName, RUT } = req.body;
-  
+      const { status, email, phone, businessName, contactName, RUT } = req.body;
+      const { id } = req.params;
+
       if (!id 
          || (!status || typeof status !== "number")
          || (!email || typeof email !== "string") 
@@ -35,19 +36,20 @@ class CompanyController {
          || (!RUT || typeof RUT !== "string") ) {
         return res.status(400).json({ message: "Invalid Params" });
       }   
- 
-      const result = await this.service.update(req.body);
+      let company = req.body;
+      company.id = id;
+      const result = await this.service.update(company);
       return res.status(200).json(result);
     }
 
     async delete(req, res, next) {
-      const { id } = req.body;
+      const { id } = req.params;
   
       if (!id) {
         return res.status(400).json({ message: "Invalid Params" });
       }   
  
-      const result = await this.service.delete(req.body);
+      const result = await this.service.delete(id);
       return res.status(200).json(result);
     }
 
