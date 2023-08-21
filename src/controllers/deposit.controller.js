@@ -60,7 +60,7 @@ class DepositController {
       const { images } = req.body;
       const { id } = req.params;
 
-      if (!depositId || typeof depositId !== "number") {
+      if (!id || typeof id !== "number") {
         return res.status(400).json({ message: "Invalid Params" });
       }
       const result = await this.service.addDepositImages(id, images);
