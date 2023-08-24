@@ -41,11 +41,11 @@ class AuthService {
       hasError = true;
       resultCode = enums.resultCodes.requiredValue; 
     } 
-    else if(userFound.status != enums.userStatus.ACTIVE){
+    else if(userFound.status == enums.userStatus.DELETED){
       message = 'El usuario se encuentra eliminado.';
       hasError = true;    
     }
-    else if(userFound.status != enums.userStatus.BLOCKED){
+    else if(userFound.status == enums.userStatus.BLOCKED){
       message = 'El usuario se encuentra bloqueado.';
       hasError = true;    
     }
