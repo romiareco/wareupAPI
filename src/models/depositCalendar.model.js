@@ -22,6 +22,10 @@ class DepositCalendarModel extends Model {
           type: DataTypes.STRING,
           allowNull: true
         }, 
+        isDeleted: {
+          type: DataTypes.BOOLEAN,
+          allowNull: true
+        },
         depositId: {
           type: DataTypes.INTEGER,
           allowNull: false,

@@ -23,10 +23,11 @@ class DepositCalendarRepository {
           { 
             dateFrom: request.dateFrom,
             dateTo: request.dateTo,
-            totalM3: request.totalM3
+            totalM3: request.totalM3,
+            isDeleted: request.isDeleted
           },
           {
-            where: { id : request.id}
+            where: { id : request.id }
           });
     }
     catch (error) {
@@ -38,7 +39,7 @@ class DepositCalendarRepository {
   async get(id){
     try {
       return this.model.findOne({
-        where: {id: id}
+        where: { id: id }
       });
     }
     catch (error) {
@@ -50,7 +51,7 @@ class DepositCalendarRepository {
   async getByDeposit(depositId) {
     try {
       return await this.model.findAll({
-        where: {depositId: depositId}
+        where: { depositId: depositId, isDeleted:false }
       });
     }
     catch (error) {
@@ -62,7 +63,9 @@ class DepositCalendarRepository {
 
   async getAll() {
     try {
-      return await this.model.findAll();
+      return await this.model.findAll({
+        where: { isDeleted:false }
+      });
     }
     catch (error) {
       this.log.create('Error in getAll: '+error, enums.logsType.database);
