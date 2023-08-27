@@ -66,6 +66,19 @@ class UserRepository {
     return null;
   }
 
+  async getByStatus(status) {
+    try {
+      return await this.model.findAll({
+        where: {status: status}
+      }); 
+    }
+    catch (error) {
+      this.log.create('Error in getByEmail: '+error, enums.logsType.database);
+    }
+
+    return null;
+  }
+
   async getAll() {
     try {
       return await this.model.findAll();

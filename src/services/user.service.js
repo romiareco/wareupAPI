@@ -232,6 +232,26 @@ class UserService {
     return { message, hasError, resultCode, users };
   }
 
+  async geyByStatus(status) {
+    let hasError = false;
+    let message = null; 
+    let resultCode = enums.resultCodes.OK;
+    let users = null;
+
+    try{
+      users = await this.repository.getByStatus(status);
+    }
+    catch (error) {
+      resultCode = enums.resultCodes.genericError;
+      hasError = true;
+      message = 'Ha ocurrido un error obteniendo los usuarios.';
+
+      this.log.create('Error in getActive: '+ error, enums.logsType.service);
+    } 
+
+    return { message, hasError, resultCode, users };
+  }
+
   async delete(id) {
     let hasError = false;
     let message = null; 

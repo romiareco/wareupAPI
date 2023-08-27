@@ -2,7 +2,7 @@ const jwt = require("../utils/jwt")
  
 function validateAuth(req, res, next) {
     if(!req.headers.authorization || req.headers.authorization == null) {
-        res.status(402).send({msg: "Usuario no autorizado"});
+        return res.status(402).send({msg: "Usuario no autorizado"});
     }
    
     const token = req.headers.authorization.replace("Bearer ", "").trim();
