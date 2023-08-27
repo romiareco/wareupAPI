@@ -1,5 +1,5 @@
 const enums = require('../utils/enums');
-const { DepositModel, CityModel, CompanyModel, ServiceModel } = require("../database"); 
+const { DepositModel, CityModel, CompanyModel, ServiceModel, DepartmentModel } = require("../database"); 
 const DepositServiceModel = require('../models/depositService.model');
 
 class DepositRepository {
@@ -101,7 +101,7 @@ class DepositRepository {
     try {
       return await this.model.findAll({
         where: {userId: userId},
-        include: [CompanyModel, CityModel, DepositServiceModel]
+        include: [CompanyModel, {model: CityModel, include: [DepartmentModel]}, DepositServiceModel]
       });
     }
     catch (error) {
