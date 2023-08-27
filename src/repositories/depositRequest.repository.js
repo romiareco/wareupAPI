@@ -44,7 +44,7 @@ class DepositRequestRepository {
 
   async getByCompany(companyId) {
     try {
-      return this.model.findOne({
+      return this.model.findAll({
         where: {companyId: companyId},
         include: [CompanyModel, CityModel]
       });
@@ -57,7 +57,7 @@ class DepositRequestRepository {
 
   async getByUser(userId) {
     try {
-      return this.model.findOne({
+      return this.model.findAll({
         where: {userId: userId},
         include: [CompanyModel, CityModel]
       });

@@ -59,10 +59,20 @@ class UserController {
     }
 
     async getAll(req, res) {
+      const { status } = req.query;
 
-      const result = await this.service.getAll();
-      return res.status(200).json(result);
+      if(!status){
+        const result = await this.service.getAll();
+        return res.status(200).json(result);
+      }
+      else{
+        console.log(status);
+        const result = await this.service.geyByStatus(status)
+        return res.status(200).json(result);
+      }
     }
+
+   
 
     async getMe(req, res) {
       const { id } = req.user;
