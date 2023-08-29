@@ -212,38 +212,6 @@ class DepositService {
     return { message, hasError, resultCode, deposit };
   } 
 
-
-  /*async addDepositServices(depositId, servicesId) {
-    let hasError = false;
-    let message = null; 
-    let resultCode = enums.resultCodes.OK;
-    let deposit = null;
-    
-    try{ 
-      
-       deposit = this.repository.get(depositId);   
-        
-      if(deposit == null){
-        message = 'Deposito no valido'; 
-        resultCode = enums.resultCodes.invalidData;
-        hasError = true;
-      }
-      else{ 
-        servicesId.forEach(serviceId => {
-           this.depositServiceRepository.create({depositId, serviceId});
-        });
-      }      
-    }
-    catch (error) {
-      resultCode = enums.resultCodes.genericError;
-      hasError = true;
-      message = "Error asociando los servicios al deposito.";
-      this.log.create('Error in addDepositServices: '+ error, enums.logsType.service);
-    }
-
-    return { message, hasError, resultCode, deposit };
-  }*/
-
   async addDepositImages(depositId, images) {
     let hasError = false;
     let message = null;

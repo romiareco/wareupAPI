@@ -43,15 +43,16 @@ class DepositRequestService {
     let depositRequest = null;
 
     try{ 
-        const { companyId } = depositRequestToUpdate;  
-        const company = await this.companyRepository.get(companyId);
-        if(company == null){
-          message = 'Compania no valida'; 
+        const depositRequestDb = await this.repository.get(depositRequestToUpdate.id);
+        if(depositRequestDb == null){
+          message = 'Id no valido'; 
           resultCode = enums.resultCodes.invalidData;
           hasError = true;
         }
-        else{ 
-          depositRequest = await this.repository.update(depositRequestToUpdate);
+        else{
+          depositRequestDb.status = depositRequestToUpdate.status;
+          depositRequest = await this.repository.update(depositRequestDb);
+
         }
     }
     catch (error) {

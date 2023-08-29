@@ -166,7 +166,6 @@ class UserService {
       hasError = true;
       resultCode = enums.resultCodes.requiredData;
     }
-     
     this.mailService.sendContactForm(contactForm);  
       
     return {message, hasError, resultCode};

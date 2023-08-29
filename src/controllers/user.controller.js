@@ -94,7 +94,7 @@ class UserController {
       } else {  
         const result = await this.service.contact(req.body); 
         return res.status(200).json(result); 
-      }
+      } 
     }
 
     async delete(req, res, next) {

@@ -62,6 +62,8 @@ DepartmentModel.hasMany(CityModel);
 DepositRequestModel.belongsTo(CompanyModel, { foreignKey: 'companyId', });
 DepositRequestModel.belongsTo(CityModel, { foreignKey: 'cityId', });
 
+CityModel.belongsTo(DepartmentModel, { foreignKey: 'departmentId', });
+
 DepositModel.belongsTo(CompanyModel, { foreignKey: 'companyId', });
 DepositModel.belongsTo(CityModel, { foreignKey: 'cityId', });
 DepositModel.hasMany(DepositServiceModel); 
@@ -71,6 +73,7 @@ CompanyModel.belongsTo(CityModel, { foreignKey: 'cityId', });
 
 DepositServiceModel.belongsTo(DepositModel, { foreignKey: 'depositId', });
 DepositServiceModel.belongsTo(ServiceModel, { foreignKey: 'serviceId', });
+ServiceModel.belongsTo(ServiceGroupModel, { foreignKey: 'serviceGroupId', });
 
 const db = {
   ...models,

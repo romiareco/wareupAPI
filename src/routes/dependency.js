@@ -16,6 +16,8 @@ const DepartmentRepository = require("../repositories/department.repository");
 const CityRepository = require("../repositories/city.repository");
 const CommonService = require("../services/common.service");
 const DepositImageRepository = require("../repositories/depositImage.repository");
+const DepositCalendarRepository = require("../repositories/depositCalendar.repository");
+const DepositCalendarService = require("../services/depositCalendar.service");
 
 const logRepository = new LogRepository();
 const userRepository = new UserRepository(logRepository);
@@ -27,6 +29,7 @@ const depositServiceRepository = new DepositServiceRepository(logRepository);
 const departmentRepository = new DepartmentRepository(logRepository);
 const cityRepository = new CityRepository(logRepository);
 const depositImageRepository = new DepositImageRepository(logRepository);
+const depositCalendarRepository = new DepositCalendarRepository(logRepository);
 
 const mailService = new MailService(logRepository);
 const userService = new UserService(userRepository, logRepository, mailService); 
@@ -36,6 +39,7 @@ const depositRequestService = new DepositRequestService(depositRequestRepository
 const depositService = new DepositService(depositRepository, logRepository, companyRepository, depositServiceRepository, depositImageRepository, cityRepository);
 const serviceGroupService = new ServiceGroupService(serviceGroupRepository, logRepository);
 const commonService = new CommonService(departmentRepository, cityRepository, logRepository);
+const depositCalendarService = new DepositCalendarService(depositCalendarRepository, logRepository, depositRepository);
 
 module.exports = {
   userRepository,
@@ -54,6 +58,8 @@ module.exports = {
   depositServiceRepository,
   commonService,
   departmentRepository,
-  cityRepository
+  cityRepository,
+  depositCalendarService,
+  depositCalendarRepository
 };
 
