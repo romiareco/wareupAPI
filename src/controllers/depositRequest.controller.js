@@ -18,18 +18,22 @@ class DepositRequestController {
         return res.status(400).json({ message: "Invalid Params" });
       }
       const result = await this.service.create(req.body);
-      return res.status(201).json(result);
+      return res.status(200).json(result);
     }
 
     async update(req, res, next) {
   
-      const { title, description, email, companyId, phone} = req.body;
-   
-      if (!title || typeof title !== "string" || (typeof description !== "string")
-        || (!email || typeof email !== "string") || (!phone || typeof phone !== "string") ) {
+      const { status } = req.body;
+      const { id } = req.params;
+
+      if (!status || typeof status !== "number" ) {
         return res.status(400).json({ message: "Invalid Params" });
       }
-      const result = await this.service.update(req.body);
+
+      const depositRequest = req.body;
+      depositRequest.id = id;
+
+      const result = await this.service.update(depositRequest);
       return res.status(200).json(result);
     }
 

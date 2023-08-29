@@ -74,8 +74,10 @@ class MailService {
                     email: contactForm.email,
                     phone: contactForm.phone,
                     message: contactForm.message,
+                    subject: contactForm.subject
                 }
-            }
+            };
+            
             sgMail
             .send(msg)
             .then(() => {

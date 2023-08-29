@@ -1,9 +1,10 @@
 var enums = require('../utils/enums');
 
 class DepositCalendarService {
-  constructor(depositCalendarRepository, logRepository){
+  constructor(depositCalendarRepository, logRepository, depositRepository){
     this.repository = depositCalendarRepository;
     this.log = logRepository;
+    this.depositRepository=depositRepository;
   }
  
 
@@ -56,17 +57,35 @@ class DepositCalendarService {
       
         await this.repository.update(depositCalendarInDb);
 
-    
         depositCalendar = await this.repository.get(depositCalendarInDb.id);
     }
     catch (error) {
-      message = 'Error al actualizar el caalendario del deposito.';
+      message = 'Error al actualizar el calendario del deposito.';
       resultCode = enums.resultCodes.genericError;
       hasError = true;
       this.log.create('Error in update: '+ error, enums.logsType.service);
     }
 
     return {message, hasError, resultCode, depositCalendar};
+  }
+
+  async get(id) {
+    let hasError = false;
+    let message = null;
+    let resultCode = enums.resultCodes.OK;
+    let depositCalendar = null;
+
+    try{
+      depositCalendar = await this.repository.get(id);
+    }
+    catch (error) {
+      resultCode = enums.resultCodes.genericError;
+      hasError = true;
+      message = "Error consultando el calendario del deposito.";
+      this.log.create('Error in get: '+ error, enums.logsType.service);
+    }
+
+    return { message, hasError, resultCode, depositCalendar };
   }
 
   async getByDeposit(depositId) {
@@ -76,15 +95,7 @@ class DepositCalendarService {
     let depositCalendars = null;
 
     try{
-      let deposit = await this.repository.get(depositId);
-      if(deposit == null){
-        message = 'Deposito no valido';
-        resultCode = enums.resultCodes.invalidData;
-        hasError = true;
-      }
-      else{ 
-        depositCalendars = await this.repository.getByDeposit(depositId);
-      }
+      depositCalendars = await this.repository.getByDeposit(depositId);
     }
     catch (error) {
       resultCode = enums.resultCodes.genericError;

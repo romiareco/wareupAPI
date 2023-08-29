@@ -73,6 +73,7 @@ CompanyModel.belongsTo(CityModel, { foreignKey: 'cityId', });
 
 DepositServiceModel.belongsTo(DepositModel, { foreignKey: 'depositId', });
 DepositServiceModel.belongsTo(ServiceModel, { foreignKey: 'serviceId', });
+ServiceModel.belongsTo(ServiceGroupModel, { foreignKey: 'serviceGroupId', });
 
 const db = {
   ...models,

@@ -19,8 +19,7 @@ const logsType = {
 
 const companyStatus = {
     ACTIVE: 1, 
-    DELETED: 2,
-    PENDING: 3 
+    DELETED: 2
 }
  
 const depositStatus = {
