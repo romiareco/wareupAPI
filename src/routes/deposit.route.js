@@ -16,6 +16,5 @@ router.get("/deposits/byCompany/:companyId", /*[mdAuth.validateAuth], */(req, re
 router.get("/deposits/byUser/:userId", /*[mdAuth.validateAuth], */(req, res) => controller.getByUser(req, res));
 router.get("/deposits/services/:depositId", /*[mdAuth.validateAuth], */(req, res) => controller.getServicesByDeposit(req, res));
 router.get("/deposits/images/:depositId", /*[mdAuth.validateAuth], */(req, res) => controller.getImagesByDeposit(req, res));
-router.get("/deposits/byFilter", /*[mdAuth.validateAuth], */(req, res) => controller.getByFilter(req, res));
 
 module.exports = router;

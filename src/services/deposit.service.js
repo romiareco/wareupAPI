@@ -159,6 +159,7 @@ class DepositService {
     var deposits = null;
 
     try{
+      console.log(filterOptions);
       deposits = await this.repository.getByFilter(filterOptions);
     }
     catch (error) {
