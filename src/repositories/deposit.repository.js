@@ -74,12 +74,16 @@ class DepositRepository {
   async getByFilter(filterOptions) {
     try {
       return await this.model.findAll({
-        where:  { title: { $like: '%'+filterOptions.title+'%' }},
-        include: [CompanyModel, CityModel, DepositServiceModel] 
+        include: [CompanyModel, CityModel,
+          {
+            model: DepositServiceModel,
+            where: { serviceId: filterOptions.servicesId },
+            include: [ServiceModel]
+          }] 
       });
     }
     catch (error) {
-      this.log.create('Error in getByCompany: '+error, enums.logsType.database);
+      this.log.create('Error in getByFilter: '+error, enums.logsType.database);
     }
 
     return null;
