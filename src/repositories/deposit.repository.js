@@ -77,7 +77,7 @@ class DepositRepository {
         include: [CompanyModel, CityModel,
           {
             model: DepositServiceModel,
-            where: { serviceId: {in: filterOptions.servicesId }},
+            where: { serviceId: filterOptions.servicesId },
             include: [ServiceModel]
           }] 
       });
