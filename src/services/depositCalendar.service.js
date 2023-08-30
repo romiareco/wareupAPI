@@ -51,9 +51,10 @@ class DepositCalendarService {
           hasError = true;
           return {message, hasError, resultCode, depositCalendar};
         }
-        depositCalendarInDb.dateFrom = depositToUpdate.dateFrom; 
-        depositCalendarInDb.dateTo = depositToUpdate.dateTo; 
-        depositCalendarInDb.totalM3 = depositToUpdate.totalM3;
+        depositCalendarInDb.dateFrom = depositCalendarToUpdate.dateFrom; 
+        depositCalendarInDb.dateTo = depositCalendarToUpdate.dateTo; 
+        depositCalendarInDb.totalM3 = depositCalendarToUpdate.totalM3
+        depositCalendarInDb.isDeleted = depositCalendarToUpdate.isDeleted;
       
         await this.repository.update(depositCalendarInDb);
 

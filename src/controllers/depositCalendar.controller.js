@@ -21,12 +21,10 @@ class DepositCalendarController {
 
     async update(req, res, next) {
   
-      const { dateFrom,dateTo, totalM3, depositId, isDeleted } = req.body;
+      const { dateFrom, dateTo, totalM3, isDeleted } = req.body;
       const { id } = req.params;
 
-      if (!dateFrom || typeof title !== "string" || (typeof dateTo !== "string")
-        || (!totalM3 || typeof totalM3 !== "number")
-        || (!depositId || typeof depositId !== "number")) {
+      if (!dateFrom || !dateTo || (!totalM3 || typeof totalM3 !== "number")) {
         return res.status(400).json({ message: "Invalid Params" });
       }
 
