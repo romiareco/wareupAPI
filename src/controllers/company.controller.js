@@ -2,8 +2,9 @@ const enums = require('../utils/enums');
 
 class CompanyController {
 
-    constructor(companyService) {
+    constructor(companyService, depositService) {
       this.service = companyService;
+      this.depositService = depositService;
     }
   
     async register(req, res, next) {
@@ -49,6 +50,7 @@ class CompanyController {
         return res.status(400).json({ message: "Invalid Params" });
       }   
  
+      await this.depositService.deleteByCompany(id);
       const result = await this.service.delete(id);
       return res.status(200).json(result);
     }
