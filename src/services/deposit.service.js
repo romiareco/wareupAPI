@@ -89,8 +89,7 @@ class DepositService {
             await this.depositServiceRepository.create({depositId, serviceId});
          });
         }
-        
-        console.log(depositInDb);
+
         if(!!depositInDb.depositServices){
           depositInDb.depositServices.forEach(async (depositService) => {
             if(!depositToUpdate.servicesId || !depositToUpdate.servicesId.find(s=>s == depositService.serviceId)){
@@ -318,6 +317,29 @@ class DepositService {
     }
     catch (error) {
       message = 'Error al eliminar el deposito.';
+      resultCode = enums.resultCodes.genericError;
+      hasError = true;
+      this.log.create('Error in delete: '+ error, enums.logsType.service);
+    }
+
+    return {message, hasError, resultCode, deposit};
+  }
+
+  async deleteByCompany(companyId) {
+    let hasError = false;
+    let message = null; 
+    let resultCode = enums.resultCodes.OK;
+    let deposit = null;
+
+    try{  
+        let depositsInDb = await this.repository.getByCompany(companyId);
+        depositsInDb.forEach(async depositInDb => {
+          depositInDb.status =  enums.depositStatus.DELETED;
+          await this.repository.update(depositInDb)
+        });
+    }
+    catch (error) {
+      message = 'Error al eliminar los depositos.';
       resultCode = enums.resultCodes.genericError;
       hasError = true;
       this.log.create('Error in delete: '+ error, enums.logsType.service);

@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const CompanyController = require("../controllers/company.controller"); 
-const { companyService } = require("./dependency");
+const { companyService, depositService } = require("./dependency");
 const mdAuth = require("../middleware/authenticated");
 
-const controller = new CompanyController(companyService);
+const controller = new CompanyController(companyService, depositService);
 
 router.post("/companies", /*[mdAuth.validateAuth], */ (req, res) => controller.register(req, res)); 
 router.put("/companies/:id",/*[mdAuth.validateAuth], */ (req, res) => controller.update(req, res));
