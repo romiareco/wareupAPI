@@ -8,6 +8,8 @@ class DepositImageRepository {
   }
 
  b64toBlob = (b64Data, contentType='', sliceSize=512) => {
+
+    b64Data = b64Data.replace('data:image/jpeg;base64,','');
     const byteCharacters = atob(b64Data);
     const byteArrays = [];
 
