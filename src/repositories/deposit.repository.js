@@ -48,7 +48,11 @@ class DepositRepository {
     try {
       return this.model.findOne({
         where: {id: id},
-        include: [CompanyModel, CityModel, DepositServiceModel]
+        include: [CompanyModel,
+          {
+            model: CityModel,
+            include: [DepartmentModel]
+          }, DepositServiceModel]
       });
     }
     catch (error) {
@@ -61,7 +65,11 @@ class DepositRepository {
     try {
       return await this.model.findAll({
         where: {companyId: companyId},
-        include: [CompanyModel, CityModel, DepositServiceModel]
+        include: [CompanyModel,
+          {
+            model: CityModel,
+            include: [DepartmentModel]
+          }, DepositServiceModel]
       });
     }
     catch (error) {
@@ -74,11 +82,15 @@ class DepositRepository {
   async getByFilter(filterOptions) {
     try {
       return await this.model.findAll({
-        include: [CompanyModel, CityModel,
+        include: [CompanyModel,
           {
             model: DepositServiceModel,
             where: { serviceId: filterOptions.servicesId },
             include: [ServiceModel]
+          },
+          {
+            model: CityModel,
+            include: [DepartmentModel]
           }] 
       });
     }
@@ -92,7 +104,11 @@ class DepositRepository {
   async getAll() {
     try {
       return await this.model.findAll({
-        include: [CompanyModel, CityModel, DepositServiceModel]});
+        include: [CompanyModel,
+          {
+            model: CityModel,
+            include: [DepartmentModel]
+          }, DepositServiceModel]});
     }
     catch (error) {
       this.log.create('Error in getAll: '+error, enums.logsType.database);
