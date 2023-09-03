@@ -32,7 +32,7 @@ class CompanyService {
           return {message, hasError, resultCode};
         }  
 
-        companyToAdd.status = enums.companyStatus.PENDING; 
+        companyToAdd.status = enums.companyStatus.ACTIVE; 
         company = await this.repository.create(companyToAdd); 
     }
     catch (error) {
