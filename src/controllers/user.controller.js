@@ -12,7 +12,7 @@ class UserController {
         return res.status(400).json({ message: "Invalid Params" });
       }
       const result = await this.service.create(req.body);
-      return res.status(201).json(result);
+      return res.status(200).json(result);
     }
 
     async update(req, res, next) {
@@ -26,7 +26,7 @@ class UserController {
       let user = req.body;
       user.id = id;
       const result = await this.service.update(user);
-      return res.status(201).json(result);
+      return res.status(200).json(result);
     }
 
     async updatePassword(req, res, next) {
@@ -36,7 +36,7 @@ class UserController {
         return res.status(400).json({ message: "Invalid Params" });
       }
       const result = await this.service.updatePassword(linkEncrypt, password);
-      return res.status(201).json(result);
+      return res.status(200).json(result);
     }
 
     async recoverPassword(req, res, next) {
