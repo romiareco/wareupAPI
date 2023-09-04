@@ -111,14 +111,14 @@ class CompanyService {
     return {message, hasError, resultCode, company};
   }
 
-  async getByUser(userId){ 
+  async getByUser(userId, status){ 
     let hasError = false;
     let message = null; 
     let resultCode = enums.resultCodes.OK;
     let companies = null;
 
     try{ 
-      companies =  await this.repository.getByUser(userId);
+      companies =  await this.repository.getByUser(userId, status);
     }
       catch (error) {
         resultCode = enums.resultCodes.genericError;
@@ -131,14 +131,15 @@ class CompanyService {
       return { message, hasError, resultCode, companies };
   } 
 
-  async getAll(){ 
+
+  async getAll(status){ 
     let hasError = false;
     let message = null; 
     let resultCode = enums.resultCodes.OK;
     let companies = null;
 
     try{ 
-      companies =  await this.repository.getAll();
+        companies =  await this.repository.getAll(status);
     }
     catch (error) {
       resultCode = enums.resultCodes.genericError;

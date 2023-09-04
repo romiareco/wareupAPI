@@ -62,7 +62,7 @@ class CompanyController {
         return res.status(400).json({ message: "Invalid Params" });
       }
 
-      const result = await this.service.getByUser(userId);
+      const result = await this.service.getByUser(userId, req.body.status);
       return res.status(200).json(result);
     }
 
@@ -78,7 +78,7 @@ class CompanyController {
     }  
 
     async getAll(req, res, next) { 
-      const result = await this.service.getAll();
+      const result = await this.service.getAll(req.body.status);
       return res.status(200).json(result);
     }  
 }  
