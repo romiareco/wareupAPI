@@ -56,10 +56,16 @@ class CompanyRepository {
     return null;
   }
 
-  async getByUser(userId){
+  async getByUser(userId, status){
     try {
+
+      let condition = { userId: userId };
+      if (status) {
+        condition = { userId: userId, status: status };
+      }
+
       return await this.model.findAll({
-        where: {userId: userId},
+        where: condition,
         include:[CityModel]
       });
     }
@@ -84,8 +90,13 @@ class CompanyRepository {
     return null;
   }
 
-  async getAll() {
+  async getAll(status) {
     try {
+
+      if (status) {
+        return await this.model.findAll({where: {status: status, }, include: [CityModel]}); 
+      }
+
       return await this.model.findAll({include: [CityModel]}); 
     }
     catch (error) {
