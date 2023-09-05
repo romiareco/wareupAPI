@@ -12,7 +12,6 @@ class DepositRequestController {
    
       if (!title || typeof title !== "string" || (typeof description !== "string")
         || (!companyId || typeof companyId !== "number")
-        || (!userId || typeof userId !== "number")
         || (!email || typeof email !== "string") || (!phone || typeof phone !== "string") 
         || (!address || typeof address !== "string")) {
         return res.status(400).json({ message: "Invalid Params" });
