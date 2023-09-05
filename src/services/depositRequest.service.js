@@ -22,6 +22,7 @@ class DepositRequestService {
           hasError = true;
         }
         else{
+          depositRequestToAdd.userId = company.userId;
           depositRequestToAdd.status = enums.depositRequestStatus.PENDING;
           depositRequest = await this.repository.create(depositRequestToAdd);
         }
