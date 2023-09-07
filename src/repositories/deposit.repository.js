@@ -85,12 +85,14 @@ class DepositRepository {
         include: [CompanyModel,
           {
             model: DepositServiceModel,
-            where: { serviceId: filterOptions.servicesId },
+            //where: { serviceId: filterOptions.servicesId },
             include: [ServiceModel]
           },
           {
             model: CityModel,
-            include: [DepartmentModel]
+            include: [{ model: DepartmentModel, where: { title:  { [Op.like]: filterOptions.city } } } ],
+            where: { title:  { [Op.like]: filterOptions.city}
+            }
           }] 
       });
     }
