@@ -23,8 +23,21 @@ class DepositCalendarService {
           hasError = true;
         }
         else{
-          depositCalendarToAdd.isDeleted=false;
-          depositCalendar = await this.repository.create(depositCalendarToAdd);
+          var currentCalendars = await this.repository.getByDeposit(depositId);
+
+          var sameRangeCalendars = currentCalendars.filter(c =>
+            (new Date(depositCalendarToAdd.dateFrom).getTime() >= new Date(c.dateFrom).getTime() && new Date(depositCalendarToAdd.dateFrom).getTime() <= new Date(c.dateTo).getTime())
+            || (new Date(depositCalendarToAdd.dateTo).getTime() >= new Date(c.dateFrom).getTime() && new Date(depositCalendarToAdd.dateTo).getTime() <= new Date(c.dateTo).getTime()));
+
+          if(sameRangeCalendars != null && sameRangeCalendars.length > 0){
+            message = 'Ya hay un calendario existente';
+            resultCode = enums.resultCodes.invalidData;
+            hasError = true;
+          }
+          else{
+            depositCalendarToAdd.isDeleted=false;
+            depositCalendar = await this.repository.create(depositCalendarToAdd);
+          }
         }
     }
     catch (error) {

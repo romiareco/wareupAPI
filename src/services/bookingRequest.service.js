@@ -15,6 +15,9 @@ class BookingRequestService {
     try{ 
       bookingRequestToAdd.status = enums.depositRequestStatus.PENDING;
       bookingRequest = await this.repository.create(bookingRequestToAdd)
+
+      //send email
+      
     }
     catch (error) {
       resultCode = enums.resultCodes.genericError;

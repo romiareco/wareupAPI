@@ -46,7 +46,7 @@ describe("DepositRequestController", function() {
       expect(stub.calledOnce).to.be.true;
       expect(status.calledOnce).to.be.true;
       expect(status.args[0][0]).to.equal(200);   
-    }); s
+    }); 
   }); 
 
 
