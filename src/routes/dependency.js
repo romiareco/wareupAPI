@@ -18,6 +18,8 @@ const CommonService = require("../services/common.service");
 const DepositImageRepository = require("../repositories/depositImage.repository");
 const DepositCalendarRepository = require("../repositories/depositCalendar.repository");
 const DepositCalendarService = require("../services/depositCalendar.service");
+const BookingRequestRepository = require("../repositories/bookingRequest.repository");
+const BookingRequestService = require("../services/bookingRequest.service");
 
 const logRepository = new LogRepository();
 const userRepository = new UserRepository(logRepository);
@@ -30,6 +32,7 @@ const departmentRepository = new DepartmentRepository(logRepository);
 const cityRepository = new CityRepository(logRepository);
 const depositImageRepository = new DepositImageRepository(logRepository);
 const depositCalendarRepository = new DepositCalendarRepository(logRepository);
+const bookingRequestRepository = new BookingRequestRepository(logRepository);
 
 const mailService = new MailService(logRepository);
 const userService = new UserService(userRepository, logRepository, mailService); 
@@ -39,6 +42,8 @@ const depositRequestService = new DepositRequestService(depositRequestRepository
 const depositService = new DepositService(depositRepository, logRepository, companyRepository, depositServiceRepository, depositImageRepository, cityRepository);
 const serviceGroupService = new ServiceGroupService(serviceGroupRepository, logRepository);
 const commonService = new CommonService(departmentRepository, cityRepository, logRepository);
+
+const bookingRequestService = new BookingRequestService(bookingRequestRepository, logRepository);
 const depositCalendarService = new DepositCalendarService(depositCalendarRepository, logRepository, depositRepository);
 
 module.exports = {
@@ -53,6 +58,7 @@ module.exports = {
   serviceGroupService,
   serviceGroupRepository,
   authService,
+  bookingRequestRepository,
   depositRequestService,
   depositRequestRepository,
   depositServiceRepository,
@@ -60,6 +66,7 @@ module.exports = {
   departmentRepository,
   cityRepository,
   depositCalendarService,
-  depositCalendarRepository
+  depositCalendarRepository,
+  bookingRequestService
 };
 

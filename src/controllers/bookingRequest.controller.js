@@ -1,19 +1,17 @@
 const enums = require('../utils/enums');
 
-class DepositRequestController {
+class BookingRequestController {
 
-    constructor(depositRequestService) {
-      this.service = depositRequestService;
+    constructor(bookingRequestService) {
+      this.service = bookingRequestService;
     }
   
     async register(req, res, next) {
   
-      const { title, description, email, companyId, phone, address} = req.body;
+      const { description, userId, depositId, dateFrom, dateTo, totalM} = req.body;
    
-      if (!title || typeof title !== "string" || (typeof description !== "string")
-        || (!companyId || typeof companyId !== "number")
-        || (!email || typeof email !== "string") || (!phone || typeof phone !== "string") 
-        || (!address || typeof address !== "string")) {
+      if ( (!userId || typeof userId !== "number")
+        || (!depositId || typeof depositId !== "number")) {
         return res.status(400).json({ message: "Invalid Params" });
       }
       const result = await this.service.create(req.body);
@@ -36,18 +34,18 @@ class DepositRequestController {
       return res.status(200).json(result);
     }
 
-    async getByCompany(req, res, next) {
-      const { companyId } = req.params; 
-      if (!companyId || typeof companyId !== "string") {
+    async getByDeposit(req, res, next) {
+      const { depositId } = req.params; 
+      if (!depositId) {
         return res.status(400).json({ message: "Invalid Params" });
       }
-      const result = await this.service.getByCompany(companyId);
+      const result = await this.service.getByDeposit(depositId);
       return res.status(200).json(result);
     }
 
     async getByUser(req, res, next) {
       const { userId } = req.params; 
-      if (!userId || typeof userId !== "string") {
+      if (!userId) {
         return res.status(400).json({ message: "Invalid Params" });
       }
       const result = await this.service.getByUser(userId);
@@ -71,5 +69,5 @@ class DepositRequestController {
     }  
 }  
 
-module.exports = DepositRequestController;
+module.exports = BookingRequestController;
   

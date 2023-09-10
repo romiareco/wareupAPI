@@ -14,6 +14,7 @@ const DepositServiceModel= require("../models/depositService.model");
 const DepartmentModel= require("../models/department.model");
 const CityModel = require("../models/city.model"); 
 const DepositCalendarModel = require("../models/depositCalendar.model"); 
+const BookingRequestModel = require("../models/bookingRequest.model"); 
 
 const sequelize = new Sequelize(
     config.db.database,
@@ -53,7 +54,8 @@ const models = {
   DepositServiceModel: DepositServiceModel.init(sequelize, Sequelize),
   DepartmentModel: DepartmentModel.init(sequelize, Sequelize),
   CityModel: CityModel.init(sequelize, Sequelize),
-  DepositCalendarModel: DepositCalendarModel.init(sequelize, Sequelize)
+  DepositCalendarModel: DepositCalendarModel.init(sequelize, Sequelize),
+  BookingRequestModel: BookingRequestModel.init(sequelize, Sequelize),
 };
 
 ServiceGroupModel.hasMany(ServiceModel);
@@ -63,6 +65,11 @@ DepositRequestModel.belongsTo(CompanyModel, { foreignKey: 'companyId', });
 DepositRequestModel.belongsTo(CityModel, { foreignKey: 'cityId', });
 
 CityModel.belongsTo(DepartmentModel, { foreignKey: 'departmentId', });
+
+
+BookingRequestModel.belongsTo(UserModel, { foreignKey: 'userId', });
+BookingRequestModel.belongsTo(DepositModel, { foreignKey: 'depositId', });
+DepositModel.belongsTo(UserModel, { foreignKey: 'userId', });
 
 DepositModel.belongsTo(CompanyModel, { foreignKey: 'companyId', });
 DepositModel.belongsTo(CityModel, { foreignKey: 'cityId', });

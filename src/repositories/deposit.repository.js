@@ -1,4 +1,5 @@
 const enums = require('../utils/enums');
+const Sequelize = require('sequelize');
 const { DepositModel, CityModel, CompanyModel, ServiceModel, DepartmentModel } = require("../database"); 
 const DepositServiceModel = require('../models/depositService.model');
 
@@ -79,20 +80,32 @@ class DepositRepository {
     return null;
   }
 
+  onlyUnique(value, index, array) {
+    return array.indexOf(value) === index;
+  }
+
   async getByFilter(filterOptions) {
     try {
-      return await this.model.findAll({
+
+      var filterAll = await this.model.findAll({
         include: [CompanyModel,
           {
             model: DepositServiceModel,
-            where: { serviceId: filterOptions.servicesId },
+            //where: { serviceId: filterOptions.servicesId },
             include: [ServiceModel]
           },
           {
             model: CityModel,
             include: [DepartmentModel]
           }] 
-      });
+      }).then(deposits => deposits.filter(deposit => deposit.city != null && 
+        (
+          (deposit.city.title.includes(filterOptions.city) || 
+          (deposit.city.department != null && deposit.city.department.title.includes(filterOptions.city))
+          )
+        )));
+
+        return filterAll; 
     }
     catch (error) {
       this.log.create('Error in getByFilter: '+error, enums.logsType.database);

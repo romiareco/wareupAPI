@@ -115,8 +115,8 @@ class DepositController {
     } 
     
     async getAll(req, res, next) { 
-      if(req.body.applyFilter){
-        const result = await this.service.getByFilter(req.body);
+      if(req.query.applyFilter){
+        const result = await this.service.getByFilter(req.query);
         return res.status(200).json(result);
       }
       else{
