@@ -14,7 +14,9 @@ describe("DepositRequestRepository", function() {
     var stub;
     const stubValue = {
       id: 1,
-      name: 'Deposit'
+      name: 'Deposit',
+      title: "aaaa",
+      companyId: 1
     };
 
     it("should add a new deposit request to the db", async function() { 
@@ -46,7 +48,9 @@ describe("DepositRequestRepository", function() {
     var stub;
     const stubValue = {
       id: 1,
-      name: 'Deposit'
+      name: 'Deposit',
+      title: "aaaa",
+      companyId: 1
     };
 
     it("should update a new deposit request to the db", async function() { 
@@ -121,7 +125,7 @@ describe("DepositRequestRepository", function() {
     it("should retrieve a deposit request with specific company id", async function() {
 
       sinon.restore();
-      var stub = sinon.stub(DepositRequestModel, 'findOne').returns(stubValue);
+      var stub = sinon.stub(DepositRequestModel, 'findAll').returns(stubValue);
 
       const depositRequestRepository = new DepositRequestRepository();
       const deposit = await depositRequestRepository.getByCompany(stubValue.id);
@@ -135,7 +139,7 @@ describe("DepositRequestRepository", function() {
     it("should return error", async function() {
 
       sinon.restore();
-      var stub = sinon.stub(DepositRequestModel, "findOne").throwsException();
+      var stub = sinon.stub(DepositRequestModel, "findAll").throwsException();
       stub = sinon.stub(LogModel, "create").returns();
       const logRepository = new LogRepository();
 

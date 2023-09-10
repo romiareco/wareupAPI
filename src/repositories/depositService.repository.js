@@ -38,6 +38,7 @@ class DepositServiceRepository {
     }
     catch (error) {
       this.log.create('Error in get: '+error, enums.logsType.database);
+      return null;
     }
   }
 

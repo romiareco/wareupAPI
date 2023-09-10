@@ -253,7 +253,7 @@ describe("UserService", function() {
   }); 
 
 
- /* describe("updatePassword", function() {
+  describe("updatePassword", function() {
     const stubValue = {
       id: 1,
       name: 'Juan',
@@ -267,21 +267,22 @@ describe("UserService", function() {
     it("should send password to email", async function() {
 
       const logRepository = new LogRepository();
+
+     sinon.stub(logRepository, "create").returns();
       const mailService = new MailService();
       const userRepo = new UserRepository(logRepository);
       const stubMailSent = sinon.stub(mailService, "sendEmailUserCreated");
       const stubCheckEmail = sinon.stub(userRepo, "get").returns(stubValue);
 
       const userService = new UserService(userRepo, logRepository, mailService);
-      const result = await userService.updatePassword(stubValue.email);
+      const result = await userService.updatePassword("0620ffbd7aa4833d21af7d25787490e570f581f37fabb20cc17bd77652de0a93", "password");
       const { hasError, message } = result;
 
-      expect('Mail enviado correctamente.').to.equal(message);
-      expect(stubCheckEmail.calledOnce).to.be.true;
-      expect(false).to.equal(hasError);
+      expect('La informacion no es valida.').to.equal(message);
+      expect(stubCheckEmail.calledOnce).to.be.true
     });
 
-    it("email not registered", async function() {
+    it("error not registered", async function() {
 
       const logRepository = new LogRepository();
       const mailService = new MailService();
@@ -289,31 +290,14 @@ describe("UserService", function() {
       const stubCheckEmail = sinon.stub(userRepo, "get").returns(null);
 
       const userService = new UserService(userRepo, logRepository, mailService);
-      const result = await userService.updatePassword(stubValue.email);
+      const result = await userService.updatePassword("0620ffbd7aa4833d21af7d25787490e570f581f37fabb20cc17bd77652de0a93", null);
       const { hasError, message } = result;
 
-      expect('Error al actualizar la password del usuario.').to.equal(message);
+      expect('El usuario no existe.').to.equal(message);
       expect(stubCheckEmail.calledOnce).to.be.true;
-      expect(stubMailSent.notCalled).to.be.true;
       expect(true).to.equal(hasError);
     });
 
-    it("email required", async function() {
 
-      const logRepository = new LogRepository();
-      const mailService = new MailService();
-      const userRepo = new UserRepository(logRepository);
-      const stubMailSent = sinon.stub(mailService, "sendEmailUserCreated");
-      const stubCheckEmail = sinon.stub(userRepo, "get").returns(null);
-  
-      const userService = new UserService(userRepo, logRepository, mailService);
-      const result = await userService.updatePassword(null);
-      const {hasError, message} = result;
-  
-      expect('El email es requerido.').to.equal(message);
-      expect(stubCheckEmail.notCalled).to.be.true;
-      expect(stubMailSent.notCalled).to.be.true;
-      expect(true).to.equal(hasError);
-    });
-  }); */  
+  });   
 });

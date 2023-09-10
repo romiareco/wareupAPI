@@ -52,6 +52,7 @@ class BookingRequestRepository {
     }
     catch (error) {
       this.log.create('Error in getByUser: '+error, enums.logsType.database);
+      return null;
     }
   }
 
@@ -64,6 +65,7 @@ class BookingRequestRepository {
     }
     catch (error) {
       this.log.create('Error in getByUser: '+error, enums.logsType.database);
+      return null;
     }
   }
  
