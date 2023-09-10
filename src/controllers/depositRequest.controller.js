@@ -8,7 +8,7 @@ class DepositRequestController {
   
     async register(req, res, next) {
   
-      const { title, description, email, companyId, phone, address, userId} = req.body;
+      const { title, description, email, companyId, phone, address} = req.body;
    
       if (!title || typeof title !== "string" || (typeof description !== "string")
         || (!companyId || typeof companyId !== "number")
