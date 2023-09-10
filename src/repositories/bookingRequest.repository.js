@@ -58,7 +58,7 @@ class BookingRequestRepository {
   async getByDeposit(depositId) {
     try {
       return this.model.findAll({
-        where: {userId: userId},
+        where: {depositId: depositId},
         include: [UserModel, { model: DepositModel, include: [UserModel]}]
       });
     }

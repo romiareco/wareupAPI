@@ -231,7 +231,7 @@ class UserService {
     return { message, hasError, resultCode, users };
   }
 
-  async geyByStatus(status) {
+  async getByStatus(status) {
     let hasError = false;
     let message = null; 
     let resultCode = enums.resultCodes.OK;

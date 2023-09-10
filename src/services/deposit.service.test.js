@@ -4,7 +4,7 @@ const DepositRepository = require("../repositories/deposit.repository");
 const expect = chai.expect; 
 const LogRepository = require("../repositories/log.repository");
 const DepositService = require("./deposit.service");
-const { logRepository, companyRepository, cityRepository } = require("../routes/dependency");
+const { logRepository, companyRepository, cityRepository, depositServiceRepository, depositImageRepository } = require("../routes/dependency");
 
 describe("DepositService", function() {
 
@@ -22,7 +22,7 @@ describe("DepositService", function() {
       var stubGetCompany = sinon.stub(companyRepository, "get").returns({ id: 1, });
       var stubGetCity = sinon.stub(cityRepository, "get").returns({title: "city"});
 
-      const service = new DepositService(repository, logRepository, companyRepository);
+      const service = new DepositService(repository, logRepository, companyRepository, depositServiceRepository, depositImageRepository, cityRepository);
       const result = await service.create(stubValue);
  
       

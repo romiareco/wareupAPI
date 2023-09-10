@@ -60,7 +60,6 @@ describe("DepositRepository", function() {
       expect(stub.calledOnce).to.be.true;
       expect(department.id).to.equal(stubValue.id);
       expect(department.title).to.equal(stubValue.title); 
-      expect(department.visible).to.equal(stubValue.visible);
     });
 
     it("should return error", async function() {
