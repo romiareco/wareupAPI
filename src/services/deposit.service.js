@@ -27,7 +27,7 @@ class DepositService {
           hasError = true;
         }
         else{
-          depositToAdd.status = enums.depositStatus.PENDING;
+          depositToAdd.status = enums.depositStatus.ACTIVE;
           depositToAdd.userId = company.userId;
 
           var city = await this.cityRepository.get(depositToAdd.cityId); 
