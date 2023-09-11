@@ -52,18 +52,20 @@ class BookingRequestRepository {
     }
     catch (error) {
       this.log.create('Error in getByUser: '+error, enums.logsType.database);
+      return null;
     }
   }
 
   async getByDeposit(depositId) {
     try {
       return this.model.findAll({
-        where: {userId: userId},
+        where: {depositId: depositId},
         include: [UserModel, { model: DepositModel, include: [UserModel]}]
       });
     }
     catch (error) {
       this.log.create('Error in getByUser: '+error, enums.logsType.database);
+      return null;
     }
   }
  

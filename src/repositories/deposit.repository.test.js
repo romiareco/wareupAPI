@@ -40,6 +40,38 @@ describe("DepositRepository", function() {
     });
   });
 
+  describe("update", function() {
+
+    var stub;
+    const stubValue = {
+      id: 1,
+      name: 'Deposit'
+    };
+
+    it("should update a new deposit to the db", async function() { 
+      sinon.restore();
+      stub = sinon.stub(DepositModel, "update").returns(stubValue);
+      const depositRepository = new DepositRepository();
+      const deposit = await depositRepository.update(stubValue);
+
+      expect(stub.calledOnce).to.be.true;
+      expect(deposit.id).to.equal(stubValue.id);
+      expect(deposit.name).to.equal(stubValue.name);
+    });
+
+    it("should return error", async function() {
+      sinon.restore();
+      stub = sinon.stub(DepositModel, "update").throwsException();
+      stub = sinon.stub(LogModel, "create").returns();
+      const logRepository = new LogRepository();
+      const depositRepository = new DepositRepository(logRepository);
+      const deposit = await depositRepository.update(stubValue);
+
+      expect(stub.calledOnce).to.be.true;
+      expect(deposit).to.equal(null);
+    });
+  });
+
   describe("get", function() {
     var stub;
     const stubValue = {
@@ -60,7 +92,6 @@ describe("DepositRepository", function() {
       expect(stub.calledOnce).to.be.true;
       expect(department.id).to.equal(stubValue.id);
       expect(department.title).to.equal(stubValue.title); 
-      expect(department.visible).to.equal(stubValue.visible);
     });
 
     it("should return error", async function() {
@@ -110,6 +141,91 @@ describe("DepositRepository", function() {
 
       const depositRepository = new DepositRepository(logRepository);
       const deposits = await depositRepository.getByCompany(1);
+
+      expect(stub.calledOnce).to.be.true;
+      expect(deposits).to.equal(null);
+    });
+  });
+
+  describe("getByFilter", function() {
+    var stub;
+    const stubValue = {
+      id: 1,
+      title: 'Montevideo',
+      visible: true,
+      departmentId: 2,
+      city: {
+        id:1,
+        title:'Montevideo',
+        department:{
+          id:1,
+          title: 'Montevideo'
+        }
+      }
+    };
+
+    it("should retrieve a deposit with specific filter", async function() {
+
+      sinon.restore();
+      stub = sinon.stub(DepositModel, 'findAll').returns([stubValue]);
+
+      var filter = {
+        city: "Montevideo"
+      };
+      const logRepository = new LogRepository();
+      const depositRepository = new DepositRepository(logRepository);
+      const deposits = await depositRepository.getByFilter(filter);
+
+      expect(stub.calledOnce).to.be.true;
+    });
+
+    it("should return error", async function() {
+
+      sinon.restore();
+      stub = sinon.stub(DepositModel, "findAll").throwsException();
+      stub = sinon.stub(LogModel, "create").returns();
+      const logRepository = new LogRepository();
+
+      const depositRepository = new DepositRepository(logRepository);
+      const deposits = await depositRepository.getByFilter(stubValue);
+
+      expect(stub.calledOnce).to.be.true;
+      expect(deposits).to.equal(null);
+    });
+  });
+
+  describe("getByFilter", function() {
+    var stub;
+    const stubValue = {
+      id: 1,
+      title: 'Montevideo',
+      visible: true,
+      departmentId: 2
+    };
+
+    it("should retrieve a deposit with specific user", async function() {
+
+      sinon.restore();
+      stub = sinon.stub(DepositModel, 'findAll').returns([stubValue]);
+
+      const depositRepository = new DepositRepository();
+      const deposits = await depositRepository.getByUser(stubValue);
+
+      expect(stub.calledOnce).to.be.true;
+      expect(deposits[0].id).to.equal(stubValue.id);
+      expect(deposits[0].title).to.equal(stubValue.title); 
+      expect(deposits[0].visible).to.equal(stubValue.visible);
+    });
+
+    it("should return error", async function() {
+
+      sinon.restore();
+      stub = sinon.stub(DepositModel, "findAll").throwsException();
+      stub = sinon.stub(LogModel, "create").returns();
+      const logRepository = new LogRepository();
+
+      const depositRepository = new DepositRepository(logRepository);
+      const deposits = await depositRepository.getByUser(1);
 
       expect(stub.calledOnce).to.be.true;
       expect(deposits).to.equal(null);

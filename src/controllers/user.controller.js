@@ -46,7 +46,7 @@ class UserController {
         return res.status(400).json({ message: "Invalid Params" });
       }
       const result = await this.service.recoverPassword(email);
-      return res.status(200).json({data: result });
+      return res.status(200).json(result);
     }
 
     async get(req, res) {
@@ -67,7 +67,7 @@ class UserController {
       }
       else{
         console.log(status);
-        const result = await this.service.geyByStatus(status)
+        const result = await this.service.getByStatus(status)
         return res.status(200).json(result);
       }
     }

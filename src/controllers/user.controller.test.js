@@ -141,7 +141,7 @@ describe("UserController", function() {
     });   
    
     it("should return all users", async function() {
-      const req = { params: { id : "1"} };
+      const req = { params: { id : "1"}, query: {status: 1} };
 
       const stubValue = {
         id: 1,
@@ -149,7 +149,8 @@ describe("UserController", function() {
       };
       const mock = sinon.mock(res);
     
-      const stub = sinon.stub(service, "getAll").returns([stubValue]);
+      sinon.stub(service, "getAll").returns([stubValue]);
+      sinon.stub(service, "getByStatus").returns([stubValue]);
       controller = new UserController(service);
       await controller.getAll(req, res);
           
