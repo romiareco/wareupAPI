@@ -67,6 +67,7 @@ module.exports = {
   cityRepository,
   depositCalendarService,
   depositCalendarRepository,
-  bookingRequestService
+  bookingRequestService,
+  depositImageRepository
 };
 
