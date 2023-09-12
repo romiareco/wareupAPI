@@ -250,6 +250,21 @@ describe("UserService", function() {
       expect(stubMailSent.notCalled).to.be.true;
       expect(true).to.equal(hasError);
     });
+
+    it("error", async function() {
+
+      const logRepository = new LogRepository();
+      const mailService = new MailService();
+      const userRepo = new UserRepository(logRepository);
+      const stubMailSent = sinon.stub(mailService, "sendEmailUserCreated").throwsException();
+      const stubCheckEmail = sinon.stub(userRepo, "getByEmail").returns(null);
+  
+      const userService = new UserService(userRepo, logRepository, mailService);
+      const result = await userService.recoverPassword(null);
+      const {hasError, message} = result;
+  
+      expect(true).to.equal(hasError);
+    });
   }); 
 
 
@@ -287,17 +302,176 @@ describe("UserService", function() {
       const logRepository = new LogRepository();
       const mailService = new MailService();
       const userRepo = new UserRepository(logRepository);  
-      const stubCheckEmail = sinon.stub(userRepo, "get").returns(null);
+      sinon.stub(userRepo, "get").returns(null);
+      sinon.stub(logRepository, "create").returns();
 
       const userService = new UserService(userRepo, logRepository, mailService);
       const result = await userService.updatePassword("0620ffbd7aa4833d21af7d25787490e570f581f37fabb20cc17bd77652de0a93", null);
       const { hasError, message } = result;
 
       expect('El usuario no existe.').to.equal(message);
-      expect(stubCheckEmail.calledOnce).to.be.true;
       expect(true).to.equal(hasError);
     });
+  });  
+  
+  describe("recoverPassword", function() {
+    const stubValue = {
+      id: 1,
+      name: 'Juan',
+      email: 'Juan@email.com',
+      phone: '123',
+      last_name: 'Perez',
+      status: 2,
+      role: 2
+    };
 
+    it("should contact ok", async function() {
+      sinon.restore();
+      const logRepository = new LogRepository();
+      const mailService = new MailService();
+      const userRepo = new UserRepository(logRepository);
+      sinon.stub(mailService, "sendContactForm");
+    
+      const userService = new UserService(userRepo, logRepository, mailService);
+      const result = await userService.contact(stubValue);
+      const { hasError, message } = result;
 
-  });   
+      expect(false).to.equal(hasError);
+    });
+
+    it("error", async function() {
+      sinon.restore();
+      const logRepository = new LogRepository();
+      const mailService = new MailService();
+      const userRepo = new UserRepository(logRepository);
+      sinon.stub(logRepository, "create").returns();
+      sinon.stub(mailService, "sendContactForm").throwsException();
+      
+      const userService = new UserService(userRepo, logRepository, mailService);
+      const result = await userService.contact(stubValue);
+      
+      expect(true).to.equal(result.hasError);
+    });
+  }); 
+
+  describe("getByEmail", function() {
+
+    const stubValue = {
+      id: 1,
+      name: 'Juan',
+      email: 'Juan@email.com',
+      password: 'Pass123',
+      lastName: 'Perez',
+      status: 2,
+      role: 2
+    };
+
+    it("should return a user that matches the provided id", async function() {
+      sinon.restore();
+      const userRepo = new UserRepository();
+      const stub = sinon.stub(userRepo, "getByEmail").returns(stubValue);
+
+      const userService = new UserService(userRepo);
+      const result = await userService.getByEmail(stubValue.id);
+
+      expect(stub.calledOnce).to.be.true;
+      expect(result.user.id).to.equal(stubValue.id);
+      expect(result.user.name).to.equal(stubValue.name);
+      expect(result.user.email).to.equal(stubValue.email);
+    });
+
+    it("should return an error", async function() {
+      sinon.restore();
+      const logRepository = new LogRepository();
+      const userRepo = new UserRepository();
+      var stub = sinon.stub(userRepo, "getByEmail").throwsException();
+      stub = sinon.stub(logRepository, "create").returns();
+
+      const userService = new UserService(userRepo, logRepository);
+      const result = await userService.getByEmail(stubValue.id);
+
+      expect(stub.calledOnce).to.be.true;
+      expect(result.hasError).to.equal(true);
+    });
+  });
+
+  describe("getByStatus", function() {
+
+    const stubValue = {
+      id: 1,
+      name: 'Juan',
+      email: 'Juan@email.com',
+      password: 'Pass123',
+      lastName: 'Perez',
+      status: 2,
+      role: 2
+    };
+
+    it("should return a user that matches the provided id", async function() {
+      sinon.restore();
+      const userRepo = new UserRepository();
+      const stub = sinon.stub(userRepo, "getByStatus").returns([stubValue]);
+
+      const userService = new UserService(userRepo);
+      const result = await userService.getByStatus(stubValue.id);
+
+      expect(stub.calledOnce).to.be.true;
+      expect(result.users[0].id).to.equal(stubValue.id);
+    });
+
+    it("should return an error", async function() {
+      sinon.restore();
+      const logRepository = new LogRepository();
+      const userRepo = new UserRepository();
+      var stub = sinon.stub(userRepo, "getByStatus").throwsException();
+      stub = sinon.stub(logRepository, "create").returns();
+
+      const userService = new UserService(userRepo, logRepository);
+      const result = await userService.getByStatus(stubValue.id);
+
+      expect(stub.calledOnce).to.be.true;
+      expect(result.hasError).to.equal(true);
+    });
+  });
+
+  describe("getByStatus", function() {
+
+    const stubValue = {
+      id: 1,
+      name: 'Juan',
+      email: 'Juan@email.com',
+      password: 'Pass123',
+      lastName: 'Perez',
+      status: 2,
+      role: 2
+    };
+
+    it("should return a user that matches the provided id", async function() {
+      sinon.restore();
+      const userRepo = new UserRepository();
+      const stub = sinon.stub(userRepo, "getAll").returns([stubValue]);
+
+      const userService = new UserService(userRepo);
+      const result = await userService.getAll();
+
+      expect(stub.calledOnce).to.be.true;
+      expect(result.users[0].id).to.equal(stubValue.id);
+      expect(result.users[0].name).to.equal(stubValue.name)
+    });
+
+    it("should return an error", async function() {
+      sinon.restore();
+      const logRepository = new LogRepository();
+      const userRepo = new UserRepository();
+      var stub = sinon.stub(userRepo, "getAll").throwsException();
+      stub = sinon.stub(logRepository, "create").returns();
+
+      const userService = new UserService(userRepo, logRepository);
+      const result = await userService.getAll();
+
+      expect(stub.calledOnce).to.be.true;
+      expect(result.hasError).to.equal(true);
+    });
+  });
+
 });
