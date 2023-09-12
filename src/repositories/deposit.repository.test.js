@@ -170,7 +170,24 @@ describe("DepositRepository", function() {
       stub = sinon.stub(DepositModel, 'findAll').returns([stubValue]);
 
       var filter = {
-        city: "Montevideo"
+        city: "Montevideo",
+        applyFilter:true
+      };
+      const logRepository = new LogRepository();
+      const depositRepository = new DepositRepository(logRepository);
+      const deposits = await depositRepository.getByFilter(filter);
+
+      expect(stub.calledOnce).to.be.true;
+    });
+
+    it("should retrieve a deposit with specific filter", async function() {
+
+      sinon.restore();
+      stub = sinon.stub(DepositModel, 'findAll').returns([stubValue]);
+
+      var filter = {
+        city: "Montevideo",
+        applyFilter:true
       };
       const logRepository = new LogRepository();
       const depositRepository = new DepositRepository(logRepository);
@@ -194,7 +211,7 @@ describe("DepositRepository", function() {
     });
   });
 
-  describe("getByFilter", function() {
+  describe("getByUser", function() {
     var stub;
     const stubValue = {
       id: 1,
@@ -216,6 +233,7 @@ describe("DepositRepository", function() {
       expect(deposits[0].title).to.equal(stubValue.title); 
       expect(deposits[0].visible).to.equal(stubValue.visible);
     });
+    
 
     it("should return error", async function() {
 

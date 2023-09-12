@@ -14,7 +14,7 @@ class CompanyService {
     let company = null;
 
     try{ 
-       const {userId, RUT } = companyToAdd;  
+       const { userId, RUT } = companyToAdd;  
 
         const user = await this.userRepository.get(userId);
         if(user == null){
@@ -36,6 +36,8 @@ class CompanyService {
         company = await this.repository.create(companyToAdd); 
     }
     catch (error) {
+
+      hasError = true;
       resultCode = enums.resultCodes.genericError;
       message = 'Ocurrio un error al intentar crear la compañia'
       this.log.create('Error in create: '+ error, enums.logsType.service);
