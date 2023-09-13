@@ -35,9 +35,6 @@ describe("UserService", function() {
       expect(stubMailSent.calledOnce).to.be.true;
       expect(false).to.equal(hasError);  
     });
-  });
-
-  describe("create", function() {
     const stubValue = {
       id: 1,
       name: 'Juan',
@@ -144,6 +141,67 @@ describe("UserService", function() {
       expect(result.hasError).to.equal(true);
     });
   });
+
+  describe("update", function() {
+    const stubValue = {
+      id: 1,
+      name: 'Juan',
+      email: 'Juan@email.com',
+      password: 'Pass123',
+      lastName: 'Perez',
+      status: 2,
+      role: 2
+    };
+
+    it("should update user", async function() {
+
+      const logRepository = new LogRepository();
+      const mailService = new MailService();
+      const userRepo = new UserRepository(logRepository);
+      const stubUserUpdated = sinon.stub(userRepo, "update").returns(stubValue); 
+      const stubCheckUser = sinon.stub(userRepo, "get").returns(stubValue);
+
+      const userService = new UserService(userRepo, logRepository, mailService);
+      const result = await userService.delete(stubValue);
+
+      expect(stubCheckUser.calledTwice).to.be.true;
+      expect(stubUserUpdated.calledOnce).to.be.true; 
+      expect(result.hasError).to.equal(false);
+    });
+
+    it("should return error  : El usuario no existe.", async function() {
+
+      const logRepository = new LogRepository();
+      const mailService = new MailService();
+      const userRepo = new UserRepository(logRepository);
+      const stubUserCreated = sinon.stub(userRepo, "update").returns(stubValue); 
+      const stubCheckUser = sinon.stub(userRepo, "get").returns(null);
+
+      const userService = new UserService(userRepo, logRepository, mailService);
+      const result = await userService.delete(stubValue);
+
+      expect(stubCheckUser.calledOnce).to.be.true;
+      expect(stubUserCreated.notCalled).to.be.true; 
+      expect(result.hasError).to.equal(true);
+      expect('El usuario no existe.').to.equal(result.message);
+    });
+
+    it("should return an error", async function() {
+      sinon.restore();
+      const logRepository = new LogRepository();
+      const userRepo = new UserRepository();
+      var stub = sinon.stub(userRepo, "get").throwsException();
+      const stubCheckEmail = sinon.stub(userRepo, "update").throwsException();
+      stub = sinon.stub(logRepository, "create").returns();
+
+      const userService = new UserService(userRepo, logRepository);
+      const result = await userService.delete(stubValue);
+
+      expect(stub.calledOnce).to.be.true;
+      expect(result.hasError).to.equal(true);
+    });
+  });
+
 
   describe("get", function() {
 

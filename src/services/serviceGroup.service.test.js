@@ -41,4 +41,38 @@ describe("ServiceGroupService", function() {
       expect(result.hasError).to.equal(true);
     });
   });
+
+  describe("getAll", function() {
+
+    const stubValue = {
+      id: 1,
+      name: 'Certificacion'
+    };
+
+    it("should return a service group that matches the provided id", async function() {
+      const repository = new ServiceGroupRepository();
+      sinon.restore();
+      const stub = sinon.stub(repository, "getAll").returns([stubValue]);
+
+      const service = new ServiceGroupService(repository);
+      const result = await service.getAll();
+
+      expect(stub.calledOnce).to.be.true;
+      expect(result.serviceGroups[0].id).to.equal(stubValue.id);
+    });
+
+    it("should return an error", async function() {
+      sinon.restore();
+      const logRepository = new LogRepository();
+      const repository = new ServiceGroupRepository();
+      sinon.stub(repository, "getAll").throwsException(); 
+      stub = sinon.stub(logRepository, "create").returns();
+
+      const service = new ServiceGroupService(repository, logRepository);
+      const result = await service.getAll();
+
+      expect(stub.calledOnce).to.be.true;
+      expect(result.hasError).to.equal(true);
+    });
+  });
 });
