@@ -13,8 +13,8 @@ const config = {
     mode: "dev", //dev - prod 
     sendgrid:{
       apikey: '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',
-      from:'romiareco@gmail.com',
-      contactTo:'romiareco@gmail.com',
+      from:'wareuplogistica@gmail.com',
+      contactTo:'wareuplogistica@gmail.com',
     },
     frontendUrl:"http://localhost:3000"
   };
