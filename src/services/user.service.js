@@ -151,23 +151,32 @@ class UserService {
   }
 
   async contact(contactForm){ 
+   
     let hasError = false;
     let message = null; 
     let resultCode = enums.resultCodes.OK;
 
-    const { email, phone } = contactForm;
-    if(email == null){
-      message = 'El email es requerido.';
+   try{
+      const { email, phone } = contactForm;
+      if(email == null){
+        message = 'El email es requerido.';
+        hasError = true;
+        resultCode = enums.resultCodes.requiredData;
+      }
+      else if(phone == null){
+        message = 'El telefono  es requerido.';
+        hasError = true;
+        resultCode = enums.resultCodes.requiredData;
+      }
+      this.mailService.sendContactForm(contactForm);  
+        
+    } catch (error) {
+      resultCode = enums.resultCodes.genericError;
       hasError = true;
-      resultCode = enums.resultCodes.requiredData;
+      message = 'Ha ocurrido un error.';
+
+      this.log.create('Error in contact: '+ error, enums.logsType.service);
     }
-    else if(phone == null){
-      message = 'El telefono  es requerido.';
-      hasError = true;
-      resultCode = enums.resultCodes.requiredData;
-    }
-    this.mailService.sendContactForm(contactForm);  
-      
     return {message, hasError, resultCode};
   }
 

@@ -8,7 +8,7 @@ const { departmentRepository, cityRepository, logRepository } = require("../rout
 
 describe("CommonService", function() {
 
-  describe("get", function() {
+  describe("getDepartments", function() {
 
     const stubValue = {
       id: 1,
@@ -34,6 +34,70 @@ describe("CommonService", function() {
 
       const service = new CommonService(departmentRepository, cityRepository, logRepository);
       const result = await service.getDepartments(stubValue.id);
+
+      expect(stub.calledOnce).to.be.true;
+      expect(result.hasError).to.equal(true);
+    });
+  });
+
+  describe("getDepartment", function() {
+
+    const stubValue = {
+      id: 1,
+      name: 'Certificacion'
+    };
+
+    it("should return a service group that matches the provided id", async function() {
+      const repository = new CommonService();
+      const stub = sinon.stub(departmentRepository, "get").returns(stubValue);
+
+      const service = new CommonService(departmentRepository, cityRepository, logRepository);
+      const result = await service.getDepartment(stubValue.id);
+
+      expect(stub.calledOnce).to.be.true;
+    });
+
+    it("should return an error", async function() {
+      sinon.restore();
+      const logRepository = new LogRepository();
+      const repository = new CommonService();
+      var stub = sinon.stub(departmentRepository, "get").throwsException(); 
+      stub = sinon.stub(logRepository, "create").returns();
+
+      const service = new CommonService(departmentRepository, cityRepository, logRepository);
+      const result = await service.getDepartment(stubValue.id);
+
+      expect(stub.calledOnce).to.be.true;
+      expect(result.hasError).to.equal(true);
+    });
+  });
+
+  describe("getCitiesByDepartment", function() {
+
+    const stubValue = {
+      id: 1,
+      name: 'Certificacion'
+    };
+
+    it("should return a service group that matches the provided id", async function() {
+      const repository = new CommonService();
+      const stub = sinon.stub(cityRepository, "getByDepartment").returns([stubValue]);
+
+      const service = new CommonService(departmentRepository, cityRepository, logRepository);
+      const result = await service.getCitiesByDepartment(stubValue.id);
+
+      expect(stub.calledOnce).to.be.true;
+    });
+
+    it("should return an error", async function() {
+      sinon.restore();
+      const logRepository = new LogRepository();
+      const repository = new CommonService();
+      var stub = sinon.stub(cityRepository, "getByDepartment").throwsException(); 
+      stub = sinon.stub(logRepository, "create").returns();
+
+      const service = new CommonService(departmentRepository, cityRepository, logRepository);
+      const result = await service.getCitiesByDepartment(stubValue.id);
 
       expect(stub.calledOnce).to.be.true;
       expect(result.hasError).to.equal(true);

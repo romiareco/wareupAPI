@@ -62,6 +62,14 @@ class DepositRepository {
     return null;
   }
 
+  hasFilters(d, servicesId){
+    var hasFilter = true;
+    servicesId.forEach(s=> {
+      hasFilter = hasFilter && d.depositServices.filter(ds => ds.serviceId == s).length > 0;
+    });
+    return hasFilter;
+  }
+
   async getByCompany(companyId) {
     try {
       return await this.model.findAll({
@@ -98,12 +106,16 @@ class DepositRepository {
             model: CityModel,
             include: [DepartmentModel]
           }] 
-      }).then(deposits => deposits.filter(deposit => deposit.city != null && 
+      }).then(deposits => deposits.filter(deposit => filterOptions.city == null || (deposit.city != null && 
         (
           (deposit.city.title.includes(filterOptions.city) || 
           (deposit.city.department != null && deposit.city.department.title.includes(filterOptions.city))
           )
-        )));
+        ))));
+
+        if(filterOptions.applyFilter && !!filterOptions.servicesId){
+          filterAll = filterAll.filter(d=> this.hasFilters(d, filterOptions.servicesId.split(',')));
+        }
 
         return filterAll; 
     }
