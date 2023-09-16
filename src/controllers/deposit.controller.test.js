@@ -35,6 +35,37 @@ describe("ServiceGroupController", function() {
       mock.verify();
     });
   }); 
+  
+  describe("getServicesByDeposit", function() {
+    let status, json, res, controller, service;
+    beforeEach(() => {
+      status = sinon.stub();
+      json = sinon.spy();
+      res = { json, status };
+      status.returns(res);
+      const repository = sinon.spy();
+      service = new DepositService(repository);
+    });   
+   
+    it("should return all deposits", async function() {
+      const req = { params: {depositId: "1"}  };
+
+      const stubValue = {
+        id: 1,
+        name: 'service group'
+      };
+      const mock = sinon.mock(res); 
+      sinon.stub(service, "getServicesByDeposit").returns([stubValue]);
+      controller = new DepositController(service);
+      await controller.getServicesByDeposit(req, res);
+          
+      expect(status.calledOnce).to.be.true;
+      expect(status.args[0][0]).to.equal(200);  
+      expect(json.calledOnce).to.be.true; 
+      mock.verify();
+    });
+  }); 
+
 
   describe("getAll", function() {
     let status, json, res, controller, service;
