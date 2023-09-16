@@ -21,7 +21,7 @@ class DepositCalendarController {
 
     async update(req, res, next) {
   
-      const { dateFrom, dateTo, totalM3, isDeleted } = req.body;
+      const { dateFrom, dateTo, totalM3 } = req.body;
       const { id } = req.params;
 
       if (!dateFrom || !dateTo || (!totalM3 || typeof totalM3 !== "number")) {

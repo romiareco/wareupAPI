@@ -50,6 +50,51 @@ describe("DepositRequestController", function() {
   }); 
 
 
+  describe("update", function() {
+    let status, json, res, userController, userService;
+    beforeEach(() => {
+      status = sinon.stub();
+      json = sinon.spy();
+      res = { json, status };
+      status.returns(res);
+      const repository = sinon.spy();
+      service = new DepositRequestService(repository);
+    });
+
+    it("should not update a deposit request when some param is not provided", async function() {
+      const req = { params: { id:1 }, body: { email: 'Juan@email.com' } };
+
+      await new DepositRequestController().update(req, res);
+
+      expect(status.calledOnce).to.be.true;
+      expect(status.args[0][0]).to.equal(400);
+      expect(json.calledOnce).to.be.true;
+      expect(json.args[0][0].message).to.equal("Invalid Params");
+    });
+ 
+    it("should update a deposit request when all params are provided", async function() {
+      const req = {
+        params: { id:1 },
+        body: { title: 'a', description: 'a', email: 'a', phone: 'a', address: 'a', companyId: 1, userId: 2,
+        status: 1 }
+      }; 
+   
+      const stubValue = {
+        id: 1,
+        name: 'Juan',
+        email: 'Juan@email.com'
+      };
+      const stub = sinon.stub(service, "update").returns(stubValue);
+      controller = new DepositRequestController(service);
+
+      await controller.update(req, res);
+      expect(stub.calledOnce).to.be.true;
+      expect(status.calledOnce).to.be.true;
+      expect(status.args[0][0]).to.equal(200);   
+    }); 
+  }); 
+
+
 
 
 
@@ -119,5 +164,67 @@ describe("DepositRequestController", function() {
       expect(json.calledOnce).to.be.true; 
       mock.verify();
     });
-  }); 
+  });
+  
+  describe("getByCompany", function() {
+    let status, json, res, controller, service;
+    beforeEach(() => {
+      status = sinon.stub();
+      json = sinon.spy();
+      res = { json, status };
+      status.returns(res);
+      const repository = sinon.spy();
+      service = new DepositRequestService(repository);
+    });   
+   
+    it("should return all DepositRequest", async function() {
+      const req = { params: { companyId : "1"} };
+
+      const stubValue = {
+        id: 1,
+        name: 'deposit name'
+      };
+      const mock = sinon.mock(res);
+    
+      const stub = sinon.stub(service, "getByCompany").returns([stubValue]);
+      controller = new DepositRequestController(service);
+      await controller.getByCompany(req, res);
+          
+      expect(status.calledOnce).to.be.true;
+      expect(status.args[0][0]).to.equal(200);  
+      expect(json.calledOnce).to.be.true; 
+      mock.verify();
+    });
+  });
+
+  describe("getByUser", function() {
+    let status, json, res, controller, service;
+    beforeEach(() => {
+      status = sinon.stub();
+      json = sinon.spy();
+      res = { json, status };
+      status.returns(res);
+      const repository = sinon.spy();
+      service = new DepositRequestService(repository);
+    });   
+   
+    it("should return all DepositRequest", async function() {
+      const req = { params: { userId : "1"} };
+
+      const stubValue = {
+        id: 1,
+        name: 'deposit name'
+      };
+      const mock = sinon.mock(res);
+    
+      const stub = sinon.stub(service, "getByUser").returns([stubValue]);
+      controller = new DepositRequestController(service);
+      await controller.getByUser(req, res);
+          
+      expect(status.calledOnce).to.be.true;
+      expect(status.args[0][0]).to.equal(200);  
+      expect(json.calledOnce).to.be.true; 
+      mock.verify();
+    });
+  });
 });
