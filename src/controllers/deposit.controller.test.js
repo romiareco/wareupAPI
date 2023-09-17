@@ -36,6 +36,37 @@ describe("ServiceGroupController", function() {
     });
   }); 
   
+
+  describe("getImagesByDeposit", function() {
+    let status, json, res, controller, service;
+    beforeEach(() => {
+      status = sinon.stub();
+      json = sinon.spy();
+      res = { json, status };
+      status.returns(res);
+      const repository = sinon.spy();
+      service = new DepositService(repository);
+    });   
+   
+    it("should return all images", async function() {
+      const req = { params: {depositId: "1"}  };
+
+      const stubValue = {
+        id: 1,
+        name: 'service group'
+      };
+      const mock = sinon.mock(res); 
+      sinon.stub(service, "getImagesByDeposit").returns([stubValue]);
+      controller = new DepositController(service);
+      await controller.getImagesByDeposit(req, res);
+          
+      expect(status.calledOnce).to.be.true;
+      expect(status.args[0][0]).to.equal(200);  
+      expect(json.calledOnce).to.be.true; 
+      mock.verify();
+    });
+  }); 
+
   describe("getServicesByDeposit", function() {
     let status, json, res, controller, service;
     beforeEach(() => {

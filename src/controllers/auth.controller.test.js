@@ -9,6 +9,7 @@ describe("AuthController", function() {
    
   describe("login", function() {
     let status, json, res, controller, service;
+
     beforeEach(() => {
       status = sinon.stub();
       json = sinon.spy();
@@ -24,8 +25,7 @@ describe("AuthController", function() {
       const stubValue = {
         hasError: false
       };
-      const mock = sinon.mock(res);
-    
+      const mock = sinon.mock(res); 
       const stub = sinon.stub(service, "login").returns(stubValue);
       controller = new AuthController(service);
       await controller.login(req, res);
@@ -34,6 +34,26 @@ describe("AuthController", function() {
       expect(status.args[0][0]).to.equal(200);  
       expect(json.calledOnce).to.be.true; 
       mock.verify();
+    });
+
+
+    it("should not login - email", async function() {
+      const req = { body: { email : null, password: "adasdass"} };
+      const mock = sinon.mock(res); 
+      
+      controller = new AuthController(service);
+      controller.login(req, res);
+
+      expect(status.calledOnce).to.be.true;
+      expect(status.args[0][0]).to.equal(400); 
+    });
+
+    it("should not login = password", async function() {
+      const req = { body: { email : "adasdass", password: null} };
+      await new AuthController().login(req, res);
+
+      expect(status.calledOnce).to.be.true;
+      expect(status.args[0][0]).to.equal(400); 
     });
   });  
   
