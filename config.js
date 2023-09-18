@@ -4,7 +4,7 @@ const config = {
       host: "db4free.net",
       user: "wareupadmin",
       password: "Pass123*",
-      database: "wareup",
+      database: "wareup_dev",
       recreate: false, //indicates if the tables are recreated in database
       alter: true, //indicates if the tables should be updated in database
       logging: false
