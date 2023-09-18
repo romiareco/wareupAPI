@@ -65,14 +65,11 @@ class UserController {
         const result = await this.service.getAll();
         return res.status(200).json(result);
       }
-      else{
-        console.log(status);
+      else{ 
         const result = await this.service.getByStatus(status)
         return res.status(200).json(result);
       }
     }
-
-   
 
     async getMe(req, res) {
       const { id } = req.user;

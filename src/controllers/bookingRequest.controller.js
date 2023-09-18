@@ -8,7 +8,7 @@ class BookingRequestController {
   
     async register(req, res, next) {
   
-      const { description, userId, depositId, dateFrom, dateTo, totalM} = req.body;
+      const { userId, depositId} = req.body;
    
       if ( (!userId || typeof userId !== "number")
         || (!depositId || typeof depositId !== "number")) {

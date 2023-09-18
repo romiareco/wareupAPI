@@ -57,12 +57,17 @@ class CompanyController {
 
     async getByUser(req, res, next) {
 
-      const { userId } = req.params;  
+      const { userId } = req.params;   
       if (!userId || typeof userId !== "string") {
         return res.status(400).json({ message: "Invalid Params" });
       }
 
-      const result = await this.service.getByUser(userId, req.query.status);
+      const status = null;
+      if(req.query){
+        status = req.query.status;
+      }
+
+      const result = await this.service.getByUser(userId,status);
       return res.status(200).json(result);
     }
 
