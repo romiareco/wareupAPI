@@ -2,9 +2,9 @@ const config = {
     db: {
       /* don't expose password or any sensitive info, done only for demo */
       host: "db4free.net",
-      user: "wareupadmin",
+      user: "wareupadmindev",
       password: "Pass123*",
-      database: "wareup",
+      database: "wareup_dev",
       recreate: false, //indicates if the tables are recreated in database
       alter: true, //indicates if the tables should be updated in database
       logging: false
@@ -16,7 +16,7 @@ const config = {
       from:'wareuplogistica@gmail.com',
       contactTo:'wareuplogistica@gmail.com',
     },
-    frontendUrl:"http://localhost:3000"
+    frontendUrl:"https://wareup-front-dev.onrender.com"
   };
 
   module.exports = config;
