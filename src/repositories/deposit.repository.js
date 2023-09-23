@@ -116,14 +116,17 @@ class DepositRepository {
         if(filterOptions.applyFilter && !!filterOptions.servicesId){
           filterAll = filterAll.filter(d=> this.hasFilters(d, filterOptions.servicesId.split(',')));
         } 
-        if(filterOptions.applyFilter && !!filterOptions.totalM3){
-          filterAll = filterAll.filter(d=> d.totalM3 >= filterOptions.totalM3);
+        if(filterOptions.applyFilter && !!filterOptions.fromTotalM3){
+          filterAll = filterAll.filter(d=> d.totalM3 >= filterOptions.fromTotalM3);
+        } 
+        if(filterOptions.applyFilter && !!filterOptions.toTotalM3){
+          filterAll = filterAll.filter(d=> d.totalM3 <= filterOptions.toTotalM3);
         } 
         if(filterOptions.applyFilter && !!filterOptions.minimumBusinessPeriod){
-          filterAll = filterAll.filter(d=> d.minimumBusinessPeriod >= filterOptions.minimumBusinessPeriod);
+          filterAll = filterAll.filter(d=> d.minimumBusinessPeriod <= filterOptions.minimumBusinessPeriod);
         }
         if(filterOptions.applyFilter && !!filterOptions.minimumBusinessVolume){
-          filterAll = filterAll.filter(d=> d.minimumBusinessVolume >= filterOptions.minimumBusinessVolume);
+          filterAll = filterAll.filter(d=> d.minimumBusinessVolume <= filterOptions.minimumBusinessVolume);
         }  
         if(filterOptions.applyFilter && !!filterOptions.status){
           filterAll = filterAll.filter(d=> d.status >= filterOptions.status);
