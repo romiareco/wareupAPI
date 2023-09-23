@@ -31,11 +31,11 @@ class DepositModel extends Model {
           allowNull: true
         },
         minimumBusinessVolume: {
-          type: DataTypes.DECIMAL,
+          type: DataTypes.INTEGER,
           allowNull: true
         },
         expectedPrice: {
-          type: DataTypes.DECIMAL,
+          type: DataTypes.INTEGER,
           allowNull: true
         },
         cityId: {

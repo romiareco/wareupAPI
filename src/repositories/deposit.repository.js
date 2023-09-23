@@ -122,12 +122,21 @@ class DepositRepository {
         if(filterOptions.applyFilter && !!filterOptions.toTotalM3){
           filterAll = filterAll.filter(d=> d.totalM3 <= filterOptions.toTotalM3);
         } 
+
+        if(filterOptions.applyFilter && !!filterOptions.fromPrice){
+          filterAll = filterAll.filter(d=> d.expectedPrice >= filterOptions.fromPrice);
+        } 
+        if(filterOptions.applyFilter && !!filterOptions.toPrice){
+          filterAll = filterAll.filter(d=> d.expectedPrice <= filterOptions.toPrice);
+        } 
+
         if(filterOptions.applyFilter && !!filterOptions.minimumBusinessPeriod){
           filterAll = filterAll.filter(d=> d.minimumBusinessPeriod <= filterOptions.minimumBusinessPeriod);
         }
         if(filterOptions.applyFilter && !!filterOptions.minimumBusinessVolume){
           filterAll = filterAll.filter(d=> d.minimumBusinessVolume <= filterOptions.minimumBusinessVolume);
         }  
+        
         if(filterOptions.applyFilter && !!filterOptions.status){
           filterAll = filterAll.filter(d=> d.status >= filterOptions.status);
         }  
