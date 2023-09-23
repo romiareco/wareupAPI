@@ -19,7 +19,7 @@ class DepositCalendarModel extends Model {
           allowNull: false
         },
         totalM3: {
-          type: DataTypes.STRING,
+          type: DataTypes.INTEGER,
           allowNull: true
         }, 
         isDeleted: {

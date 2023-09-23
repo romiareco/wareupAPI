@@ -62,8 +62,8 @@ class CompanyController {
         return res.status(400).json({ message: "Invalid Params" });
       }
 
-      const status = null;
-      if(req.query){
+      let status = null;
+      if(!!req.query && !!req.query.status){
         status = req.query.status;
       }
 

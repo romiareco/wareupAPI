@@ -52,7 +52,8 @@ class DepositRequestService {
         }
         else{
           depositRequestDb.status = depositRequestToUpdate.status;
-          depositRequest = await this.repository.update(depositRequestDb);
+          await this.repository.update(depositRequestDb);
+          depositRequest = await this.repository.get(depositRequestDb.id);;
 
         }
     }

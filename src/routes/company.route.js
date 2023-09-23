@@ -10,7 +10,7 @@ router.post("/companies", /*[mdAuth.validateAuth], */ (req, res) => controller.r
 router.put("/companies/:id",/*[mdAuth.validateAuth], */ (req, res) => controller.update(req, res));
 router.delete("/companies/:id",/*[mdAuth.validateAuth], */ (req, res) => controller.delete(req, res));
 router.get("/companies",/*[mdAuth.validateAuth], */  (req, res) => controller.getAll(req, res)); 
-router.get("/companies/:id", [mdAuth.validateAuth],  (req, res) => controller.get(req, res));
-router.get("/companies/byUser/:userId", [mdAuth.validateAuth], (req, res) => controller.getByUser(req, res));
+router.get("/companies/:id", /*[mdAuth.validateAuth], */  (req, res) => controller.get(req, res));
+router.get("/companies/byUser/:userId", /*[mdAuth.validateAuth], */ (req, res) => controller.getByUser(req, res));
 
 module.exports = router;

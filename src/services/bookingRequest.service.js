@@ -44,8 +44,8 @@ class BookingRequestService {
         }
         else{
           bookingRequestDb.status = bookingRequestToUpdate.status;
-          bookingRequest = await this.repository.update(bookingRequestDb);
-
+          await this.repository.update(bookingRequestDb);
+          bookingRequest = await this.repository.get(bookingRequestDb.id);
         }
     }
     catch (error) {

@@ -23,7 +23,7 @@ class BookingRequestModel extends Model {
           }
         },
         status: {
-          type: DataTypes.STRING,
+          type: DataTypes.INTEGER,
           allowNull: true
         },
         userId: {
@@ -35,11 +35,11 @@ class BookingRequestModel extends Model {
           }
         },
         dateFrom: {
-          type: DataTypes.STRING,
+          type: DataTypes.DATE,
           allowNull: true
         },
         dateTo: {
-          type: DataTypes.STRING,
+          type: DataTypes.DATE,
           allowNull: true
         },
         totalM3: {

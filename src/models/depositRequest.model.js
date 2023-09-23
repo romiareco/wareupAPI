@@ -35,7 +35,7 @@ class DepositRequestModel extends Model {
           }
         },
         status: {
-          type: DataTypes.STRING,
+          type: DataTypes.INTEGER,
           allowNull: true
         },
         companyId: {

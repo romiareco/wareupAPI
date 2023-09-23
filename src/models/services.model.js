@@ -46,7 +46,7 @@ class ServiceModel extends Model {
 
     super.findOrCreate({where: { title: 'Abierto' }, defaults: {title: 'Abierto', description: null, serviceGroupId:1, order: 1, status: 1} });
     super.findOrCreate({where: { title: 'Cerrado' }, defaults: {title: 'Cerrado', description: null, serviceGroupId:1, order: 2, status: 1} });
-    super.findOrCreate({where: { title: 'Temperatura controllada' }, defaults:  {title: 'Temperatura controllada', description: null, serviceGroupId:1, order: 3, status: 1} });
+    super.findOrCreate({where: { title: 'Temperatura controlada' }, defaults:  {title: 'Temperatura controlada', description: null, serviceGroupId:1, order: 3, status: 1} });
     //super.findOrCreate({where: { title: 'Otros' }, defaults:  {title: 'Otros', description: null, serviceGroupId:1, order: 1, status: 1} });
     //super.findOrCreate({where: { title: 'Racksm' }, defaults:  {title: 'Racksm', description: null, serviceGroupId:2, order: 1, status: 1} });
     //super.findOrCreate({where: { title: 'FlatStorage' }, defaults:  {title: 'FlatStorage', description: null, serviceGroupId:2, order: 2, status: 1} });
