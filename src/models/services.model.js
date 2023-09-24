@@ -53,10 +53,10 @@ class ServiceModel extends Model {
    
     super.findOrCreate({where: { title: 'Carga/descarga de mercaderia' }, defaults:  {title: 'Carga/descarga de mercaderia', description: null, serviceGroupId:3, order: 1, status: 1}}); 
     super.findOrCreate({where: { title: 'Seguridad 24 horas' }, defaults:  {title: 'Seguridad 24 horas', description: null, serviceGroupId:3, order: 2, status: 1}});
-    super.findOrCreate({where: { title: 'Camaras' }, defaults:  {title: 'Camaras', description: null, serviceGroupId:3, order: 3, status: 1}});
+    super.findOrCreate({where: { title: 'Cámaras de Seguridad' }, defaults:  {title: 'Cámaras de Seguridad', description: null, serviceGroupId:3, order: 3, status: 1}});
     //super.findOrCreate({where: { title: 'Parking' }, defaults:  {title: 'Parking', description: null, serviceGroupId:3, order: 4, status: 1}});
     super.findOrCreate({where: { title: 'Control de plagas' }, defaults:  {title: 'Control de plagas', description: null, serviceGroupId:3, order: 5, status: 1}});
-    //super.findOrCreate({where: { title: 'Etiquetados' }, defaults:  {title: 'Etiquetados', description: null, serviceGroupId:3, order: 6, status: 1}});
+    super.findOrCreate({where: { title: 'Ingreso de camiones' }, defaults:  {title: 'Ingreso de camiones', description: null, serviceGroupId:3, order: 6, status: 1}});
     super.findOrCreate({where: { title: 'Fraccionamiento/preparacion de pedidos' }, defaults:  {title: 'Fraccionamiento/preparacion de pedidos', description: null, serviceGroupId:3, order: 7, status: 1}});
     super.findOrCreate({where: { title: 'Software de gestion de stock WMS' }, defaults:  {title: 'Software de gestion de stock WMS', description: null, serviceGroupId:3, order: 8, status: 1}});
     super.findOrCreate({where: { title: 'Consolidacion/desconsolidacion' }, defaults:  {title: 'Consolidacion/desconsolidacion', description: null, serviceGroupId:3, order: 9, status: 1}});
@@ -75,13 +75,13 @@ class ServiceModel extends Model {
     super.findOrCreate({where: { title: 'Bomberos' }, defaults:  {title: 'Bomberos', description: null, serviceGroupId:6, order: 5, status: 1}});
     super.findOrCreate({where: { title: 'Otras' }, defaults:  {title: 'Otras', description: null, serviceGroupId:6, order: 6, status: 1}});
 
-    super.findOrCreate({where: { title: 'Lunes' }, defaults:  {title: 'Lunes', description: null, serviceGroupId:7, order: 1, status: 1}});
-    super.findOrCreate({where: { title: 'Martes' }, defaults:  {title: 'Martes', description: null, serviceGroupId:7, order: 2, status: 1}});
-    super.findOrCreate({where: { title: 'Miercoles' }, defaults:  {title: 'Miercoles', description: null, serviceGroupId:7, order: 3, status: 1}});
-    super.findOrCreate({where: { title: 'Jueves' }, defaults:  {title: 'Jueves', description: null, serviceGroupId:7, order: 4, status: 1}});
-    super.findOrCreate({where: { title: 'Viernes' }, defaults:  {title: 'Viernes', description: null, serviceGroupId:7, order: 5, status: 1}});
-    super.findOrCreate({where: { title: 'Sabado' }, defaults:  {title: 'Sabado', description: null, serviceGroupId:7, order: 6, status: 1}});
-    super.findOrCreate({where: { title: 'Domingo' }, defaults:  {title: 'Domingo', description: null, serviceGroupId:7, order: 7, status: 1}});
+    super.findOrCreate({where: { id: 23 }, defaults:  {title: 'Lunes', description: null, serviceGroupId:7, order: 1, status: 1}});
+    super.findOrCreate({where: { id: 24 }, defaults:  {title: 'Martes', description: null, serviceGroupId:7, order: 2, status: 1}});
+    super.findOrCreate({where: { id: 25 }, defaults:  {title: 'Miercoles', description: null, serviceGroupId:7, order: 3, status: 1}});
+    super.findOrCreate({where: { id: 26 }, defaults:  {title: 'Jueves', description: null, serviceGroupId:7, order: 4, status: 1}});
+    super.findOrCreate({where: { id: 27 }, defaults:  {title: 'Viernes', description: null, serviceGroupId:7, order: 5, status: 1}});
+    super.findOrCreate({where: { id: 28 }, defaults:  {title: 'Sabado', description: null, serviceGroupId:7, order: 6, status: 1}});
+    super.findOrCreate({where: { id: 29 }, defaults:  {title: 'Domingo', description: null, serviceGroupId:7, order: 7, status: 1}});
   } 
 }   
 module.exports = ServiceModel;

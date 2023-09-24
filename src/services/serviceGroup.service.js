@@ -13,7 +13,11 @@ class ServiceGroupService {
     let serviceGroups = null;
 
     try{ 
-      serviceGroups =  await this.repository.getAll().sort((a,b) => a.order - b.order);
+      serviceGroups =  await this.repository.getAll();
+      serviceGroups.sort((a,b) => a.order - b.order);
+      serviceGroups.array.forEach(element => {
+        element.services.sort((a,b) => a.order - b.order)
+      });
     }
     catch (error) {
       resultCode = enums.resultCodes.genericError;
@@ -34,7 +38,7 @@ class ServiceGroupService {
 
     try{
       serviceGroup =  await this.repository.get(id);
-     serviceGroup.services.sort((a,b) => a.order - b.order);
+      serviceGroup.services.sort((a,b) => a.order - b.order);
     }
     catch (error) {
       resultCode = enums.resultCodes.genericError;
