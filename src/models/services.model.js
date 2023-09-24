@@ -81,7 +81,7 @@ class ServiceModel extends Model {
     super.findOrCreate({where: { title: 'Jueves' }, defaults:  {title: 'Jueves', description: null, serviceGroupId:7, order: 4, status: 1}});
     super.findOrCreate({where: { title: 'Viernes' }, defaults:  {title: 'Viernes', description: null, serviceGroupId:7, order: 5, status: 1}});
     super.findOrCreate({where: { title: 'Sabado' }, defaults:  {title: 'Sabado', description: null, serviceGroupId:7, order: 6, status: 1}});
-    super.findOrCreate({where: { title: 'Domingo' }, defaults:  {title: 'Domingo', description: null, serviceGroupId:7, order: 6, status: 1}});
+    super.findOrCreate({where: { title: 'Domingo' }, defaults:  {title: 'Domingo', description: null, serviceGroupId:7, order: 7, status: 1}});
   } 
 }   
 module.exports = ServiceModel;
