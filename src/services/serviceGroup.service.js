@@ -15,7 +15,7 @@ class ServiceGroupService {
     try{ 
       serviceGroups =  await this.repository.getAll();
       serviceGroups.sort((a,b) => a.order - b.order);
-      serviceGroups.array.forEach(element => {
+      serviceGroups.forEach(element => {
         element.services.sort((a,b) => a.order - b.order)
       });
     }
