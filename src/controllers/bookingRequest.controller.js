@@ -1,4 +1,3 @@
-const enums = require('../utils/enums');
 
 class BookingRequestController {
 

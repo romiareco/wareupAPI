@@ -1,4 +1,3 @@
-const enums = require('../utils/enums');
 
 class DepositController {
 
@@ -7,9 +6,9 @@ class DepositController {
     }
 
     async register(req, res, next) {
-      const { description, cityId, totalM3} = req.body;
+      const { description, cityId, totalM3, address} = req.body;
 
-      if (!description || typeof description !== "string" || !cityId || typeof cityId !== "number"
+      if (!description || typeof description !== "string" || !address || typeof address !== "string" || !cityId || typeof cityId !== "number"
         || !totalM3 || typeof totalM3 !== "number") {
         return res.status(400).json({ message: "Invalid Params" });
       }
@@ -18,13 +17,13 @@ class DepositController {
     } 
 
     async update(req, res, next) {
-      const { status, description, cityId, totalM3 } = req.body;
+      const { status, description, cityId, totalM3, address} = req.body;
       const { id } = req.params;
 
       if (!id 
         || !status || typeof status !== "number" 
         || !description || typeof description !== "string" || !cityId || typeof cityId !== "number"
-        || !totalM3 || typeof totalM3 !== "number") {
+        || !totalM3 || typeof totalM3 !== "number" || !address || typeof address !== "string" ) {
         return res.status(400).json({ message: "Invalid Params" });
       }
       let deposit = req.body;

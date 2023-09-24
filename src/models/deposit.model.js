@@ -46,9 +46,9 @@ class DepositModel extends Model {
             key: 'id'
           }
         },
-        street: {
+        address: {
           type: DataTypes.STRING,
-          allowNull: true
+          allowNull: false
         },
         postalCode: {
           type: DataTypes.STRING,

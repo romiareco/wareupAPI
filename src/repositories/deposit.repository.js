@@ -32,7 +32,7 @@ class DepositRepository {
             minimumBusinessPeriod: request.minimumBusinessPeriod ,
             minimumBusinessVolume: request.minimumBusinessVolume,
             expectedPrice: request.expectedPrice,
-            street: request.street,
+            address: request.address,
             postalCode: request.postalCode
           },
           {
@@ -136,7 +136,7 @@ class DepositRepository {
         if(filterOptions.applyFilter && !!filterOptions.minimumBusinessVolume){
           filterAll = filterAll.filter(d=> d.minimumBusinessVolume <= filterOptions.minimumBusinessVolume);
         }  
-        
+
         if(filterOptions.applyFilter && !!filterOptions.status){
           filterAll = filterAll.filter(d=> d.status >= filterOptions.status);
         }  
