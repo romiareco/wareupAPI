@@ -12,7 +12,8 @@ describe("ServiceGroupService", function() {
 
     const stubValue = {
       id: 1,
-      name: 'Certificacion'
+      name: 'Certificacion',
+      services: []
     };
 
     it("should return a service group that matches the provided id", async function() {
@@ -46,7 +47,12 @@ describe("ServiceGroupService", function() {
 
     const stubValue = {
       id: 1,
-      name: 'Certificacion'
+      name: 'Certificacion',
+      order: 1,
+      services: [
+        { order: 1 },
+        { order: 2 }
+      ]
     };
 
     it("should return a service group that matches the provided id", async function() {

@@ -62,7 +62,7 @@ class DepositRepository {
     return null;
   }
 
-  hasFilters(d, servicesId){
+ /*hasFilters(d, servicesId){
     var hasFilter = true;
     servicesId.forEach(s=> {
       hasFilter = hasFilter && d.depositServices.filter(ds => ds.serviceId == s).length > 0;
@@ -91,7 +91,39 @@ class DepositRepository {
   onlyUnique(value, index, array) {
     return array.indexOf(value) === index;
   }
-
+*/
+async getByFilter(filterOptions){
+ try{ var filterAll = await this.model.findAll()
+  
+  
+  return filterAll;
+}
+catch (error) {
+  this.log.create('Error in getByFilter: '+error, enums.logsType.database);
+}
+return null
+}
+async getByCompany(filterOptions){
+try{  var filterAll = await this.model.findAll({
+    include: [CompanyModel,
+      {
+        model: DepositServiceModel,
+        //where: { serviceId: filterOptions.servicesId },
+        include: [ServiceModel]
+      },
+      {
+        model: CityModel,
+        include: [DepartmentModel]
+      }] 
+  })
+  return filterAll;
+}
+catch (error) {
+  this.log.create('Error in getByFilter: '+error, enums.logsType.database);
+}
+return null;
+}
+/*
   async getByFilter(filterOptions) {
     try {
 
@@ -148,6 +180,7 @@ class DepositRepository {
 
     return null;
   }
+  */
 
   async getAll() {
     try {

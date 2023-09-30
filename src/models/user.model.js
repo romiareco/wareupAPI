@@ -16,7 +16,7 @@ class UserModel extends Model {
         },
         lastName: {
           type: DataTypes.STRING,
-          allowNull: false
+          allowNull: true
         },
         password: {
           type: DataTypes.STRING,
@@ -34,7 +34,11 @@ class UserModel extends Model {
         status: {
           type: DataTypes.INTEGER,
           allowNull: false
-        } 
+        },
+        industry: {
+          type: DataTypes.STRING,
+          allowNull: true
+        },
       },
       {
         sequelize,

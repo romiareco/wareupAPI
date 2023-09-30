@@ -35,9 +35,8 @@ describe("CompanyService", function() {
       const logRepository = new LogRepository();
       const repository = new CompanyRepository();
       var stub = sinon.stub(repository, "update").throwsException(); 
-      var stubGeUser = sinon.stub(repository, "get").returns({ id: 1, });
+      sinon.stub(repository, "get").returns({ id: 1 });
       stub = sinon.stub(logRepository, "create").returns();
-      //sinon.stub(repository, "getByRUT").returns(null);
       const service = new CompanyService(repository, logRepository, userRepository);
       const result = await service.delete(stubValue.id);
 
@@ -75,8 +74,7 @@ describe("CompanyService", function() {
       const repository = new CompanyRepository();
       var stub = sinon.stub(repository, "update").throwsException(); 
       var stubGeUser = sinon.stub(userRepository, "get").returns({ id: 1, });
-      stub = sinon.stub(logRepository, "create").returns();
-      //sinon.stub(repository, "getByRUT").returns(null);
+      stub = sinon.stub(logRepository, "create").returns()
       const service = new CompanyService(repository, logRepository, userRepository);
       const result = await service.update(stubValue.id);
 
@@ -93,23 +91,22 @@ describe("CompanyService", function() {
       RUT: "200"
     };
 
-    it("should create a company", async function() {
+    it("should create a company when the data is okey", async function() {
       sinon.restore();
       const repository = new CompanyRepository();
       var stubCreate = sinon.stub(repository, "create").returns(stubValue);
-      var stubGeUser = sinon.stub(userRepository, "get").returns({ id: 1, });
+      sinon.stub(userRepository, "get").returns({ id: 1, });
       sinon.stub(repository, "getByRUT").returns(null);
       
       const service = new CompanyService(repository, logRepository, userRepository);
       const result = await service.create(stubValue);
- 
-      
+     
       expect(result.hasError).to.equal(false)
       expect(stubCreate.calledOnce).to.be.true;
       expect(result.company.id).to.equal(stubValue.id);
     });
 
-    it("should return an error", async function() {
+    it("should return an error when create method throws an exception", async function() {
       sinon.restore();
       const logRepository = new LogRepository();
       const repository = new CompanyRepository();
@@ -166,7 +163,7 @@ describe("CompanyService", function() {
       name: 'Certificacion'
     };
 
-    it("should return a service group that matches the provided id", async function() {
+    it("should return all company by user", async function() {
       const repository = new CompanyRepository();
       const stub = sinon.stub(repository, "getByUser").returns([stubValue]);
 
@@ -177,7 +174,7 @@ describe("CompanyService", function() {
       expect(result.companies[0].id).to.equal(stubValue.id);
     });
 
-    it("should return an error", async function() {
+    it("should return an error when getByUsers throws an exception", async function() {
       sinon.restore();
       const logRepository = new LogRepository();
       const repository = new CompanyRepository();
@@ -199,7 +196,7 @@ describe("CompanyService", function() {
       name: 'Certificacion'
     };
 
-    it("should return a service group that matches the provided id", async function() {
+    it("should return all companies", async function() {
       const repository = new CompanyRepository();
       const stub = sinon.stub(repository, "getAll").returns([stubValue]);
 
@@ -210,7 +207,7 @@ describe("CompanyService", function() {
       expect(result.companies[0].id).to.equal(stubValue.id);
     });
 
-    it("should return an error", async function() {
+    it("should return an error when getAlls throws an exception", async function() {
       sinon.restore();
       const logRepository = new LogRepository();
       const repository = new CompanyRepository();

@@ -149,7 +149,9 @@ describe("ServiceGroupController", function() {
         description: 'adsadsa',
         status: 1,
         cityId: 1,
-        totalM3:100} };
+        totalM3:100,
+        address: "Av. Italia 1234"
+      }};
 
         const stubValue = {
           hasError: false
@@ -182,7 +184,9 @@ describe("ServiceGroupController", function() {
       const req = { body: { description: 'depositoooo',
       city: "Montevideo",
       cityId: 1,
-      totalM3:100 }};
+      totalM3:100,
+      address: "Av. Italia 1234" 
+    }};
 
       const stubValue = {
         hasError: false
