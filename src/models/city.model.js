@@ -42,6 +42,7 @@ class CityModel extends Model {
     super.findOrCreate({where: { id: 4 }, defaults: {id: 4, title: 'Pocitos', visible: true, departmentId: 2} }); 
     super.findOrCreate({where: { id: 5 }, defaults: {id: 5, title: 'Otro', visible: true, departmentId: 1} }); 
     super.findOrCreate({where: { id: 6 }, defaults: {id: 6, title: 'Otro', visible: true, departmentId: 2} }); 
+    super.findOrCreate({where: { id: 7 }, defaults: {id: 7, title: 'San José', visible: true, departmentId: 3} }); 
   }
 }
 module.exports = CityModel;

@@ -30,6 +30,7 @@ class DepartmentModel extends Model {
 
     super.findOrCreate({where: { id: 1 }, defaults: {id: 1, title: 'Canelones', visible: true} }); 
     super.findOrCreate({where: { id: 2 }, defaults: {id: 2, title: 'Montevideo', visible: true} });
+    super.findOrCreate({where: { id: 3 }, defaults: {id: 3, title: 'San José', visible: true} });
   } 
 }   
 module.exports = DepartmentModel;

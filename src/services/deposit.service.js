@@ -74,6 +74,8 @@ class DepositService {
         depositInDb.status = depositToUpdate.status; 
         depositInDb.cityId = depositToUpdate.cityId; 
         depositInDb.description = depositToUpdate.description;
+        depositInDb.address = depositToUpdate.address;
+        depositInDb.postalCode = depositToUpdate.postalCode;
         depositInDb.totalM3 = depositToUpdate.totalM3;
         depositInDb.currency = depositToUpdate.currency;
         depositInDb.minimumBusinessPeriod = depositToUpdate.minimumBusinessPeriod;
