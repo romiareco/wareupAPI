@@ -62,8 +62,9 @@ class UserService {
         }
 
         userInDb.email = userToUpdate.email.toLowerCase();
-        userInDb.name = userToUpdate.name.toLowerCase();
-        userInDb.lastName = userToUpdate.lastName.toLowerCase();
+        userInDb.name = userToUpdate.nam;
+        userInDb.lastName = userToUpdate.lastName;
+        userInDb.industry = userToUpdate.industry;
 
         await this.repository.update(userInDb);
         user = await this.repository.get(userToUpdate.id);
