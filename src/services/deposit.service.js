@@ -31,7 +31,7 @@ class DepositService {
           depositToAdd.userId = company.userId;
 
           var city = await this.cityRepository.get(depositToAdd.cityId); 
-          depositToAdd.title = city.title + ' ' + depositToAdd.totalM3 + ' m3';
+          depositToAdd.title = city.title + ' ' + depositToAdd.totalM3 + ' m³';
 
           deposit = await this.repository.create(depositToAdd);
 
@@ -69,7 +69,7 @@ class DepositService {
         }
 
         var city = await this.cityRepository.get(depositToUpdate.cityId); 
-        depositInDb.title = city.title + ' ' + depositToUpdate.totalM3 + ' M3';
+        depositInDb.title = city.title + ' ' + depositToUpdate.totalM3 + ' m³';
  
         depositInDb.status = depositToUpdate.status; 
         depositInDb.cityId = depositToUpdate.cityId; 
