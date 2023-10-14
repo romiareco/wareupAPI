@@ -43,7 +43,7 @@ class MailService {
                 subject: 'Recuperacion de contraseña',
                 template_id: 'd-ff8f6eee18964ab6a6bc704be3d4da37',
                 dynamicTemplateData: { 
-                    linkEncrypt: config.frontendUrl+'/users/password-recovery?'+dataEncrypt,
+                    linkEncrypt: config.frontendUrl+'/password-recovery?'+dataEncrypt,
                     name: user.name
                 }
             }
